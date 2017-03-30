@@ -18,8 +18,10 @@ public class ExerciseCategoriesLocalDataSource implements ExerciseCategoriesData
 
     public ExerciseCategoriesLocalDataSource() {
         exerciseList = new ArrayList<>();
-        exerciseList.add(new ExerciseCategory("Local 1", "Description 1"));
-        exerciseList.add(new ExerciseCategory("Local 2", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Push Exercises", "Description 1"));
+        exerciseList.add(new ExerciseCategory("Pull Exercises", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Led & Glute Exercises", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Core Exercises", "Description 2"));
     }
 
     @Override

@@ -1,11 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
+    
+    
+    <LinearLayout
+        android:layout_marginBottom="@dimen/_1sdp"
+        android:layout_above="@+id/ln_bottom"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="exercise"/>
+        android:layout_height="@dimen/_50sdp">
 
-</LinearLayout>
+        <TextView
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Push"
+            android:layout_marginRight="@dimen/_1sdp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_push_ex"
+            android:background="@color/colorLightGreen"/>
+
+        <TextView
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Pull"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_pull_ex"
+            android:background="@color/colorGray"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="@dimen/_1sdp"
+        android:id="@+id/ln_bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp">
+
+        <TextView
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Led and Glute"
+            android:layout_marginRight="@dimen/_1sdp"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_led_glute_ex"
+            android:background="@color/colorGray"/>
+
+        <TextView
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:textSize="@dimen/_14sdp"
+            android:text="Core"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tv_core_ex"
+            android:background="@color/colorGray"/>
+    </LinearLayout>
+
+</RelativeLayout>
