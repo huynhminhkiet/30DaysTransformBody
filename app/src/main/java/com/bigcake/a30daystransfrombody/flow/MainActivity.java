@@ -14,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bigcake.a30daystransfrombody.R;
+import com.bigcake.a30daystransfrombody.data.repository.ExerciseCategoriesRepository;
+import com.bigcake.a30daystransfrombody.data.source.local.ExerciseCategoriesLocalDataSource;
+import com.bigcake.a30daystransfrombody.flow.exercisecategories.ExerciseCategoryPresenter;
 import com.bigcake.a30daystransfrombody.flow.exercisecategories.ExercisesCategoriesFragment;
 import com.bigcake.a30daystransfrombody.utils.ActivityUtils;
 
@@ -36,7 +39,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), ExercisesCategoriesFragment.newInstance(), R.id.fragment_container);
+        ExercisesCategoriesFragment exercisesCategoriesFragment = ExercisesCategoriesFragment.newInstance();
+        exercisesCategoriesFragment.setPresenter(new ExerciseCategoryPresenter(exercisesCategoriesFragment, ExerciseCategoriesRepository.getInstance(new ExerciseCategoriesLocalDataSource())));
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), exercisesCategoriesFragment, R.id.fragment_container);
     }
 
     @Override

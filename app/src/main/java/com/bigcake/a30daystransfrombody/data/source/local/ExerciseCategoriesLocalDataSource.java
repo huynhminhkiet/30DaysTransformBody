@@ -18,14 +18,14 @@ public class ExerciseCategoriesLocalDataSource implements ExerciseCategoriesData
 
     public ExerciseCategoriesLocalDataSource() {
         exerciseList = new ArrayList<>();
-        exerciseList.add(new ExerciseCategory("Push Exercises", "Description 1"));
-        exerciseList.add(new ExerciseCategory("Pull Exercises", "Description 2"));
-        exerciseList.add(new ExerciseCategory("Led & Glute Exercises", "Description 2"));
-        exerciseList.add(new ExerciseCategory("Core Exercises", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Push", "Description 1"));
+        exerciseList.add(new ExerciseCategory("Pull", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Led & Glute", "Description 2"));
+        exerciseList.add(new ExerciseCategory("Core", "Description 2"));
     }
 
     @Override
-    public void getExercises(@NonNull ExerciseCategoriesDataSource.LoadExercisesCallBack callBack) {
-        callBack.onExercisesLoaded(exerciseList);
+    public void getExercises(@NonNull LoadExerciseCartegoryCallBack callBack) {
+        callBack.onExerciseCategoryLoaded(exerciseList);
     }
 }

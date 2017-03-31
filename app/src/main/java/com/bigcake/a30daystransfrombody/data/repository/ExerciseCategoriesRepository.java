@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
 import com.bigcake.a30daystransfrombody.data.source.ExerciseCategoriesDataSource;
-import com.bigcake.a30daystransfrombody.data.source.local.ExerciseCategoriesLocalDataSource;
 
 import java.util.List;
 
@@ -28,11 +27,11 @@ public class ExerciseCategoriesRepository implements ExerciseCategoriesDataSourc
     }
 
     @Override
-    public void getExercises(@NonNull final LoadExercisesCallBack callBack) {
-        mExerciseCategoriesLocalDataSource.getExercises(new LoadExercisesCallBack() {
+    public void getExercises(@NonNull final LoadExerciseCartegoryCallBack callBack) {
+        mExerciseCategoriesLocalDataSource.getExercises(new LoadExerciseCartegoryCallBack() {
             @Override
-            public void onExercisesLoaded(List<ExerciseCategory> exerciseList) {
-                callBack.onExercisesLoaded(exerciseList);
+            public void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList) {
+                callBack.onExerciseCategoryLoaded(exerciseList);
             }
 
             @Override

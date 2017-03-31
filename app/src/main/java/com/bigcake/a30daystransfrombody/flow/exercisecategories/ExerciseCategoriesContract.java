@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface ExerciseCategoriesContract {
     interface View extends BaseView<Presenter> {
-        void displayCategories(List<ExerciseCategory> exerciseCategories);
+        void displayCategories(List<ExerciseCategory> exerciseCategoryList);
+        void displayExerciseCategoryImages();
     }
 
     interface Presenter extends BasePresenter {
-
     }
 }

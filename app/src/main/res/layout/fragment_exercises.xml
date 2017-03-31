@@ -2,69 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    
-    <LinearLayout
-        android:layout_marginBottom="@dimen/_1sdp"
-        android:layout_above="@+id/ln_bottom"
-        android:orientation="horizontal"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rv_exercise_category"/>
 
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:gravity="center"
-            android:textSize="@dimen/_14sdp"
-            android:text="Push"
-            android:layout_marginRight="@dimen/_1sdp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/tv_push_ex"
-            android:background="@color/colorLightGreen"/>
-
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:gravity="center"
-            android:textSize="@dimen/_14sdp"
-            android:text="Pull"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/tv_pull_ex"
-            android:background="@color/colorGray"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginBottom="@dimen/_1sdp"
-        android:id="@+id/ln_bottom"
+    <android.support.v7.widget.RecyclerView
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp">
-
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:gravity="center"
-            android:textSize="@dimen/_14sdp"
-            android:text="Led and Glute"
-            android:layout_marginRight="@dimen/_1sdp"
-            android:layout_margin="@dimen/_1sdp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/tv_led_glute_ex"
-            android:background="@color/colorGray"/>
-
-        <TextView
-            android:textColor="@color/colorBlack"
-            android:gravity="center"
-            android:textSize="@dimen/_14sdp"
-            android:text="Core"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/tv_core_ex"
-            android:background="@color/colorGray"/>
-    </LinearLayout>
-
+        android:layout_height="@dimen/_104sdp"
+        android:id="@+id/rv_exercise_category">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

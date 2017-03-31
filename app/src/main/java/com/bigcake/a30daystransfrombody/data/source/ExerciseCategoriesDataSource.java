@@ -11,10 +11,10 @@ import java.util.List;
  */
 
 public interface ExerciseCategoriesDataSource {
-    interface LoadExercisesCallBack {
-        void onExercisesLoaded(List<ExerciseCategory> exerciseList);
+    interface LoadExerciseCartegoryCallBack {
+        void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList);
         void onDataNotAvailable();
     }
 
-    void getExercises(@NonNull LoadExercisesCallBack callBack);
+    void getExercises(@NonNull LoadExerciseCartegoryCallBack callBack);
 }
