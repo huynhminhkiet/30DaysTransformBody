@@ -1,13 +1,25 @@
 package com.bigcake.a30daystransfrombody.flow.exercisecategories;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bigcake.a30daystransfrombody.R;
 import com.bigcake.a30daystransfrombody.base.BaseFragment;
 import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
+import com.bigcake.a30daystransfrombody.data.repository.ExerciseCategoriesRepository;
+import com.bigcake.a30daystransfrombody.data.source.local.ExerciseCategoriesLocalDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +29,7 @@ import java.util.List;
  */
 
 public class ExercisesCategoriesFragment extends BaseFragment implements ExerciseCategoriesContract.View,
-        ExerciseCategoryAdapter.ExerciseCategoryAdapterListener{
+        ExerciseCategoryAdapter.ExerciseCategoryAdapterListener {
 
     private ExerciseCategoriesContract.Presenter mPresenter;
 
@@ -27,18 +39,26 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
     private RecyclerView rvExerciseCategory;
     private ExerciseCategoryAdapter mExerciseCategoryAdapter;
 
+    private ImageButton ivBtnOpenExercises;
+
+    @Nullable
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.fragment_exercises;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_exercises, container, false);
+        initViews(view);
+        return view;
     }
 
-    @Override
     protected void initViews(View view) {
         bindViews(view);
+        mPresenter = new ExerciseCategoryPresenter(this,
+                ExerciseCategoriesRepository.getInstance(new ExerciseCategoriesLocalDataSource()));
         mPresenter.start();
     }
 
     private void bindViews(View view) {
+        ivBtnOpenExercises = (ImageButton) view.findViewById(R.id.btn_go);
+
         mExerciseCatViewPager = (ViewPager) view.findViewById(R.id.pager);
         mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getActivity().getSupportFragmentManager());
         mExerciseCatViewPager.setAdapter(mExerciseCategoryDescriptionAdapter);
@@ -55,7 +75,6 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -71,23 +90,24 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
     }
 
     @Override
-    public void setPresenter(ExerciseCategoriesContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     public void displayCategories(List<ExerciseCategory> exerciseCategoryList) {
         mExerciseCategoryAdapter.replaceAllData(exerciseCategoryList);
         mExerciseCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void displayExerciseCategoryImages() {
-
+    public void onExerciseCategoryItemClick(ExerciseCategory exerciseCategory, int pos) {
+        mExerciseCatViewPager.setCurrentItem(pos);
+        mPresenter.setCurrentExerciseCategory(exerciseCategory);
     }
 
     @Override
-    public void onExerciseCategoryItemClick(int pos) {
-        mExerciseCatViewPager.setCurrentItem(pos);
+    public void setPresenter(ExerciseCategoriesContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showExercises(ExerciseCategory exerciseCategory) {
+        Toast.makeText(getContext(), exerciseCategory.getName(), Toast.LENGTH_SHORT).show();
     }
 }

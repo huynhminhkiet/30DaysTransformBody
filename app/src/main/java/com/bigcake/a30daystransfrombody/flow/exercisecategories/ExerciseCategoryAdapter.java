@@ -41,7 +41,7 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
             @Override
             public void onClick(View v) {
                 mCurrentExerciseCat = holder.getAdapterPosition();
-                mListener.onExerciseCategoryItemClick(holder.getAdapterPosition());
+                mListener.onExerciseCategoryItemClick(exerciseCategory, holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
@@ -80,6 +80,6 @@ public class ExerciseCategoryAdapter extends RecyclerView.Adapter<ExerciseCatego
     }
 
     interface ExerciseCategoryAdapterListener {
-        void onExerciseCategoryItemClick(int pos);
+        void onExerciseCategoryItemClick(ExerciseCategory exerciseCategory,int pos);
     }
 }

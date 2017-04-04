@@ -3,6 +3,7 @@ package com.bigcake.a30daystransfrombody.flow;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,26 +23,33 @@ import com.bigcake.a30daystransfrombody.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String KEY_CURRENT_FRAGMENT = "key_current_fragment";
+
+    private Toolbar toolbar;
+
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        initSlideMenu();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        if (savedInstanceState == null) {
+            mCurrentFragment = ExercisesCategoriesFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        } else {
+            mCurrentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
+        }
+    }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        ExercisesCategoriesFragment exercisesCategoriesFragment = ExercisesCategoriesFragment.newInstance();
-        exercisesCategoriesFragment.setPresenter(new ExerciseCategoryPresenter(exercisesCategoriesFragment, ExerciseCategoriesRepository.getInstance(new ExerciseCategoriesLocalDataSource())));
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), exercisesCategoriesFragment, R.id.fragment_container);
+        getSupportFragmentManager().putFragment(outState, KEY_CURRENT_FRAGMENT, mCurrentFragment);
     }
 
     @Override
@@ -92,5 +100,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initSlideMenu() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }

@@ -15,11 +15,14 @@ import java.util.List;
 public class ExerciseCategoryPresenter implements ExerciseCategoriesContract.Presenter {
     private ExerciseCategoriesContract.View mExerciseCatView;
     private ExerciseCategoriesRepository mExerciseCategoriesRepository;
+    private ExerciseCategory mCurrentExerciseCategory;
 
     public ExerciseCategoryPresenter(@NonNull ExerciseCategoriesContract.View exerciseCatView,
                                      @NonNull ExerciseCategoriesRepository exerciseCategoriesRepository) {
         mExerciseCatView = exerciseCatView;
         mExerciseCategoriesRepository = exerciseCategoriesRepository;
+
+        exerciseCatView.setPresenter(this);
     }
 
     @Override
@@ -27,6 +30,7 @@ public class ExerciseCategoryPresenter implements ExerciseCategoriesContract.Pre
         mExerciseCategoriesRepository.getExercises(new ExerciseCategoriesDataSource.LoadExerciseCartegoryCallBack() {
             @Override
             public void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList) {
+                mCurrentExerciseCategory = exerciseList.get(0);
                 mExerciseCatView.displayCategories(exerciseList);
             }
 
@@ -35,5 +39,15 @@ public class ExerciseCategoryPresenter implements ExerciseCategoriesContract.Pre
 
             }
         });
+    }
+
+    @Override
+    public void openExercises() {
+        mExerciseCatView.showExercises(mCurrentExerciseCategory);
+    }
+
+    @Override
+    public void setCurrentExerciseCategory(ExerciseCategory exerciseCategory) {
+        mCurrentExerciseCategory = exerciseCategory;
     }
 }

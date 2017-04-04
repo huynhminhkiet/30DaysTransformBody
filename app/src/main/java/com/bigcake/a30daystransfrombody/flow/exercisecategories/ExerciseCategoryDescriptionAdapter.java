@@ -5,22 +5,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
- * Created by Big Cake on 4/1/2017.
+ * Created by Big Cake on 4/1/2017
  */
 
 public class ExerciseCategoryDescriptionAdapter extends FragmentStatePagerAdapter {
+
     public ExerciseCategoryDescriptionAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new PullExerciseFragment();
+        BaseExerciseCategoryFragment fragment = new PullExerciseFragment();
+        return fragment;
     }
 
     @Override
     public int getCount() {
         return 4;
     }
-
 }

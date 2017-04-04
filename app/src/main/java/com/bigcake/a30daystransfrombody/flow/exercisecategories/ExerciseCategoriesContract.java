@@ -13,9 +13,11 @@ import java.util.List;
 public interface ExerciseCategoriesContract {
     interface View extends BaseView<Presenter> {
         void displayCategories(List<ExerciseCategory> exerciseCategoryList);
-        void displayExerciseCategoryImages();
+        void showExercises(ExerciseCategory exerciseCategory);
     }
 
     interface Presenter extends BasePresenter {
+        void openExercises();
+        void setCurrentExerciseCategory(ExerciseCategory exerciseCategory);
     }
 }
