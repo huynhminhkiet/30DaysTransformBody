@@ -1,10 +1,10 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 import android.support.annotation.NonNull;
 
-import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
-import com.bigcake.a30daystransfrombody.data.repository.ExerciseCategoriesRepository;
-import com.bigcake.a30daystransfrombody.data.source.ExerciseCategoriesDataSource;
+import com.bigcake.a30daystransformbody.data.ExerciseCategory;
+import com.bigcake.a30daystransformbody.data.repository.ExerciseCategoriesRepository;
+import com.bigcake.a30daystransformbody.data.source.ExerciseCategoriesDataSource;
 
 import java.util.List;
 

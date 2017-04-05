@@ -1,11 +1,11 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bigcake.a30daystransfrombody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.base.BaseFragment;
 
 /**
  * Created by Big Cake on 4/2/2017

@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody.utils;
+package com.bigcake.a30daystransformbody.utils;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

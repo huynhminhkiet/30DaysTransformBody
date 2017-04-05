@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bigcake.a30daystransfrombody.R;
-import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
+import com.bigcake.a30daystransformbody.R;
+import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 
 import java.util.List;
 

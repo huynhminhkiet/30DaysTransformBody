@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody.base;
+package com.bigcake.a30daystransformbody.base;
 
 public interface BaseView<T> {
 

@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody;
+package com.bigcake.a30daystransformbody;
 
 import org.junit.Test;
 

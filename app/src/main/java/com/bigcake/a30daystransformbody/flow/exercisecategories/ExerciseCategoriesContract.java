@@ -1,8 +1,8 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
-import com.bigcake.a30daystransfrombody.base.BasePresenter;
-import com.bigcake.a30daystransfrombody.base.BaseView;
-import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
+import com.bigcake.a30daystransformbody.base.BasePresenter;
+import com.bigcake.a30daystransformbody.base.BaseView;
+import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 
 import java.util.List;
 

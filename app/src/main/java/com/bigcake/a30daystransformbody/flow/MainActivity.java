@@ -1,10 +1,7 @@
-package com.bigcake.a30daystransfrombody.flow;
+package com.bigcake.a30daystransformbody.flow;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,12 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bigcake.a30daystransfrombody.R;
-import com.bigcake.a30daystransfrombody.data.repository.ExerciseCategoriesRepository;
-import com.bigcake.a30daystransfrombody.data.source.local.ExerciseCategoriesLocalDataSource;
-import com.bigcake.a30daystransfrombody.flow.exercisecategories.ExerciseCategoryPresenter;
-import com.bigcake.a30daystransfrombody.flow.exercisecategories.ExercisesCategoriesFragment;
-import com.bigcake.a30daystransfrombody.utils.ActivityUtils;
+import com.bigcake.a30daystransformbody.R;
+import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
+import com.bigcake.a30daystransformbody.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

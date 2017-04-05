@@ -1,8 +1,8 @@
-package com.bigcake.a30daystransfrombody.data.source;
+package com.bigcake.a30daystransformbody.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.bigcake.a30daystransfrombody.data.ExerciseCategory;
+import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 
 import java.util.List;
 

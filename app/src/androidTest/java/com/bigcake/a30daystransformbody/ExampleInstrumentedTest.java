@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody;
+package com.bigcake.a30daystransformbody;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

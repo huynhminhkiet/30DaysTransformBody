@@ -1,7 +1,7 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 
-import com.bigcake.a30daystransfrombody.R;
+import com.bigcake.a30daystransformbody.R;
 
 /**
  * Created by Big Cake on 3/31/2017

@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody.flow.exercisecategories;
+package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

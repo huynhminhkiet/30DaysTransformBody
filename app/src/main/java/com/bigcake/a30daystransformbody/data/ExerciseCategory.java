@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransfrombody.data;
+package com.bigcake.a30daystransformbody.data;
 
 /**
  * Created by kiethuynh on 30/03/2017
