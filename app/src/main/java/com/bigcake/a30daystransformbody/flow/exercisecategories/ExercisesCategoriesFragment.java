@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
@@ -47,13 +48,18 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
     protected void initViews(View view) {
         bindViews(view);
-        mPresenter = new ExerciseCategoryPresenter(this,
-                ExerciseCategoriesRepository.getInstance(new ExerciseCategoriesLocalDataSource()));
+        mPresenter = new ExerciseCategoryPresenter(this, Injection.provideExerciseCategoriesRepository());
         mPresenter.start();
     }
 
     private void bindViews(View view) {
         ivBtnOpenExercises = (ImageButton) view.findViewById(R.id.btn_go);
+        ivBtnOpenExercises.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.openExercises();
+            }
+        });
 
         mExerciseCatViewPager = (ViewPager) view.findViewById(R.id.pager);
         mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getActivity().getSupportFragmentManager());

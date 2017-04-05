@@ -14,9 +14,16 @@ import java.util.List;
 
 public class ExerciseCategoriesLocalDataSource implements ExerciseCategoriesDataSource {
 
+    private static ExerciseCategoriesLocalDataSource mInstance;
     private List<ExerciseCategory> exerciseList;
 
-    public ExerciseCategoriesLocalDataSource() {
+    public static synchronized ExerciseCategoriesLocalDataSource getInstance() {
+        if (mInstance == null)
+            mInstance = new ExerciseCategoriesLocalDataSource();
+        return mInstance;
+    }
+
+    private ExerciseCategoriesLocalDataSource() {
         exerciseList = new ArrayList<>();
         exerciseList.add(new ExerciseCategory("Push", "Description 1"));
         exerciseList.add(new ExerciseCategory("Pull", "Description 2"));

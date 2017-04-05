@@ -14,21 +14,21 @@ import java.util.List;
 public class ExerciseCategoriesRepository implements ExerciseCategoriesDataSource {
     private static ExerciseCategoriesRepository mInstance = null;
 
-    private ExerciseCategoriesDataSource mExerciseCategoriesLocalDataSource;
+    private ExerciseCategoriesDataSource mExerciseCategoriesDataSource;
 
     private ExerciseCategoriesRepository(ExerciseCategoriesDataSource exerciseCategoriesLocalDataSource) {
-        mExerciseCategoriesLocalDataSource = exerciseCategoriesLocalDataSource;
+        mExerciseCategoriesDataSource = exerciseCategoriesLocalDataSource;
     }
 
-    public static synchronized ExerciseCategoriesRepository getInstance(ExerciseCategoriesDataSource exerciseCategoriesLocalDataSource) {
+    public static synchronized ExerciseCategoriesRepository getInstance(ExerciseCategoriesDataSource exerciseCategoriesDataSource) {
         if (mInstance == null)
-            mInstance = new ExerciseCategoriesRepository(exerciseCategoriesLocalDataSource);
+            mInstance = new ExerciseCategoriesRepository(exerciseCategoriesDataSource);
         return mInstance;
     }
 
     @Override
     public void getExercises(@NonNull final LoadExerciseCartegoryCallBack callBack) {
-        mExerciseCategoriesLocalDataSource.getExercises(new LoadExerciseCartegoryCallBack() {
+        mExerciseCategoriesDataSource.getExercises(new LoadExerciseCartegoryCallBack() {
             @Override
             public void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList) {
                 callBack.onExerciseCategoryLoaded(exerciseList);
