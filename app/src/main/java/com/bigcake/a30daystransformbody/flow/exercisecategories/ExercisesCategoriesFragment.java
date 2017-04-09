@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -9,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
-import com.bigcake.a30daystransformbody.data.repository.ExerciseCategoriesRepository;
-import com.bigcake.a30daystransformbody.data.source.local.ExerciseCategoriesLocalDataSource;
+import com.bigcake.a30daystransformbody.flow.exercisedetail.ExerciseDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +109,7 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
     @Override
     public void showExercises(ExerciseCategory exerciseCategory) {
-        Toast.makeText(getContext(), exerciseCategory.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Dive Bombers"
+        android:textColor="@color/colorOrange"
+        android:textSize="@dimen/text_large" />
+
+    <TextView
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="pectorals, triceps, deltoids, core!(3-4)"
+        android:textSize="@dimen/text_small" />
+
+</LinearLayout>

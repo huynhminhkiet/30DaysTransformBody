@@ -3,8 +3,8 @@ package com.bigcake.a30daystransformbody.flow.exercisecategories;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
-import com.bigcake.a30daystransformbody.data.repository.ExerciseCategoriesRepository;
-import com.bigcake.a30daystransformbody.data.source.ExerciseCategoriesDataSource;
+import com.bigcake.a30daystransformbody.data.repository.ExerciseRepository;
+import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 
 import java.util.List;
 
@@ -14,20 +14,20 @@ import java.util.List;
 
 public class ExerciseCategoryPresenter implements ExerciseCategoriesContract.Presenter {
     private ExerciseCategoriesContract.View mExerciseCatView;
-    private ExerciseCategoriesRepository mExerciseCategoriesRepository;
+    private ExerciseRepository mExerciseRepository;
     private ExerciseCategory mCurrentExerciseCategory;
 
     public ExerciseCategoryPresenter(@NonNull ExerciseCategoriesContract.View exerciseCatView,
-                                     @NonNull ExerciseCategoriesRepository exerciseCategoriesRepository) {
+                                     @NonNull ExerciseRepository exerciseRepository) {
         mExerciseCatView = exerciseCatView;
-        mExerciseCategoriesRepository = exerciseCategoriesRepository;
+        mExerciseRepository = exerciseRepository;
 
         exerciseCatView.setPresenter(this);
     }
 
     @Override
     public void start() {
-        mExerciseCategoriesRepository.getExercises(new ExerciseCategoriesDataSource.LoadExerciseCartegoryCallBack() {
+        mExerciseRepository.getExerciseCategorise(new ExerciseDataSource.LoadExerciseCategoryCallBack() {
             @Override
             public void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList) {
                 mCurrentExerciseCategory = exerciseList.get(0);

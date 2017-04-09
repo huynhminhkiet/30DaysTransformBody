@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGray"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp">
+
+    <ImageView
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_width="@dimen/_5sdp"
+        android:layout_height="@dimen/_5sdp"
+        android:src="@drawable/ic_bullet"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:textColor="@color/colorBlack"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:text="With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
+        android:textSize="@dimen/text_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
