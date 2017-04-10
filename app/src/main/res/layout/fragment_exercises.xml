@@ -9,22 +9,21 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rv_exercise_category"/>
 
-    <ImageButton
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:layout_alignParentRight="true"
-        android:layout_above="@id/rv_exercise_category"
-        android:id="@+id/btn_go"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/ic_navigate"
-        android:scaleType="centerInside"
-        android:background="@android:color/transparent"/>
-
     <android.support.v7.widget.RecyclerView
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_104sdp"
         android:id="@+id/rv_exercise_category">
     </android.support.v7.widget.RecyclerView>
+
+    <ImageButton
+        android:layout_marginBottom="@dimen/_32sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_go"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@drawable/ic_navigate"
+        android:scaleType="centerInside"
+        android:background="@android:color/transparent"/>
 </RelativeLayout>

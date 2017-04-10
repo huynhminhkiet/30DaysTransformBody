@@ -56,4 +56,19 @@ public class ExerciseRepository implements ExerciseDataSource {
             }
         });
     }
+
+    @Override
+    public void getExerciseList(@NonNull final LoadExerciseListCallBack callBack) {
+        mExerciseDataSource.getExerciseList(new LoadExerciseListCallBack() {
+            @Override
+            public void onExerciseListLoaded(List<Exercise> exerciseList) {
+                callBack.onExerciseListLoaded(exerciseList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+    }
 }

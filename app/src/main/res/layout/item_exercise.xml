@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="One-Arm Push Ups"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_exercise_title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="One-Arm Push Ups"
+            android:textSize="@dimen/text_small"
+            android:textColor="@color/colorOrange"
+            android:id="@+id/tv_tag"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

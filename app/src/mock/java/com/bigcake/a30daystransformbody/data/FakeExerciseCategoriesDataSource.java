@@ -57,4 +57,29 @@ public class FakeExerciseCategoriesDataSource implements ExerciseDataSource {
                 1, images, descriptions);
         callBack.onExerciseLoaded(exercise);
     }
+
+    @Override
+    public void getExerciseList(@NonNull LoadExerciseListCallBack callBack) {
+        List<Exercise> exerciseList = new ArrayList<>();
+        exerciseList.add(new Exercise(123, 123, "Dive Bombers", "pectorals, triceps, deltoids, core (3-4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Pec Flies", "pectorals, core, shoulders (4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Seated Dips", "triceps (1-3)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Dive Bombers", "pectorals, triceps, deltoids, core (3-4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Pec Flies", "pectorals, core, shoulders (4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Seated Dips", "triceps (1-3)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Dive Bombers", "pectorals, triceps, deltoids, core (3-4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Pec Flies", "pectorals, core, shoulders (4)",
+                1, null, null));
+        exerciseList.add(new Exercise(123, 123, "Seated Dips", "triceps (1-3)",
+                1, null, null));
+        callBack.onExerciseListLoaded(exerciseList);
+
+    }
 }

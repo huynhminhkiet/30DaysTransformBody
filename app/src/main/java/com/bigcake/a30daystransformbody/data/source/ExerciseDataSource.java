@@ -12,6 +12,11 @@ import java.util.List;
  */
 
 public interface ExerciseDataSource {
+    interface LoadExerciseListCallBack {
+        void onExerciseListLoaded(List<Exercise> exerciseList);
+        void onDataNotAvailable();
+    }
+
     interface LoadExerciseCategoryCallBack {
         void onExerciseCategoryLoaded(List<ExerciseCategory> exerciseList);
         void onDataNotAvailable();
@@ -24,4 +29,5 @@ public interface ExerciseDataSource {
 
     void getExerciseCategorise(@NonNull LoadExerciseCategoryCallBack callBack);
     void getExercise(@NonNull LoadExerciseCallBack callBack);
+    void getExerciseList(@NonNull LoadExerciseListCallBack callBack);
 }

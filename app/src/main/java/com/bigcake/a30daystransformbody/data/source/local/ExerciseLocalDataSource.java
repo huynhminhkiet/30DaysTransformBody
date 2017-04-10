@@ -2,6 +2,7 @@ package com.bigcake.a30daystransformbody.data.source.local;
 
 import android.support.annotation.NonNull;
 
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 
@@ -15,7 +16,8 @@ import java.util.List;
 public class ExerciseLocalDataSource implements ExerciseDataSource {
 
     private static ExerciseLocalDataSource mInstance;
-    private List<ExerciseCategory> exerciseList;
+    private List<ExerciseCategory> exerciseCategoryList;
+    private List<Exercise> exerciseList;
 
     public static synchronized ExerciseLocalDataSource getInstance() {
         if (mInstance == null)
@@ -24,20 +26,25 @@ public class ExerciseLocalDataSource implements ExerciseDataSource {
     }
 
     private ExerciseLocalDataSource() {
-        exerciseList = new ArrayList<>();
-        exerciseList.add(new ExerciseCategory("Push", "Description 1"));
-        exerciseList.add(new ExerciseCategory("Pull", "Description 2"));
-        exerciseList.add(new ExerciseCategory("Led & Glute", "Description 2"));
-        exerciseList.add(new ExerciseCategory("Core", "Description 2"));
+        exerciseCategoryList = new ArrayList<>();
+        exerciseCategoryList.add(new ExerciseCategory("Push", "Description 1"));
+        exerciseCategoryList.add(new ExerciseCategory("Pull", "Description 2"));
+        exerciseCategoryList.add(new ExerciseCategory("Led & Glute", "Description 2"));
+        exerciseCategoryList.add(new ExerciseCategory("Core", "Description 2"));
     }
 
     @Override
     public void getExerciseCategorise(@NonNull LoadExerciseCategoryCallBack callBack) {
-        callBack.onExerciseCategoryLoaded(exerciseList);
+        callBack.onExerciseCategoryLoaded(exerciseCategoryList);
     }
 
     @Override
     public void getExercise(@NonNull LoadExerciseCallBack callBack) {
+
+    }
+
+    @Override
+    public void getExerciseList(@NonNull LoadExerciseListCallBack callBack) {
 
     }
 }

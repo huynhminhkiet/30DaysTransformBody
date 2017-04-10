@@ -29,7 +29,7 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_exercise;
+        return R.layout.activity_exercise_detail;
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 import com.bigcake.a30daystransformbody.flow.exercisedetail.ExerciseDetailActivity;
+import com.bigcake.a30daystransformbody.flow.exercises.ExerciseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
     @Override
     public void showExercises(ExerciseCategory exerciseCategory) {
-        Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
+        Intent intent = new Intent(getContext(), ExerciseActivity.class);
         startActivity(intent);
     }
 }
