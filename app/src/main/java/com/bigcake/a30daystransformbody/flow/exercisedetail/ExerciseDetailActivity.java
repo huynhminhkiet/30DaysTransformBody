@@ -1,16 +1,21 @@
 package com.bigcake.a30daystransformbody.flow.exercisedetail;
 
+import android.content.Intent;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
+import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.Exercise;
+import com.bigcake.a30daystransformbody.flow.challengedetail.ChallengeDetailActivity;
+import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -67,5 +72,16 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.simple_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_start) {
+            Challenge challenge = new Challenge();
+            Intent intent = new Intent(this, ChallengeDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_CHALLENGE, challenge);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
