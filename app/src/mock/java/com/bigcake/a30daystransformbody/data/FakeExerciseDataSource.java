@@ -12,17 +12,17 @@ import java.util.List;
  * Created by kiethuynh on 05/04/2017
  */
 
-public class FakeExerciseCategoriesDataSource implements ExerciseDataSource {
-    private static FakeExerciseCategoriesDataSource mInstance;
+public class FakeExerciseDataSource implements ExerciseDataSource {
+    private static FakeExerciseDataSource mInstance;
     private List<ExerciseCategory> exerciseList;
 
-    public static synchronized FakeExerciseCategoriesDataSource getInstance() {
+    public static synchronized FakeExerciseDataSource getInstance() {
         if (mInstance == null)
-            mInstance = new FakeExerciseCategoriesDataSource();
+            mInstance = new FakeExerciseDataSource();
         return mInstance;
     }
 
-    private FakeExerciseCategoriesDataSource() {
+    private FakeExerciseDataSource() {
         exerciseList = new ArrayList<>();
         exerciseList.add(new ExerciseCategory("Push f", "Description 1"));
         exerciseList.add(new ExerciseCategory("Pull f", "Description 2"));

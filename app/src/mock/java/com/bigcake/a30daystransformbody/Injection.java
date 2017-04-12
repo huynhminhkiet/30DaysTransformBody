@@ -1,6 +1,8 @@
 package com.bigcake.a30daystransformbody;
 
-import com.bigcake.a30daystransformbody.data.FakeExerciseCategoriesDataSource;
+import com.bigcake.a30daystransformbody.data.FakeChallengeDataSource;
+import com.bigcake.a30daystransformbody.data.FakeExerciseDataSource;
+import com.bigcake.a30daystransformbody.data.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.data.repository.ExerciseRepository;
 
 /**
@@ -9,6 +11,10 @@ import com.bigcake.a30daystransformbody.data.repository.ExerciseRepository;
 
 public class Injection {
     public static ExerciseRepository provideExerciseCategoriesRepository() {
-        return ExerciseRepository.getInstance(FakeExerciseCategoriesDataSource.getInstance());
+        return ExerciseRepository.getInstance(FakeExerciseDataSource.getInstance());
+    }
+
+    public static ChallengeRepository provideChallengeRepository() {
+        return ChallengeRepository.getInstance(FakeChallengeDataSource.getInstance());
     }
 }

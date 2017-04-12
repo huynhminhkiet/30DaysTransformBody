@@ -23,8 +23,7 @@
         <activity android:name=".flow.addchallenge.AddChallengeActivity" />
         <activity android:name=".flow.challengedetail.ChallengeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".flow.exercisedetail.ExerciseDetailActivity" />
-        <activity android:name=".flow.exercises.ExerciseActivity"></activity>
+        <activity android:name=".flow.exercises.ExerciseActivity"/>
     </application>
 
 </manifest>

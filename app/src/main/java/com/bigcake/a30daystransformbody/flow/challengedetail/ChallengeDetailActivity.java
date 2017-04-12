@@ -4,9 +4,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan.ChallengeDayPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan.ChallengePlanFragment;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
@@ -48,8 +50,10 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     @Override
     public void displayChallenge(Challenge challenge) {
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
-        mChallengeDetailAdapter.addFragment(new ChallengePlanFragment(), "Plan");
-        mChallengeDetailAdapter.addFragment(new ChallengePlanFragment(), "Album");
+        ChallengePlanFragment challengePlanFragment = new ChallengePlanFragment();
+        challengePlanFragment.setPresenter(new ChallengeDayPresenter(challengePlanFragment,
+                Injection.provideChallengeRepository()));
+        mChallengeDetailAdapter.addFragment(challengePlanFragment, "Plan");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
