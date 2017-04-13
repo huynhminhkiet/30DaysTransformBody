@@ -10,6 +10,7 @@ public class ChallengeDay {
     private int image;
     private int status;
     private ChallengeLevel level____;
+    private String backupdemo;
 
     public ChallengeDay() {
     }
