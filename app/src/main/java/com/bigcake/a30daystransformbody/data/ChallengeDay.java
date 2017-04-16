@@ -13,17 +13,18 @@ public class ChallengeDay {
     private String day;
     private int image;
     private int status;
-    private ChallengeLevel level;
+    private ChallengeLevel level____;
+    private String backupdemo;
 
     public ChallengeDay() {
     }
 
-    public ChallengeDay(int id, String day, int image, int status, ChallengeLevel level) {
+    public ChallengeDay(int id, String day, int image, int status, ChallengeLevel level____) {
         this.id = id;
         this.day = day;
         this.image = image;
         this.status = status;
-        this.level = level;
+        this.level____ = level____;
     }
 
     public int getId() {
@@ -58,11 +59,11 @@ public class ChallengeDay {
         this.status = status;
     }
 
-    public ChallengeLevel getLevel() {
-        return level;
+    public ChallengeLevel getLevel____() {
+        return level____;
     }
 
-    public void setLevel(ChallengeLevel level) {
-        this.level = level;
+    public void setLevel____(ChallengeLevel level____) {
+        this.level____ = level____;
     }
 }
