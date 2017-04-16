@@ -2,6 +2,8 @@ package com.bigcake.a30daystransformbody.flow.challengedetail;
 
 import android.support.annotation.NonNull;
 
+import com.bigcake.a30daystransformbody.data.Challenge;
+
 /**
  * Created by kiethuynh on 10/04/2017
  */

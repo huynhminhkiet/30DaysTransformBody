@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
+import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.challengedetail.ChallengeDetailActivity;
 import com.bigcake.a30daystransformbody.utils.Constants;
