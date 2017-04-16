@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan;
+package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 
 import com.bigcake.a30daystransformbody.base.BasePresenter;
 import com.bigcake.a30daystransformbody.base.BaseView;
@@ -10,9 +10,10 @@ import java.util.List;
  * Created by Big Cake on 4/12/2017
  */
 
-public interface ChallengePlanContract {
+public interface ChallengeProgressContract {
     interface View extends BaseView<Presenter> {
         void displayChallengeDays(List<ChallengeDay> challengeDayList);
+        void displayProgressBar(int progress);
     }
 
     interface Presenter extends BasePresenter {

@@ -8,8 +8,9 @@ import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan.ChallengeDayPresenter;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan.ChallengePlanFragment;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeDayPresenter;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View {
@@ -50,10 +51,11 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     @Override
     public void displayChallenge(Challenge challenge) {
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
-        ChallengePlanFragment challengePlanFragment = new ChallengePlanFragment();
-        challengePlanFragment.setPresenter(new ChallengeDayPresenter(challengePlanFragment,
+        ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
+        challengeProgressFragment.setPresenter(new ChallengeDayPresenter(challengeProgressFragment,
                 Injection.provideChallengeRepository()));
-        mChallengeDetailAdapter.addFragment(challengePlanFragment, "Plan");
+        mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
+        mChallengeDetailAdapter.addFragment(new ChallengeAlbumFragment(), "Album");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

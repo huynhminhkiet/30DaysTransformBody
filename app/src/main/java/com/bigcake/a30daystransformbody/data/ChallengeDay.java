@@ -5,6 +5,10 @@ package com.bigcake.a30daystransformbody.data;
  */
 
 public class ChallengeDay {
+    public static final int STATUS_DONE = 1;
+    public static final int STATUS_CURRENT = 2;
+    public static final int STATUS_IN_PROGRESS= 0;
+
     private int id;
     private String day;
     private int image;

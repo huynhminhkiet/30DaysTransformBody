@@ -2,13 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
 
     <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
         android:layout_marginTop="@dimen/_10sdp"
         android:id="@+id/rv_challenge"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_250sdp" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/dr_progress" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +45,7 @@
                 android:id="@+id/tv_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20.2"
+                android:text="13.3"
                 android:textSize="@dimen/_22sdp"
                 android:textColor="@color/colorBlack"
                 android:layout_centerInParent="true"/>
@@ -42,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_progress"
                 android:layout_centerHorizontal="true"
-                android:text="28 Days left"
+                android:text="26 Days left"
                 android:textColor="@color/colorOrange"
                 android:layout_marginTop="@dimen/_15sdp"/>
         </RelativeLayout>
@@ -50,7 +63,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content">
-
+            <ImageButton
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_navigate"
+                android:scaleType="fitCenter"/>
         </RelativeLayout>
     </LinearLayout>
 

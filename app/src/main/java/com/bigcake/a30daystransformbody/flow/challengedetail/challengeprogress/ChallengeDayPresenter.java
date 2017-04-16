@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.challengeplan;
+package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 
 import android.support.annotation.NonNull;
 
@@ -12,11 +12,11 @@ import java.util.List;
  * Created by Big Cake on 4/12/2017
  */
 
-public class ChallengeDayPresenter implements ChallengePlanContract.Presenter {
-    private ChallengePlanContract.View mView;
+public class ChallengeDayPresenter implements ChallengeProgressContract.Presenter {
+    private ChallengeProgressContract.View mView;
     private ChallengeRepository mChallengeRepository;
 
-    public ChallengeDayPresenter(@NonNull ChallengePlanContract.View view, @NonNull ChallengeRepository challengeRepository) {
+    public ChallengeDayPresenter(@NonNull ChallengeProgressContract.View view, @NonNull ChallengeRepository challengeRepository) {
         this.mView = view;
         this.mChallengeRepository = challengeRepository;
     }
@@ -27,6 +27,7 @@ public class ChallengeDayPresenter implements ChallengePlanContract.Presenter {
             @Override
             public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
                 mView.displayChallengeDays(challengeDayList);
+                mView.displayProgressBar(13);
             }
         });
     }

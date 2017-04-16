@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.data;
 
+import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ public class FakeChallengeDataSource implements ChallengeDataSource{
     @Override
     public void getChallengeDays(LoadChallengeDaysCallBack callBack) {
         List<ChallengeDay> challengeDayList = new ArrayList<>();
+        int inProgress = 4;
         for (int i = 0; i < 30; i++) {
-            challengeDayList.add(new ChallengeDay(i, (i + 1) + "", i, 1, null));
+            challengeDayList.add(new ChallengeDay(i, (i + 1) + ""
+                    , (i < inProgress - 1) ? R.drawable.fake_leg : R.drawable.ic_camera
+                    , (i < inProgress) ? ChallengeDay.STATUS_DONE : (i == inProgress) ? ChallengeDay.STATUS_CURRENT : ChallengeDay.STATUS_IN_PROGRESS
+                    , null));
         }
         callBack.onChallengeDaysLoaded(challengeDayList);
     }
