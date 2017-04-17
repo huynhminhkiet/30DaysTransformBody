@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
@@ -22,11 +23,12 @@ import java.util.List;
  * Created by Big Cake on 4/12/2017
  */
 
-public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> {
+public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolder> {
     private Context mContext;
     private List<ChallengeDay> mChallengeDayList;
+    private ItemClickListener<ChallengeDay> mListener;
 
-    public ChallengeAdapter(Context context, List<ChallengeDay> challengeDayList) {
+    public ChallengeDayAdapter(Context context, List<ChallengeDay> challengeDayList) {
         mContext = context;
         mChallengeDayList = challengeDayList;
     }
@@ -38,7 +40,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> 
 
     @Override
     public void onBindViewHolder(final ChallengeViewHolder holder, int position) {
-        ChallengeDay challengeDay = mChallengeDayList.get(position);
+        final ChallengeDay challengeDay = mChallengeDayList.get(position);
         if (challengeDay.getStatus() == ChallengeDay.STATUS_DONE) {
             holder.tvDay.setText("");
             holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.colorDarkGreen));
@@ -64,6 +66,13 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> 
             holder.tvDay.setText(challengeDay.getDay());
             holder.ivDay.setVisibility(View.GONE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onItemClick(challengeDay);
+            }
+        });
     }
 
     @Override
@@ -74,5 +83,9 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> 
     public void replaceAllData(List<ChallengeDay> challengeDayList) {
         mChallengeDayList = challengeDayList;
         notifyDataSetChanged();
+    }
+
+    public void setItemClickListener(ItemClickListener<ChallengeDay> listener) {
+        mListener = listener;
     }
 }

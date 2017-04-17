@@ -31,4 +31,11 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
             }
         });
     }
+
+    @Override
+    public void challengeDayClick(ChallengeDay challengeDay) {
+        if (challengeDay.getStatus() == ChallengeDay.STATUS_DONE) {
+            mView.openCamera();
+        }
+    }
 }
