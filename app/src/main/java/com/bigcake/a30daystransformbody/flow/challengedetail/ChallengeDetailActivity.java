@@ -2,11 +2,13 @@ package com.bigcake.a30daystransformbody.flow.challengedetail;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
@@ -16,6 +18,7 @@ import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.Chal
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeDayPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
+import com.bigcake.a30daystransformbody.manager.CameraManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View, ChallengeProgressFragmentListener {
@@ -72,19 +75,29 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     }
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePictureIntent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        CameraManager cameraManager = CameraManager.getInstance();
+        cameraManager.genOutputFileUri(new CameraManager.GenOutputFileUriCallBack() {
+            @Override
+            public void onSuccess(Uri outputUri) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
+            @Override
+            public void onError(String e) {
+                Toast.makeText(ChallengeDetailActivity.this, e, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
         }
     }
 }
