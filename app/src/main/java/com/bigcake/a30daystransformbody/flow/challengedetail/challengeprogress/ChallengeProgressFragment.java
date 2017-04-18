@@ -1,10 +1,7 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,32 +13,23 @@ import android.widget.ProgressBar;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
-import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
+import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by kiethuynh on 10/04/2017
  */
 
 public class ChallengeProgressFragment extends BaseFragment implements ChallengeProgressContract.View, ItemClickListener<ChallengeDay> {
+    public static final int CAMERA_REQUEST_CODE = 100;
     private ChallengeProgressContract.Presenter mPresenter;
-    private ChallengeProgressFragmentListener mListener;
 
     private RecyclerView rvChallengeDay;
     private ChallengeDayAdapter mChallengeDayAdapter;
     private ProgressBar progressBar;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        mListener = (ChallengeProgressFragmentListener) context;
-    }
 
     @Nullable
     @Override
@@ -79,11 +67,17 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
 
     @Override
     public void openCamera() {
-        mListener.onOpenCamera();
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
     @Override
     public void onItemClick(ChallengeDay item) {
         mPresenter.challengeDayClick(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

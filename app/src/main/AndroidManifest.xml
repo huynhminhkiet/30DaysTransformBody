@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bigcake.a30daystransformbody">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -24,9 +25,12 @@
         </activity>
         <activity android:name=".flow.exercisedetail.ExerciseDetailActivity" />
         <activity android:name=".flow.addchallenge.AddChallengeActivity" />
-        <activity android:name=".flow.challengedetail.ChallengeDetailActivity"
+        <activity
+            android:name=".flow.challengedetail.ChallengeDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".flow.exercises.ExerciseActivity" />
+        <activity android:name=".flow.camera.CameraActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".flow.exercises.ExerciseActivity"/>
     </application>
 
 </manifest>
