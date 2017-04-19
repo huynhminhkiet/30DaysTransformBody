@@ -2,6 +2,7 @@ package com.bigcake.a30daystransformbody.flow.camera;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -25,6 +26,7 @@ public class ImageSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Log.d(getClass().getSimpleName(), "surfaceCreated");
         try {
             this.camera.setPreviewDisplay(surfaceHolder);
             this.camera.startPreview();
@@ -40,7 +42,7 @@ public class ImageSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        Log.d(getClass().getSimpleName(), "surfaceDestroyed");
         this.camera.stopPreview();
-        this.camera.release();
     }
 }
