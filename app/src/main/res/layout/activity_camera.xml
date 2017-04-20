@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/camera_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ln_control"/>
+        android:layout_height="40dp"
+        android:background="@android:color/holo_blue_light"
+        >
+    </FrameLayout>
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:id="@+id/ln_control"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capture"
-            android:id="@+id/button"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <com.bigcake.a30daystransformbody.custom.ResizeSurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ImageView
+            android:id="@+id/activity_camera_imv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:visibility="gone" />
+
+        <com.bigcake.a30daystransformbody.custom.LinesImageView
+            android:id="@+id/activity_camera_imv_lines"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:background="@android:color/holo_blue_light">
+
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/captureImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_navigate"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"/>
+            </FrameLayout>
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
