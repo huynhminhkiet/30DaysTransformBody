@@ -1,66 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/colorDarkGreen">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@android:color/holo_blue_light"
-        >
-    </FrameLayout>
 
     <RelativeLayout
+        android:layout_above="@+id/ln_control"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        android:layout_height="match_parent">
 
         <com.bigcake.a30daystransformbody.custom.ResizeSurfaceView
+            android:layout_alignParentBottom="true"
             android:id="@+id/surfaceView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-
-        <ImageView
-            android:id="@+id/activity_camera_imv_background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            android:visibility="gone" />
+            android:layout_height="match_parent" />
 
         <com.bigcake.a30daystransformbody.custom.LinesImageView
             android:id="@+id/activity_camera_imv_lines"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <ImageView
+            android:id="@+id/iv_last_image_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitEnd"/>
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ln_control"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorDarkGreen"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:background="@android:color/holo_blue_light">
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
+            <ImageButton
+                android:id="@+id/ib_last_image"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/captureImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_navigate"
-                    android:scaleType="centerInside"
-                    android:background="@android:color/transparent"/>
-            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <ImageButton
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/captureImage"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_capture" />
+
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/ib_edit_image"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_toLeftOf="@+id/captureImage"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:src="@drawable/ic_edit"/>
+
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/ib_save_image"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_toRightOf="@+id/captureImage"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:src="@drawable/ic_done"/>
+
+</RelativeLayout>

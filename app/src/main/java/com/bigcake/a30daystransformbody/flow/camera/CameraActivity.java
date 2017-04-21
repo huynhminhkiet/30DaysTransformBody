@@ -1,19 +1,13 @@
 package com.bigcake.a30daystransformbody.flow.camera;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Surface;
@@ -25,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bigcake.a30daystransformbody.R;
+import com.bigcake.a30daystransformbody.base.BaseActivity;
+import com.bigcake.a30daystransformbody.flow.exercises.ExercisesContract;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.io.File;
@@ -32,65 +28,52 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class CameraActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
-
-    public static final int RETAKE_IMAGE_RESULT_CODE = 104;
-
+public class CameraActivity extends BaseActivity implements SurfaceHolder.Callback, View.OnClickListener, CameraContract.View {
 
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private Camera camera;
-    private ImageButton captureImage;
-    private ImageView imvBackground,imvLines;
+    private ImageButton btnCaptureImage, btnEditImage, btnSaveImage, btnShowLastImage;
+    private ImageView imvLines, ivLastImagePreview;
     private int cameraId;
-    private boolean flashmode = false;
     private int rotation;
-    private Bitmap takenBitmap = null;
     private Camera.Size mPreviewSize;
 
-    private int timer = 0;
-    private String lastPhotoId = "";
-
+    private CameraContract.Presenter mPresenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int getLayoutResourceId() {
+        return R.layout.activity_camera;
+    }
 
+    @Override
+    protected void initViews() {
+        bindViews();
         if (Utils.isScreenLarge(this)) {
-            // width > height, better to use Landscape
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            lastPhotoId = intent.getStringExtra("PHOTO_ID");
-        }
-
-        if (savedInstanceState != null) {
-            lastPhotoId = savedInstanceState.getString("PHOTO_ID");
-        }
-
-        setContentView(R.layout.activity_camera);
-
         cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
-
-        captureImage = (ImageButton) findViewById(R.id.captureImage);
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-        imvBackground = (ImageView) findViewById(R.id.activity_camera_imv_background);
-        imvLines = (ImageView) findViewById(R.id.activity_camera_imv_lines);
-
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
-        captureImage.setOnClickListener(this);
+        btnCaptureImage.setOnClickListener(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        mPresenter = new CameraPresenter(this);
+    }
+
+    private void bindViews() {
+        btnCaptureImage = (ImageButton) findViewById(R.id.captureImage);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        imvLines = (ImageView) findViewById(R.id.activity_camera_imv_lines);
+        btnSaveImage = (ImageButton) findViewById(R.id.ib_save_image);
+        btnEditImage = (ImageButton) findViewById(R.id.ib_edit_image);
     }
 
     private void resetCameraSize() {
-
         if (mPreviewSize == null) return;
 
         Camera.Parameters params = camera.getParameters();
@@ -106,14 +89,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         if (!openCamera(Camera.CameraInfo.CAMERA_FACING_BACK)) {
             alertCameraDialog();
         } else {
-
             List<Camera.Size> mSupportedPreviewSizes = camera.getParameters().getSupportedPictureSizes();
             mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, surfaceView.getWidth(), surfaceView.getHeight());
-
             resetCameraSize();
         }
     }
@@ -172,7 +152,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             default:
                 break;
         }
-
         rotation = (info.orientation - degree + 360) % 360;
 
         System.out.println("rotation = " + rotation);
@@ -188,7 +167,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             }
         }
         params.setRotation(rotation);
-
         resetCameraSize();
     }
 
@@ -218,14 +196,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-                               int height) {
-
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
     }
 
     @Override
@@ -233,10 +208,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         switch (v.getId()) {
 
             case R.id.captureImage:
-
-                if (timer == 0) {
-                    takeImage();
-                }
+                takeImage();
                 break;
             default:
                 break;
@@ -257,6 +229,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                     Bitmap rotatedBitmap = null;
                     loadedImage = BitmapFactory.decodeByteArray(data, 0,
                             data.length);
+                    btnSaveImage.setVisibility(View.VISIBLE);
+                    btnEditImage.setVisibility(View.VISIBLE);
 
                     Camera.Size size = camera.getParameters().getPictureSize();
                     int width = imvLines.getWidth();
@@ -285,8 +259,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                     rotatedBitmap = Bitmap.createBitmap(rotatedBitmap, 0, 0, rotatedBitmap.getWidth(), newHeight);
 
                     loadedImage.recycle();
-
-                    takenBitmap = rotatedBitmap;
+//                    takenBitmap = rotatedBitmap;
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -294,14 +267,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
 
             }
         });
-    }
-
-    private void flipCamera() {
-        int id = (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK ? Camera.CameraInfo.CAMERA_FACING_FRONT
-                : Camera.CameraInfo.CAMERA_FACING_BACK);
-        if (!openCamera(id)) {
-            alertCameraDialog();
-        }
     }
 
     private void alertCameraDialog() {
@@ -332,21 +297,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         dialog.setCancelable(false);
         return dialog;
 
-    }
-
-    private void flashOnButton() {
-        if (camera != null) {
-            try {
-                Camera.Parameters param = camera.getParameters();
-                param.setFlashMode(!flashmode ? Camera.Parameters.FLASH_MODE_TORCH
-                        : Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters(param);
-                flashmode = !flashmode;
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-
-        }
     }
 
     private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
@@ -382,5 +332,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         System.out.println("optimalSize: " + optimalSize.width + " - " + optimalSize.height);
 
         return optimalSize;
+    }
+
+    @Override
+    public void setPresenter(ExercisesContract.Presenter presenter) {
+
     }
 }
