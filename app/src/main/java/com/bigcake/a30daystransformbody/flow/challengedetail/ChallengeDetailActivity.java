@@ -57,7 +57,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
         challengeProgressFragment.setPresenter(new ChallengeDayPresenter(challengeProgressFragment,
-                Injection.provideChallengeRepository()));
+                Injection.provideChallengeRepository(this)));
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
         mChallengeDetailAdapter.addFragment(new ChallengeAlbumFragment(), "Album");
         viewPager.setAdapter(mChallengeDetailAdapter);

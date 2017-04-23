@@ -1,5 +1,7 @@
 package com.bigcake.a30daystransformbody.data;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Big Cake on 4/12/2017
  */
@@ -10,21 +12,23 @@ public class ChallengeDay {
     public static final int STATUS_IN_PROGRESS= 0;
 
     private int id;
-    private String day;
-    private int image;
+    private int challengeId;
+    private int day;
+    private Bitmap image;
     private int status;
-    private ChallengeLevel level____;
-    private String backupdemo;
+    private ChallengeLevel level;
 
     public ChallengeDay() {
     }
 
-    public ChallengeDay(int id, String day, int image, int status, ChallengeLevel level____) {
+    public ChallengeDay(int id, int challengeId, int day, Bitmap image, int status, ChallengeLevel level) {
         this.id = id;
+        this.challengeId = challengeId;
+
         this.day = day;
         this.image = image;
         this.status = status;
-        this.level____ = level____;
+        this.level = level;
     }
 
     public int getId() {
@@ -35,19 +39,19 @@ public class ChallengeDay {
         this.id = id;
     }
 
-    public String getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public int getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
@@ -59,11 +63,19 @@ public class ChallengeDay {
         this.status = status;
     }
 
-    public ChallengeLevel getLevel____() {
-        return level____;
+    public ChallengeLevel getLevel() {
+        return level;
     }
 
-    public void setLevel____(ChallengeLevel level____) {
-        this.level____ = level____;
+    public void setLevel(ChallengeLevel level) {
+        this.level = level;
+    }
+
+    public int getChallengeId() {
+        return challengeId;
+    }
+
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
     }
 }

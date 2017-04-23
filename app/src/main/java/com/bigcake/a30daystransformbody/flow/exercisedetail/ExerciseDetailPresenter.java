@@ -3,7 +3,7 @@ package com.bigcake.a30daystransformbody.flow.exercisedetail;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.Exercise;
-import com.bigcake.a30daystransformbody.data.repository.ExerciseRepository;
+import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepository;
 import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 
 /**

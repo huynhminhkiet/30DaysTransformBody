@@ -3,7 +3,7 @@ package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
-import com.bigcake.a30daystransformbody.data.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 
 import java.util.List;
@@ -23,11 +23,16 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
 
     @Override
     public void start() {
-        mChallengeRepository.getChallengeDays(new ChallengeDataSource.LoadChallengeDaysCallBack() {
+        mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
             @Override
             public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
                 mView.displayChallengeDays(challengeDayList);
                 mView.displayProgressBar(13);
+            }
+
+            @Override
+            public void onError() {
+
             }
         });
     }

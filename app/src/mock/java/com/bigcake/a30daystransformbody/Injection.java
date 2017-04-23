@@ -2,8 +2,8 @@ package com.bigcake.a30daystransformbody;
 
 import com.bigcake.a30daystransformbody.data.FakeChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.FakeExerciseDataSource;
-import com.bigcake.a30daystransformbody.data.repository.ChallengeRepository;
-import com.bigcake.a30daystransformbody.data.repository.ExerciseRepository;
+import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepository;
 
 /**
  * Created by kiethuynh on 05/04/2017

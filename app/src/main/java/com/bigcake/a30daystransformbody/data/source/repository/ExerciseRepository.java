@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.data.repository;
+package com.bigcake.a30daystransformbody.data.source.repository;
 
 import android.support.annotation.NonNull;
 

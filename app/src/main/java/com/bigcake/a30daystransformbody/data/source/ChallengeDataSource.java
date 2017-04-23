@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.data.source;
 
+import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 
 import java.util.List;
@@ -11,7 +12,17 @@ import java.util.List;
 public interface ChallengeDataSource {
     interface LoadChallengeDaysCallBack {
         void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList);
+        void onError();
     }
 
-    void getChallengeDays(LoadChallengeDaysCallBack callBack);
+    interface ChallengeDayCallBack {
+        void onSuccess();
+        void onError();
+    }
+
+    void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
+    void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack);
+    void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack);
+
+
 }

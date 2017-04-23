@@ -46,24 +46,36 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
             holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.colorDarkGreen));
             holder.tvDay.setBackgroundResource(R.drawable.shape_challenge_day_done);
             holder.ivDay.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(challengeDay.getImage()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.ivDay) {
-                @Override
-                protected void setResource(Bitmap resource) {
-                    RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                    circularBitmapDrawable.setCircular(true);
-                    holder.ivDay.setImageDrawable(circularBitmapDrawable);
-                }
-            });
+            if (challengeDay.getImage() != null)
+                Glide.with(mContext).load(challengeDay.getImage()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.ivDay) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        holder.ivDay.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            else {
+                Glide.with(mContext).load(R.drawable.ic_camera).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.ivDay) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        holder.ivDay.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            }
         } else if (challengeDay.getStatus() == ChallengeDay.STATUS_CURRENT) {
             holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrange));
             holder.tvDay.setBackgroundResource(R.drawable.shape_challenge_day_current);
             holder.ivDay.setVisibility(View.GONE);
-            holder.tvDay.setText(challengeDay.getDay());
+            holder.tvDay.setText(challengeDay.getDay() + "");
         } else {
             holder.tvDay.setTextColor(ContextCompat.getColor(mContext, R.color.colorGreenYellow));
             holder.tvDay.setBackgroundResource(R.drawable.shape_challenge_day);
-            holder.tvDay.setText(challengeDay.getDay());
+            holder.tvDay.setText(challengeDay.getDay() + "");
             holder.ivDay.setVisibility(View.GONE);
         }
 
