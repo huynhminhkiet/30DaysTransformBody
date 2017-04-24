@@ -5,5 +5,5 @@ package com.bigcake.a30daystransformbody.interfaces;
  */
 
 public interface ItemClickListener<T> {
-    void onItemClick(T item);
+    void onItemClick(T item, int position);
 }

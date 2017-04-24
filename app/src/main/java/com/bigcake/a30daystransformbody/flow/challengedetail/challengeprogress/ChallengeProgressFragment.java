@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
+import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     private RecyclerView rvChallengeDay;
     private ChallengeDayAdapter mChallengeDayAdapter;
     private ProgressBar progressBar;
+
+    private int mPositionUpdating;
 
     @Nullable
     @Override
@@ -66,18 +70,29 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     }
 
     @Override
-    public void openCamera() {
+    public void openCamera(ChallengeDay challengeDay) {
         Intent intent = new Intent(getActivity(), CameraActivity.class);
+        intent.putExtra(Constants.EXTRA_CHALLENGE_DAY, challengeDay);
         startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }
 
     @Override
-    public void onItemClick(ChallengeDay item) {
+    public void onItemClick(ChallengeDay item, int position) {
+        mPositionUpdating = position;
         mPresenter.challengeDayClick(item);
     }
 
     @Override
+    public void updateItemView(ChallengeDay challengeDay, int position) {
+        mChallengeDayAdapter.updateItem(challengeDay, position);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if(resultCode == Activity.RESULT_OK){
+                mChallengeDayAdapter.updateItem((ChallengeDay) data.getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY), mPositionUpdating);
+            }
+        }
     }
 }

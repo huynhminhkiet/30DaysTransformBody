@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 

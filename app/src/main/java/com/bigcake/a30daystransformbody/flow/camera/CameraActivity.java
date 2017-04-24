@@ -1,8 +1,10 @@
 package com.bigcake.a30daystransformbody.flow.camera;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,10 +19,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.exercises.ExercisesContract;
+import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.io.File;
@@ -62,15 +68,15 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
         btnCaptureImage.setOnClickListener(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        mPresenter = new CameraPresenter(this);
+        mPresenter = new CameraPresenter(this, Injection.provideChallengeRepository(this));
     }
 
     private void bindViews() {
         btnCaptureImage = (ImageButton) findViewById(R.id.captureImage);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         imvLines = (ImageView) findViewById(R.id.activity_camera_imv_lines);
-        btnSaveImage = (ImageButton) findViewById(R.id.ib_save_image);
-        btnEditImage = (ImageButton) findViewById(R.id.ib_edit_image);
+//        btnSaveImage = (ImageButton) findViewById(R.id.ib_save_image);
+//        btnEditImage = (ImageButton) findViewById(R.id.ib_edit_image);
     }
 
     private void resetCameraSize() {
@@ -229,12 +235,12 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
                     Bitmap rotatedBitmap = null;
                     loadedImage = BitmapFactory.decodeByteArray(data, 0,
                             data.length);
-                    btnSaveImage.setVisibility(View.VISIBLE);
-                    btnEditImage.setVisibility(View.VISIBLE);
+//                    btnSaveImage.setVisibility(View.VISIBLE);
+//                    btnEditImage.setVisibility(View.VISIBLE);
 
                     Camera.Size size = camera.getParameters().getPictureSize();
-                    int width = imvLines.getWidth();
-                    int height = imvLines.getHeight();
+                    int width = 3;
+                    int height = 4;
 
                     System.out.println("Camera size: " + size.width + " - " + size.height);
                     System.out.println("Surface size: " + width + " - " + height);
@@ -257,7 +263,8 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
                             loadedImage.getWidth(), loadedImage.getHeight(),
                             rotateMatrix, false);
                     rotatedBitmap = Bitmap.createBitmap(rotatedBitmap, 0, 0, rotatedBitmap.getWidth(), newHeight);
-
+                    ChallengeDay challengeDay = (ChallengeDay) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY);
+                    mPresenter.saveImage(challengeDay, Utils.convertBitmapToByteArray(rotatedBitmap));
                     loadedImage.recycle();
 //                    takenBitmap = rotatedBitmap;
 
@@ -337,5 +344,18 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
     @Override
     public void setPresenter(ExercisesContract.Presenter presenter) {
 
+    }
+
+    @Override
+    public void onCaptureFinished(ChallengeDay challengeDay) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(Constants.EXTRA_CHALLENGE_DAY, challengeDay);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
+    public void onCaptureFail() {
+        Toast.makeText(this, "Capture fail!", Toast.LENGTH_SHORT).show();
     }
 }

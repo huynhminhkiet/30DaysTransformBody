@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorDarkGreen">
 
-
     <RelativeLayout
+        android:layout_weight="1"
         android:layout_above="@+id/ln_control"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
 
         <com.bigcake.a30daystransformbody.custom.ResizeSurfaceView
             android:layout_alignParentBottom="true"
@@ -32,7 +33,7 @@
     <LinearLayout
         android:id="@+id/ln_control"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_60sdp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorDarkGreen"
         android:orientation="horizontal">
@@ -55,46 +56,48 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/captureImage"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_capture" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
         </LinearLayout>
     </LinearLayout>
 
-    <ImageButton
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/captureImage"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_capture" />
+    <!--<ImageButton-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/ib_edit_image"-->
+        <!--android:layout_marginRight="@dimen/_10sdp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="@dimen/_70sdp"-->
+        <!--android:layout_toLeftOf="@+id/captureImage"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:layout_width="@dimen/_30sdp"-->
+        <!--android:layout_height="@dimen/_30sdp"-->
+        <!--android:src="@drawable/ic_edit"/>-->
 
-    <ImageButton
-        android:visibility="gone"
-        android:id="@+id/ib_edit_image"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_70sdp"
-        android:layout_toLeftOf="@+id/captureImage"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:src="@drawable/ic_edit"/>
+    <!--<ImageButton-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/ib_save_image"-->
+        <!--android:layout_marginLeft="@dimen/_10sdp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="@dimen/_70sdp"-->
+        <!--android:layout_toRightOf="@+id/captureImage"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:layout_width="@dimen/_30sdp"-->
+        <!--android:layout_height="@dimen/_30sdp"-->
+        <!--android:src="@drawable/ic_done"/>-->
 
-    <ImageButton
-        android:visibility="gone"
-        android:id="@+id/ib_save_image"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_70sdp"
-        android:layout_toRightOf="@+id/captureImage"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:src="@drawable/ic_done"/>
-
-</RelativeLayout>
+</LinearLayout>

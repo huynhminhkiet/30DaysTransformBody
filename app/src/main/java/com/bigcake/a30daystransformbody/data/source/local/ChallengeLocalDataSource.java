@@ -55,11 +55,10 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
                 int challengeId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID));
                 int challengeDate = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_DATE));
                 byte[] imageByteArray = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
-                Bitmap image = imageByteArray != null ? BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length) : null;
                 int status = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_STATUS));
                 int levelId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_LEVEL_ID));
 
-                ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, image, status, null);
+                ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, imageByteArray, status, null);
                 challengeDayList.add(challengeDay);
             }
         }
@@ -100,7 +99,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getChallengeId());
         values.put(TableContent.ChallengeDay.COLUMN_STATUS, challengeDay.getStatus());
         values.put(TableContent.ChallengeDay.COLUMN_DATE, challengeDay.getDay());
-        values.put(TableContent.ChallengeDay.COLUMN_IMAGE, Utils.convertBitmapToByteArray(challengeDay.getImage()));
+        values.put(TableContent.ChallengeDay.COLUMN_IMAGE, challengeDay.getImage());
         values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getLevel() != null ? 1 : 0);
 
         if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,

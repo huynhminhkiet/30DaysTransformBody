@@ -45,7 +45,7 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClick(challengeDay);
+                mListener.onItemClick(challengeDay, holder.getAdapterPosition());
             }
         });
     }
@@ -58,6 +58,11 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
     public void replaceAllData(List<ChallengeDay> challengeDayList) {
         mChallengeDayList = challengeDayList;
         notifyDataSetChanged();
+    }
+
+    public void updateItem(ChallengeDay challengeDay, int position) {
+        mChallengeDayList.set(position, challengeDay);
+        notifyItemChanged(position);
     }
 
     public void setItemClickListener(ItemClickListener<ChallengeDay> listener) {

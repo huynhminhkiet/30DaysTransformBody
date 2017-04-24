@@ -14,7 +14,8 @@ public interface ChallengeProgressContract {
     interface View extends BaseView<Presenter> {
         void displayChallengeDays(List<ChallengeDay> challengeDayList);
         void displayProgressBar(int progress);
-        void openCamera();
+        void openCamera(ChallengeDay challengeDay);
+        void updateItemView(ChallengeDay challengeDay, int position);
     }
 
     interface Presenter extends BasePresenter {

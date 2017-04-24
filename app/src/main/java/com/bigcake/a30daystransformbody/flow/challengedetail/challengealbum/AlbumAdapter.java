@@ -38,7 +38,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClick(challengeDay);
+                mListener.onItemClick(challengeDay, holder.getAdapterPosition());
             }
         });
     }
