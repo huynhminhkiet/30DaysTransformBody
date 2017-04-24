@@ -12,6 +12,7 @@ import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeDayPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
+import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.GifAlbumFragment;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View {
@@ -60,6 +61,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
                 Injection.provideChallengeRepository(this)));
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
         mChallengeDetailAdapter.addFragment(new ChallengeAlbumFragment(), "Album");
+        mChallengeDetailAdapter.addFragment(new GifAlbumFragment(), "Gif");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

@@ -1,45 +1,38 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
+package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.List;
 
 /**
- * Created by Big Cake on 4/12/2017
+ * Created by kiethuynh on 24/04/2017
  */
 
-public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private Context mContext;
     private List<ChallengeDay> mChallengeDayList;
     private ItemClickListener<ChallengeDay> mListener;
 
-    public ChallengeDayAdapter(Context context, List<ChallengeDay> challengeDayList) {
+    public AlbumAdapter(Context context, List<ChallengeDay> challengeDayList) {
         mContext = context;
         mChallengeDayList = challengeDayList;
     }
 
     @Override
-    public ChallengeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ChallengeViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_challenge, parent, false));
+    public AlbumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new AlbumViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_album, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ChallengeViewHolder holder, int position) {
+    public void onBindViewHolder(final AlbumViewHolder holder, int position) {
         final ChallengeDay challengeDay = mChallengeDayList.get(position);
         holder.bind(challengeDay);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
