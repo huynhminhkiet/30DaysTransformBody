@@ -28,6 +28,7 @@ import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.exercises.ExercisesContract;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.Utils;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,11 +40,12 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private Camera camera;
-    private ImageButton btnCaptureImage, btnEditImage, btnSaveImage, btnShowLastImage;
+    private ImageButton btnCaptureImage, btnEditImage, btnSaveImage, btnShowLastImage, btnFlipCamera;
     private ImageView imvLines, ivLastImagePreview;
     private int cameraId;
     private int rotation;
     private Camera.Size mPreviewSize;
+    private boolean isLastImageShown;
 
     private CameraContract.Presenter mPresenter;
 
@@ -68,7 +70,10 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
         btnCaptureImage.setOnClickListener(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        isLastImageShown = true;
+
         mPresenter = new CameraPresenter(this, Injection.provideChallengeRepository(this));
+        mPresenter.start();
     }
 
     private void bindViews() {
@@ -77,6 +82,40 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
         imvLines = (ImageView) findViewById(R.id.activity_camera_imv_lines);
 //        btnSaveImage = (ImageButton) findViewById(R.id.ib_save_image);
 //        btnEditImage = (ImageButton) findViewById(R.id.ib_edit_image);
+        btnShowLastImage = (ImageButton) findViewById(R.id.ib_last_image);
+        btnShowLastImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onButtonLastImageClick();
+            }
+        });
+        ivLastImagePreview = (ImageView) findViewById(R.id.iv_last_image_preview);
+        btnFlipCamera = (ImageButton) findViewById(R.id.ib_flip_camera);
+        btnFlipCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flipCamera();
+            }
+        });
+    }
+
+    private void flipCamera() {
+        cameraId = (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK ? Camera.CameraInfo.CAMERA_FACING_FRONT
+                : Camera.CameraInfo.CAMERA_FACING_BACK);
+        if (!openCamera(cameraId)) {
+            alertCameraDialog();
+        }
+    }
+
+    @Override
+    public void displayLastImagePreview(byte[] lastImage) {
+        if (isLastImageShown) {
+            ivLastImagePreview.setVisibility(View.VISIBLE);
+            Glide.with(this).load(lastImage).into(ivLastImagePreview);
+        } else {
+            ivLastImagePreview.setVisibility(View.GONE);
+        }
+        isLastImageShown = !isLastImageShown;
     }
 
     private void resetCameraSize() {
@@ -357,5 +396,15 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
     @Override
     public void onCaptureFail() {
         Toast.makeText(this, "Capture fail!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayShowLastImageButton(byte[] lastImage) {
+        if (lastImage != null) {
+            btnShowLastImage.setVisibility(View.VISIBLE);
+            Glide.with(this).load(lastImage).into(btnShowLastImage);
+        } else {
+            btnShowLastImage.setVisibility(View.GONE);
+        }
     }
 }

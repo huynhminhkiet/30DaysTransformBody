@@ -15,8 +15,11 @@ public interface CameraContract {
     interface View extends BaseView<ExercisesContract.Presenter> {
         void onCaptureFinished(ChallengeDay challengeDay);
         void onCaptureFail();
+        void displayShowLastImageButton(byte [] lastImage);
+        void displayLastImagePreview(byte [] lastImage);
     }
     interface Presenter extends BasePresenter {
         void saveImage(ChallengeDay challengeDay, byte [] bitmap);
+        void onButtonLastImageClick();
     }
 }

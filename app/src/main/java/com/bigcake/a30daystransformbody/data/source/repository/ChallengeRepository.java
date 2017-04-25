@@ -67,4 +67,19 @@ public class ChallengeRepository implements ChallengeDataSource {
             }
         });
     }
+
+    @Override
+    public void getLastImage(int challengeId, final LoadLastImageCallBack callBack) {
+        mChallengeDataSource.getLastImage(challengeId, new LoadLastImageCallBack() {
+            @Override
+            public void onSuccess(byte[] image) {
+                callBack.onSuccess(image);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
 }

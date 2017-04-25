@@ -13,6 +13,7 @@ import com.bigcake.a30daystransformbody.data.source.repository.ChallengeReposito
 public class CameraPresenter implements CameraContract.Presenter {
     private CameraContract.View mView;
     private ChallengeRepository mChallengeRepository;
+    private byte [] lastImage;
 
     public CameraPresenter(CameraContract.View view, ChallengeRepository challengeRepository) {
         this.mView = view;
@@ -21,7 +22,7 @@ public class CameraPresenter implements CameraContract.Presenter {
 
     @Override
     public void start() {
-
+        getLastImage();
     }
 
     @Override
@@ -36,6 +37,26 @@ public class CameraPresenter implements CameraContract.Presenter {
             @Override
             public void onError() {
                 mView.onCaptureFail();
+            }
+        });
+    }
+
+    @Override
+    public void onButtonLastImageClick() {
+        mView.displayLastImagePreview(lastImage);
+    }
+
+    private void getLastImage() {
+        mChallengeRepository.getLastImage(0, new ChallengeDataSource.LoadLastImageCallBack() {
+            @Override
+            public void onSuccess(byte[] image) {
+                lastImage = image;
+                mView.displayShowLastImageButton(image);
+            }
+
+            @Override
+            public void onError() {
+
             }
         });
     }

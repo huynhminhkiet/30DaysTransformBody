@@ -20,9 +20,14 @@ public interface ChallengeDataSource {
         void onError();
     }
 
+    interface LoadLastImageCallBack {
+        void onSuccess(byte [] image);
+        void onError();
+    }
+
     void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
     void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack);
-
+    void getLastImage(int challengeId, LoadLastImageCallBack callBack);
 
 }

@@ -93,6 +93,41 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
+    public void getLastImage(int challengeId, LoadLastImageCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+
+        String[] projection = {
+                TableContent.ChallengeDay.COLUMN_IMAGE
+        };
+
+        String selection = TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + " = ?";
+        String orderBy = TableContent.ChallengeDay.COLUMN_DATE + " DESC";
+        String[] selectionArgs = { String.valueOf(challengeId) };
+
+        Cursor c = db.query(
+                TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
+
+        byte[] image = null;
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
+                if (image != null) {
+                    callBack.onSuccess(image);
+                    return;
+                }
+            }
+        }
+
+        if (c != null) {
+            c.close();
+        }
+
+        db.close();
+        callBack.onSuccess(image);
+    }
+
+    @Override
     public void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
