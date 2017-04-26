@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface AlbumContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View {
         void displayAllImages(List<ChallengeDay> challengeDayList);
         void openCreateGifPanel();
     }

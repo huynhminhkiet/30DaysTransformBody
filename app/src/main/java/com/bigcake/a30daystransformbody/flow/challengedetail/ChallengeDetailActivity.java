@@ -4,6 +4,7 @@ import android.content.ContextWrapper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
@@ -33,6 +34,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
 
     @Override
     protected void initViews() {
+        Log.d(getClass().getSimpleName(), "onCreate");
         bindViews();
 
         Challenge challenge = (Challenge) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE);
@@ -57,11 +59,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     @Override
     public void displayChallenge(Challenge challenge) {
         ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
-        challengeProgressFragment.setPresenter(new ChallengeDayPresenter(challengeProgressFragment,
-                Injection.provideChallengeRepository(this)));
         ChallengeAlbumFragment challengeAlbumFragment = new ChallengeAlbumFragment();
-        challengeAlbumFragment.setPresenter(new AlbumPresenter(challengeAlbumFragment,
-                Injection.provideChallengeRepository(this)));
         GifAlbumFragment gifAlbumFragment = new GifAlbumFragment();
 
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());

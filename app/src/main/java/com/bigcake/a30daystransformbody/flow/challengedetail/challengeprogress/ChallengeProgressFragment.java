@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumPresenter;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
@@ -35,13 +38,20 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
 
     private int mPositionUpdating;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(getClass().getSimpleName(), "onCreate");
+        mPresenter = new ChallengeDayPresenter(this, Injection.provideChallengeRepository(getContext()));
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_plan, container, false);
         initViews(view);
-        if (mPresenter != null)
-            mPresenter.start();
+        Log.d(getClass().getSimpleName(), "onCreateView");
+        mPresenter.start();
         return view;
     }
 
@@ -52,11 +62,6 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
         mChallengeDayAdapter.setItemClickListener(this);
         rvChallengeDay.setAdapter(mChallengeDayAdapter);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
-    }
-
-    @Override
-    public void setPresenter(ChallengeProgressContract.Presenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override

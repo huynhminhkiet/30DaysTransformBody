@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public interface ChallengeProgressContract {
-    interface View extends BaseView<Presenter> {
+    interface View {
         void displayChallengeDays(List<ChallengeDay> challengeDayList);
         void displayProgressBar(int progress);
         void openCamera(ChallengeDay challengeDay);

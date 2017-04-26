@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
@@ -27,11 +29,19 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
 
     private AlbumContract.Presenter mPresenter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(getClass().getSimpleName(), "onCreate");
+        mPresenter = new AlbumPresenter(this, Injection.provideChallengeRepository(getContext()));
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_album, container, false);
         initViews(view);
+        Log.d(getClass().getSimpleName(), "onCreateView");
         mPresenter.start();
         return view;
     }
@@ -43,12 +53,6 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         mAlbumAdapter.setItemClickListener(this);
         rvAlbum.setAdapter(mAlbumAdapter);
     }
-
-    @Override
-    public void setPresenter(AlbumContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
     @Override
     public void displayAllImages(List<ChallengeDay> challengeDayList) {
         mAlbumAdapter.replaceAllData(challengeDayList);
