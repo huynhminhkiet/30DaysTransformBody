@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private Context mContext;
     private List<ChallengeDay> mChallengeDayList;
-    private ItemClickListener<ChallengeDay> mListener;
+    private AlbumAdapterListener mListener;
 
     public AlbumAdapter(Context context, List<ChallengeDay> challengeDayList) {
         mContext = context;
@@ -41,6 +42,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
                 mListener.onItemClick(challengeDay, holder.getAdapterPosition());
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -49,11 +57,17 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     }
 
     public void replaceAllData(List<ChallengeDay> challengeDayList) {
-        mChallengeDayList = challengeDayList;
+        filterChallengeDaysHasImage(challengeDayList);
         notifyDataSetChanged();
     }
 
-    public void setItemClickListener(ItemClickListener<ChallengeDay> listener) {
+    private void filterChallengeDaysHasImage(List<ChallengeDay> challengeDayList) {
+        for (ChallengeDay challengeDay : challengeDayList)
+            if (challengeDay.getImage() != null)
+                mChallengeDayList.add(challengeDay);
+    }
+
+    public void setItemClickListener(AlbumAdapterListener listener) {
         mListener = listener;
     }
 }

@@ -79,7 +79,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
             ContentValues values = new ContentValues();
             values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeId);
             values.put(TableContent.ChallengeDay.COLUMN_STATUS,
-                    i == 4 ? ChallengeDay.STATUS_CURRENT : i < 5 ? ChallengeDay.STATUS_DONE : ChallengeDay.STATUS_IN_PROGRESS);
+                    i == 20 ? ChallengeDay.STATUS_CURRENT : i < 21 ? ChallengeDay.STATUS_DONE : ChallengeDay.STATUS_IN_PROGRESS);
             values.put(TableContent.ChallengeDay.COLUMN_DATE, i + 1);
 
             if (db.insert(TableContent.ChallengeDay.TABLE_NAME, null, values) == -1) {

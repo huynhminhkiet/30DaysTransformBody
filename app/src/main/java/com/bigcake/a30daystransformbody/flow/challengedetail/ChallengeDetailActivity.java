@@ -9,6 +9,7 @@ import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
+import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeDayPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
@@ -55,13 +56,18 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
 
     @Override
     public void displayChallenge(Challenge challenge) {
-        mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
         challengeProgressFragment.setPresenter(new ChallengeDayPresenter(challengeProgressFragment,
                 Injection.provideChallengeRepository(this)));
+        ChallengeAlbumFragment challengeAlbumFragment = new ChallengeAlbumFragment();
+        challengeAlbumFragment.setPresenter(new AlbumPresenter(challengeAlbumFragment,
+                Injection.provideChallengeRepository(this)));
+        GifAlbumFragment gifAlbumFragment = new GifAlbumFragment();
+
+        mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
-        mChallengeDetailAdapter.addFragment(new ChallengeAlbumFragment(), "Album");
-        mChallengeDetailAdapter.addFragment(new GifAlbumFragment(), "Gif");
+        mChallengeDetailAdapter.addFragment(challengeAlbumFragment, "Album");
+        mChallengeDetailAdapter.addFragment(gifAlbumFragment, "Gif");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
