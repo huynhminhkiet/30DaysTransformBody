@@ -1,7 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
 import com.bigcake.a30daystransformbody.base.BasePresenter;
-import com.bigcake.a30daystransformbody.base.BaseView;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 
 import java.util.List;
@@ -13,11 +12,20 @@ import java.util.List;
 public interface AlbumContract {
 
     interface View {
-        void displayAllImages(List<ChallengeDay> challengeDayList);
-        void openCreateGifPanel();
+        void showAllImages(List<ChallengeDayImage> challengeDayImageList);
+        void showGifPanel();
+        void showPhotoView(ChallengeDayImage challengeDayImage);
+        void updateImageStatus(ChallengeDayImage challengeDayImage);
+        void updateNumberSelected(int count);
+        void updateAllSelectedButton(Boolean isOnSelectAll);
+        void hideGifPanel();
     }
 
     interface Presenter extends BasePresenter {
-
+        void onImageLongClick(ChallengeDayImage challengeDayImage);
+        void onImageClick(ChallengeDayImage challengeDayImage);
+        void selectAll();
+        void createGif();
+        void closeGifPanel();
     }
 }

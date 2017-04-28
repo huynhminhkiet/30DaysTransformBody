@@ -14,13 +14,20 @@ import com.bumptech.glide.Glide;
 
 public class AlbumViewHolder extends RecyclerView.ViewHolder {
     ImageView ivImage;
+    View frameSelected;
 
     public AlbumViewHolder(View itemView) {
         super(itemView);
         ivImage = (ImageView) itemView.findViewById(R.id.iv_image);
+        frameSelected = itemView.findViewById(R.id.frame_selected);
     }
 
-    public void bind(ChallengeDay challengeDay) {
-        Glide.with(itemView.getContext()).load(challengeDay.getImage()).into(ivImage);
+    public void bind(ChallengeDayImage challengeDayImage) {
+        Glide.with(itemView.getContext()).load(challengeDayImage.getChallengeDay().getImage()).into(ivImage);
+        if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
+            frameSelected.setVisibility(View.VISIBLE);
+        } else {
+            frameSelected.setVisibility(View.GONE);
+        }
     }
 }

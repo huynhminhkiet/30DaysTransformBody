@@ -5,7 +5,58 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_album"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/rv_album"
+        android:visibility="visible"/>
+
+    <!--<com.github.chrisbanes.photoview.PhotoView-->
+        <!--android:visibility="gone"-->
+        <!--android:id="@+id/photo_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1" />-->
+
+    <LinearLayout
+        android:background="@color/colorGray"
+        android:visibility="gone"
+        android:id="@+id/ln_gif_panel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_number_item_selected"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="@string/gen_item_selected"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/btn_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="All"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/btn_create_gif"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Gif"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>

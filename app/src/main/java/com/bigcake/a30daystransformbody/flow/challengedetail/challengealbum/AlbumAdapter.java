@@ -19,12 +19,12 @@ import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private Context mContext;
-    private List<ChallengeDay> mChallengeDayList;
+    private List<ChallengeDayImage> mChallengeDayImageList;
     private AlbumAdapterListener mListener;
 
-    public AlbumAdapter(Context context, List<ChallengeDay> challengeDayList) {
+    public AlbumAdapter(Context context, List<ChallengeDayImage> challengeDayImageList) {
         mContext = context;
-        mChallengeDayList = challengeDayList;
+        mChallengeDayImageList = challengeDayImageList;
     }
 
     @Override
@@ -34,18 +34,18 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
 
     @Override
     public void onBindViewHolder(final AlbumViewHolder holder, int position) {
-        final ChallengeDay challengeDay = mChallengeDayList.get(position);
-        holder.bind(challengeDay);
+        final ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(position);
+        holder.bind(challengeDayImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClick(challengeDay, holder.getAdapterPosition());
+                mListener.onItemClick(challengeDayImage, holder.getAdapterPosition());
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
+                mListener.onItemLongClick(challengeDayImage, holder.getAdapterPosition());
                 return true;
             }
         });
@@ -53,21 +53,20 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mChallengeDayList.size();
+        return mChallengeDayImageList.size();
     }
 
-    public void replaceAllData(List<ChallengeDay> challengeDayList) {
-        filterChallengeDaysHasImage(challengeDayList);
+    public void replaceAllData(List<ChallengeDayImage> challengeDayImageList) {
+        mChallengeDayImageList = challengeDayImageList;
         notifyDataSetChanged();
-    }
-
-    private void filterChallengeDaysHasImage(List<ChallengeDay> challengeDayList) {
-        for (ChallengeDay challengeDay : challengeDayList)
-            if (challengeDay.getImage() != null)
-                mChallengeDayList.add(challengeDay);
     }
 
     public void setItemClickListener(AlbumAdapterListener listener) {
         mListener = listener;
+    }
+
+    public void updateItem(ChallengeDayImage challengeDayImage, int position) {
+        mChallengeDayImageList.set(position, challengeDayImage);
+        notifyItemChanged(position);
     }
 }

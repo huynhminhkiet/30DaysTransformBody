@@ -15,6 +15,7 @@ import java.util.List;
 public class ChallengeDayPresenter implements ChallengeProgressContract.Presenter {
     private ChallengeProgressContract.View mView;
     private ChallengeRepository mChallengeRepository;
+    private List<ChallengeDay> mChallengeDayList;
 
     public ChallengeDayPresenter(@NonNull ChallengeProgressContract.View view, @NonNull ChallengeRepository challengeRepository) {
         this.mView = view;
@@ -23,18 +24,26 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
 
     @Override
     public void start() {
-        mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
-            @Override
-            public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
-                mView.displayChallengeDays(challengeDayList);
-                mView.displayProgressBar(13);
-            }
+        if (mChallengeDayList == null)
+            mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
+                @Override
+                public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
+                    mChallengeDayList = challengeDayList;
+                    mView.displayChallengeDays(mChallengeDayList);
+                    mView.displayProgressBar(13);
+                }
 
-            @Override
-            public void onError() {
+                @Override
+                public void onError() {
 
-            }
-        });
+                }
+            });
+        else {
+            mView.displayChallengeDays(mChallengeDayList);
+            mView.displayProgressBar(13);
+        }
+
+
     }
 
     @Override
