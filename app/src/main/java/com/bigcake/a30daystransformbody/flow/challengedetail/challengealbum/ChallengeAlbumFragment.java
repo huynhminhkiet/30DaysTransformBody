@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Big Cake on 4/14/2017
@@ -36,7 +38,8 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private int mPositionSelected;
     private TextView tvNumberItemSelected;
     private TextView btnSelectAll, btnCreateGif, btnCancel;
-//    private PhotoView photoView;
+    private ImageView photoView;
+    private PhotoViewAttacher mPhotoViewAttacher;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +72,8 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         btnCreateGif.setOnClickListener(this);
         btnCancel = (TextView) view.findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
-//        photoView = (PhotoView) view.findViewById(R.id.photo_view);
+        photoView = (ImageView) view.findViewById(R.id.photo_view);
+        mPhotoViewAttacher = new PhotoViewAttacher(photoView);
     }
     @Override
     public void showAllImages(List<ChallengeDayImage> challengeDayImageList) {
@@ -129,8 +133,9 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
 
     @Override
     public void showPhotoView(ChallengeDayImage challengeDayImage) {
-//        rvAlbum.setVisibility(View.GONE);
-//        photoView.setVisibility(View.VISIBLE);
-//        Glide.with(getContext()).load(challengeDayImage.getChallengeDay().getImage()).into(photoView);
+        rvAlbum.setVisibility(View.GONE);
+        photoView.setVisibility(View.VISIBLE);
+        Glide.with(getContext()).load(challengeDayImage.getChallengeDay().getImage()).into(photoView);
+        mPhotoViewAttacher.update();
     }
 }
