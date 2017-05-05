@@ -1,9 +1,15 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.utils.AnimatedGifEncoder;
+import com.bigcake.a30daystransformbody.utils.Utils;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +104,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
 
     @Override
     public void createGif() {
-
+        Utils.saveGifImage(generateGIF());
     }
 
     @Override
@@ -114,5 +120,19 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     private void selectAllOrUnSelectAll(boolean isSelectAll) {
         for (ChallengeDayImage challengeDayImage : mChallengeDayImageList)
             challengeDayImage.setStatus(isSelectAll ? ChallengeDayImage.SELECTED : ChallengeDayImage.NOT_SELECTED);
+    }
+
+    public byte[] generateGIF() {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+        encoder.start(bos);
+        for (ChallengeDayImage challengeDayImage : mChallengeDayImageList) {
+            if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
+                byte[] image = challengeDayImage.getChallengeDay().getImage();
+                encoder.addFrame(BitmapFactory.decodeByteArray(image, 0, image.length));
+            }
+        }
+        encoder.finish();
+        return bos.toByteArray();
     }
 }

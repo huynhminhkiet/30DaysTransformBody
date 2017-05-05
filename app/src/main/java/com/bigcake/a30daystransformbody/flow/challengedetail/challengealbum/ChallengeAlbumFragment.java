@@ -103,6 +103,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     }
 
     @Override
+
     public void showGifPanel() {
         mGifPanel.setVisibility(View.VISIBLE);
     }
@@ -114,6 +115,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
                 mPresenter.selectAll();
                 break;
             case R.id.btn_create_gif:
+                mPresenter.createGif();
                 break;
             case R.id.btn_cancel:
                 mPresenter.closeGifPanel();
