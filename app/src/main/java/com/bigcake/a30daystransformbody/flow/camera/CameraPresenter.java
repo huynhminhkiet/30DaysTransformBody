@@ -13,7 +13,7 @@ import com.bigcake.a30daystransformbody.data.source.repository.ChallengeReposito
 public class CameraPresenter implements CameraContract.Presenter {
     private CameraContract.View mView;
     private ChallengeRepository mChallengeRepository;
-    private byte [] lastImage;
+    private byte[] lastImage;
 
     public CameraPresenter(CameraContract.View view, ChallengeRepository challengeRepository) {
         this.mView = view;
@@ -26,17 +26,17 @@ public class CameraPresenter implements CameraContract.Presenter {
     }
 
     @Override
-    public void saveImage(final ChallengeDay challengeDay, byte [] bitmap) {
-        challengeDay.setImage(bitmap);
-        mChallengeRepository.updateChallengeDay(challengeDay, new ChallengeDataSource.ChallengeDayCallBack() {
+    public void saveImage(final ChallengeDay challengeDay, Bitmap bitmap) {
+        mChallengeRepository.updateImage(challengeDay.getId(), bitmap, new ChallengeDataSource.UpdateChallengeDayImageCallback() {
             @Override
-            public void onSuccess() {
+            public void onUpdated(String image) {
+                challengeDay.setImage(image);
                 mView.onCaptureFinished(challengeDay);
             }
 
             @Override
             public void onError() {
-                mView.onCaptureFail();
+
             }
         });
     }

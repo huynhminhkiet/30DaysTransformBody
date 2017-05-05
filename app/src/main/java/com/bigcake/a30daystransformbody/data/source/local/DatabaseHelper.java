@@ -44,7 +44,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TableContent.ChallengeDay._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
                     TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_DATE + INTEGER_TYPE + COMMA_SEP +
-                    TableContent.ChallengeDay.COLUMN_IMAGE + BLOB_TYPE + COMMA_SEP +
+                    TableContent.ChallengeDay.COLUMN_IMAGE + TEXT_TYPE + COMMA_SEP +
+                    TableContent.ChallengeDay.COLUMN_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_STATUS + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_LEVEL_ID + INTEGER_TYPE +
                     " )";

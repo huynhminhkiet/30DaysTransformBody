@@ -1,6 +1,8 @@
 package com.bigcake.a30daystransformbody.data.source;
 
-import com.bigcake.a30daystransformbody.data.Challenge;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 
 import java.util.List;
@@ -25,9 +27,20 @@ public interface ChallengeDataSource {
         void onError();
     }
 
+    interface LoadChallengeDayThumbnailCallback {
+        void onChallengeDayThumbnailLoaded(byte[] thumbnail);
+        void onDataNotAvailable();
+    }
+
+    interface UpdateChallengeDayImageCallback {
+        void onUpdated(String image);
+        void onError();
+    }
+
     void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
     void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack);
     void getLastImage(int challengeId, LoadLastImageCallBack callBack);
-
+    void getChallengeDayThumbnail(int challengeDayId, @NonNull LoadChallengeDayThumbnailCallback callback);
+    void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
 }

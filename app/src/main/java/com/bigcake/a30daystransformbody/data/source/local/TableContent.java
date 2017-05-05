@@ -11,6 +11,7 @@ public class TableContent {
         public static final String COLUMN_CHALLENGE_ID = "challengeId";
         public static final String COLUMN_DATE = "challengeDate";
         public static final String COLUMN_IMAGE = "image";
+        public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_STATUS = "status";
         public static final String COLUMN_LEVEL_ID = "levelId";
     }

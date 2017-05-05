@@ -10,13 +10,6 @@
         android:id="@+id/rv_album"
         android:visibility="visible"/>
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/photo_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:background="@color/colorGray"
         android:visibility="gone"

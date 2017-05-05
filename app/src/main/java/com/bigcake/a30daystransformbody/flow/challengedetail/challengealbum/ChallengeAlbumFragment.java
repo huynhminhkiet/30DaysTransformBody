@@ -1,6 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,22 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
-import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
-import com.bumptech.glide.Glide;
+import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Big Cake on 4/14/2017
@@ -38,8 +34,6 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private int mPositionSelected;
     private TextView tvNumberItemSelected;
     private TextView btnSelectAll, btnCreateGif, btnCancel;
-    private ImageView photoView;
-    private PhotoViewAttacher mPhotoViewAttacher;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +66,6 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         btnCreateGif.setOnClickListener(this);
         btnCancel = (TextView) view.findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
-        photoView = (ImageView) view.findViewById(R.id.photo_view);
-        mPhotoViewAttacher = new PhotoViewAttacher(photoView);
     }
     @Override
     public void showAllImages(List<ChallengeDayImage> challengeDayImageList) {
@@ -135,9 +127,9 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
 
     @Override
     public void showPhotoView(ChallengeDayImage challengeDayImage) {
-        rvAlbum.setVisibility(View.GONE);
-        photoView.setVisibility(View.VISIBLE);
-        Glide.with(getContext()).load(challengeDayImage.getChallengeDay().getImage()).into(photoView);
-        mPhotoViewAttacher.update();
+        Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
+        intent.putExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHALLENGE_ALBUM);
+        intent.putExtra(Constants.EXTRA_CHALLENGE_DAY, challengeDayImage.getChallengeDay());
+        startActivity(intent);
     }
 }

@@ -19,6 +19,7 @@ import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumPresenter;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     private void initViews(View view) {
         rvChallengeDay = (RecyclerView) view.findViewById(R.id.rv_challenge);
         rvChallengeDay.setLayoutManager(new GridLayoutManager(getContext(), 6));
-        mChallengeDayAdapter = new ChallengeDayAdapter(getContext(), new ArrayList<ChallengeDay>());
+        mChallengeDayAdapter = new ChallengeDayAdapter(getContext(), new ArrayList<ChallengeDay>(), ChallengeImageManager.getConstance(Injection.provideChallengeRepository(getContext())));
         mChallengeDayAdapter.setItemClickListener(this);
         rvChallengeDay.setAdapter(mChallengeDayAdapter);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);

@@ -5,10 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
+import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.util.ArrayList;
@@ -54,13 +55,15 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
                 int id = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay._ID));
                 int challengeId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID));
                 int challengeDate = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_DATE));
-                byte[] imageByteArray = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
+                String image = c.getString(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
                 int status = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_STATUS));
                 int levelId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_LEVEL_ID));
 
-                ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, imageByteArray, status, null);
+                ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, status, null, image);
                 challengeDayList.add(challengeDay);
             }
+        } else {
+            callBack.onError();
         }
 
         if (c != null) {
@@ -128,13 +131,64 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
+    public void getChallengeDayThumbnail(int challengeDayId, @NonNull LoadChallengeDayThumbnailCallback callback) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+
+        String[] projection = {
+                TableContent.ChallengeDay.COLUMN_THUMBNAIL
+        };
+
+        String selection = TableContent.ChallengeDay._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(challengeDayId) };
+
+        Cursor c = db.query(
+                TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                byte[] image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
+                if (image != null) {
+                    callback.onChallengeDayThumbnailLoaded(image);
+                    return;
+                }
+            }
+        } else {
+            callback.onDataNotAvailable();
+        }
+
+        if (c != null) {
+            c.close();
+        }
+
+        db.close();
+    }
+
+    @Override
+    public void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        Bitmap thumbnail = FileUtils.scaleBitmap(newImage, 200);
+        values.put(TableContent.ChallengeDay.COLUMN_THUMBNAIL, Utils.convertBitmapToByteArray(thumbnail));
+        String imageName = FileUtils.saveImage(newImage);
+        values.put(TableContent.ChallengeDay.COLUMN_IMAGE, imageName);
+
+        if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,
+                TableContent.ChallengeDay._ID + "=" + challengeDayId, null) == -1) {
+            callBack.onError();
+            return;
+        }
+
+        db.close();
+        callBack.onUpdated(imageName);
+    }
+
+    @Override
     public void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getChallengeId());
         values.put(TableContent.ChallengeDay.COLUMN_STATUS, challengeDay.getStatus());
         values.put(TableContent.ChallengeDay.COLUMN_DATE, challengeDay.getDay());
-        values.put(TableContent.ChallengeDay.COLUMN_IMAGE, challengeDay.getImage());
         values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getLevel() != null ? 1 : 0);
 
         if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,

@@ -3,8 +3,10 @@
     package="com.bigcake.a30daystransformbody">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -30,9 +32,12 @@
             android:name=".flow.challengedetail.ChallengeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".flow.exercises.ExerciseActivity" />
-        <activity android:name=".flow.camera.CameraActivity"
+        <activity
+            android:name=".flow.camera.CameraActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".flow.photoviewer.PhotoViewerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

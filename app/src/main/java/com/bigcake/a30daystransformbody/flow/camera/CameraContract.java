@@ -19,7 +19,7 @@ public interface CameraContract {
         void displayLastImagePreview(byte [] lastImage);
     }
     interface Presenter extends BasePresenter {
-        void saveImage(ChallengeDay challengeDay, byte [] bitmap);
+        void saveImage(ChallengeDay challengeDay, Bitmap bitmap);
         void onButtonLastImageClick();
     }
 }

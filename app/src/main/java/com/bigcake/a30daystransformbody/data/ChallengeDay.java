@@ -1,7 +1,5 @@
 package com.bigcake.a30daystransformbody.data;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
 /**
@@ -16,21 +14,20 @@ public class ChallengeDay implements Serializable {
     private int id;
     private int challengeId;
     private int day;
-    private byte[] image;
     private int status;
     private ChallengeLevel level;
+    private String image;
 
     public ChallengeDay() {
     }
 
-    public ChallengeDay(int id, int challengeId, int day, byte[] image, int status, ChallengeLevel level) {
+    public ChallengeDay(int id, int challengeId, int day, int status, ChallengeLevel level, String image) {
         this.id = id;
         this.challengeId = challengeId;
-
         this.day = day;
-        this.image = image;
         this.status = status;
         this.level = level;
+        this.image = image;
     }
 
     public int getId() {
@@ -47,14 +44,6 @@ public class ChallengeDay implements Serializable {
 
     public void setDay(int day) {
         this.day = day;
-    }
-
-    public byte [] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public int getStatus() {
@@ -79,5 +68,13 @@ public class ChallengeDay implements Serializable {
 
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

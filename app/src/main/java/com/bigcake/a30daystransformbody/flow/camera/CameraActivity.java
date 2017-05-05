@@ -303,7 +303,7 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
                             rotateMatrix, false);
                     rotatedBitmap = Bitmap.createBitmap(rotatedBitmap, 0, 0, rotatedBitmap.getWidth(), newHeight);
                     ChallengeDay challengeDay = (ChallengeDay) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY);
-                    mPresenter.saveImage(challengeDay, Utils.convertBitmapToByteArray(rotatedBitmap));
+                    mPresenter.saveImage(challengeDay, rotatedBitmap);
                     loadedImage.recycle();
 //                    takenBitmap = rotatedBitmap;
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
@@ -27,10 +28,12 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
     private Context mContext;
     private List<ChallengeDay> mChallengeDayList;
     private ItemClickListener<ChallengeDay> mListener;
+    private ChallengeImageManager mChallengeImageManager;
 
-    public ChallengeDayAdapter(Context context, List<ChallengeDay> challengeDayList) {
+    public ChallengeDayAdapter(Context context, List<ChallengeDay> challengeDayList, ChallengeImageManager challengeImageManager) {
         mContext = context;
         mChallengeDayList = challengeDayList;
+        mChallengeImageManager = challengeImageManager;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
     @Override
     public void onBindViewHolder(final ChallengeViewHolder holder, int position) {
         final ChallengeDay challengeDay = mChallengeDayList.get(position);
-        holder.bind(challengeDay);
+        holder.bind(challengeDay, mChallengeImageManager);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -28,20 +29,30 @@ class ChallengeViewHolder extends RecyclerView.ViewHolder {
         ivDay = (ImageView) itemView.findViewById(R.id.iv_day);
     }
 
-    public void bind(ChallengeDay challengeDay) {
+    public void bind(final ChallengeDay challengeDay, ChallengeImageManager challengeImageManager) {
         if (challengeDay.getStatus() == ChallengeDay.STATUS_DONE) {
             tvDay.setText("");
             tvDay.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorDarkGreen));
             tvDay.setBackgroundResource(R.drawable.shape_challenge_day_done);
             ivDay.setVisibility(View.VISIBLE);
-            if (challengeDay.getImage() != null)
-                Glide.with(itemView.getContext()).load(challengeDay.getImage()).asBitmap().centerCrop().into(new BitmapImageViewTarget(ivDay) {
+            if (challengeDay.getImage() != null && !challengeDay.getImage().isEmpty())
+                challengeImageManager.displayThumbnail(challengeDay.getId(), new ChallengeImageManager.DisplayThumbnailCallback() {
                     @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(itemView.getContext().getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        ivDay.setImageDrawable(circularBitmapDrawable);
+                    public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                        Glide.with(itemView.getContext()).load(thumbnail).asBitmap().centerCrop().into(new BitmapImageViewTarget(ivDay) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(itemView.getContext().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                ivDay.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+
                     }
                 });
             else {

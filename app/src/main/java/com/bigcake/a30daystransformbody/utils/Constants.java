@@ -7,4 +7,6 @@ package com.bigcake.a30daystransformbody.utils;
 public class Constants {
     public static final String EXTRA_CHALLENGE = "extra_challenge";
     public static final String EXTRA_CHALLENGE_DAY = "extra_challenge_day";
+    public static final String FLOW_PHOTO_VIEWER = "tag_photo_viewer";
+    public static final int TAG_CHALLENGE_ALBUM = 0;
 }

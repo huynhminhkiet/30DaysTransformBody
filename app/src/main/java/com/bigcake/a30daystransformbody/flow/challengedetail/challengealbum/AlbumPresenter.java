@@ -1,6 +1,5 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
@@ -70,7 +69,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     private void filterChallengeDaysHasImage(List<ChallengeDay> challengeDayList) {
         mChallengeDayImageList = new ArrayList<>();
         for (ChallengeDay challengeDay : challengeDayList)
-            if (challengeDay.getImage() != null)
+            if (challengeDay.getImage() != null && !challengeDay.getImage().isEmpty())
                 mChallengeDayImageList.add(new ChallengeDayImage(challengeDay, ChallengeDayImage.NOT_SELECTED));
     }
 
@@ -123,16 +122,17 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     }
 
     public byte[] generateGIF() {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
-        encoder.start(bos);
-        for (ChallengeDayImage challengeDayImage : mChallengeDayImageList) {
-            if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
-                byte[] image = challengeDayImage.getChallengeDay().getImage();
-                encoder.addFrame(BitmapFactory.decodeByteArray(image, 0, image.length));
-            }
-        }
-        encoder.finish();
-        return bos.toByteArray();
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+//        encoder.start(bos);
+//        for (ChallengeDayImage challengeDayImage : mChallengeDayImageList) {
+//            if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
+//                byte[] image = challengeDayImage.getChallengeDay().getImageThumbnail();
+//                encoder.addFrame(BitmapFactory.decodeByteArray(image, 0, image.length));
+//            }
+//        }
+//        encoder.finish();
+//        return bos.toByteArray();
+        return null;
     }
 }

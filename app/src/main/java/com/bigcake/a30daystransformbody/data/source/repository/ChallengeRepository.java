@@ -1,5 +1,8 @@
 package com.bigcake.a30daystransformbody.data.source.repository;
 
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 
@@ -79,6 +82,36 @@ public class ChallengeRepository implements ChallengeDataSource {
             @Override
             public void onError() {
 
+            }
+        });
+    }
+
+    @Override
+    public void getChallengeDayThumbnail(int challengeDayId, @NonNull final LoadChallengeDayThumbnailCallback callback) {
+        mChallengeDataSource.getChallengeDayThumbnail(challengeDayId, new LoadChallengeDayThumbnailCallback() {
+            @Override
+            public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                callback.onChallengeDayThumbnailLoaded(thumbnail);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
+    public void updateImage(int challengeDayId, Bitmap newImage, final UpdateChallengeDayImageCallback callBack) {
+        mChallengeDataSource.updateImage(challengeDayId, newImage, new UpdateChallengeDayImageCallback() {
+            @Override
+            public void onUpdated(String image) {
+                callBack.onUpdated(image);
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
             }
         });
     }
