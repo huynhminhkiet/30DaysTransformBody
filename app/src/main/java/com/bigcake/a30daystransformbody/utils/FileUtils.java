@@ -1,10 +1,13 @@
 package com.bigcake.a30daystransformbody.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -15,10 +18,9 @@ import java.util.Locale;
 
 public class FileUtils {
 
-    public static String saveImage(Bitmap bitmap) {
+    public static String saveImage(Bitmap bitmap, String fileName) {
         Bitmap scaledBitmap = scaleBitmap(bitmap, 600);
-        String imageName = genarateImageName() + ".png";
-        File file = new File (getImageDir(), imageName);
+        File file = new File (getImageDir(), fileName);
         if (file.exists ()) file.delete ();
         try {
             FileOutputStream out = new FileOutputStream(file);
@@ -29,7 +31,27 @@ public class FileUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return imageName;
+        return fileName;
+    }
+
+    public static byte[] loadImage(String imageName) {
+        FileInputStream inputStream = null;
+        File file = new File (getImageDir(), imageName);
+        try {
+            inputStream = new FileInputStream(file);
+            return Utils.convertBitmapToByteArray(BitmapFactory.decodeStream(inputStream));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     private static File getImageDir() {
@@ -39,7 +61,7 @@ public class FileUtils {
         return myDir;
     }
 
-    private static String genarateImageName() {
+    public static String genarateImageRandomName() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault());
         return simpleDateFormat.format(new Date());
     }

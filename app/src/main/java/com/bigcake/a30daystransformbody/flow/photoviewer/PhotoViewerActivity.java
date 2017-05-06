@@ -27,22 +27,21 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
         photoView = (ImageView) findViewById(R.id.photo_view);
         mPhotoViewAttacher = new PhotoViewAttacher(photoView);
         mPhotoViewAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        mPresenter = new PhotoViewerPresenter(this);
+        mPresenter = new PhotoViewerPresenter(this, (ChallengeDay) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY));
         mPresenter.start();
     }
 
-    private void bindImage() {
-//        int tag = getIntent().getIntExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHALLENGE_ALBUM);
-//        if (tag == Constants.TAG_CHALLENGE_ALBUM) {
-//            ChallengeDay challengeDay = (ChallengeDay) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY);
-//            Glide.with(this).load(challengeDay.getImageThumbnail()).asBitmap().into(new BitmapImageViewTarget(photoView) {
-//                @Override
-//                protected void setResource(Bitmap resource) {
-//                    super.setResource(resource);
-//                    mPhotoViewAttacher.update();
-//                }
-//            });
-//        }
+    private void bindImage(byte[] image) {
+        int tag = getIntent().getIntExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHALLENGE_ALBUM);
+        if (tag == Constants.TAG_CHALLENGE_ALBUM) {
+            Glide.with(this).load(image).asBitmap().into(new BitmapImageViewTarget(photoView) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    super.setResource(resource);
+                    mPhotoViewAttacher.update();
+                }
+            });
+        }
     }
 
     @Override
@@ -51,7 +50,7 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
     }
 
     @Override
-    public void onShowPhoto() {
-        bindImage();
+    public void onShowPhoto(byte[] image) {
+        bindImage(image);
     }
 }

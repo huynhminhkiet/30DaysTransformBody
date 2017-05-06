@@ -1,9 +1,11 @@
 package com.bigcake.a30daystransformbody.manager;
 
-import android.util.Log;
+import android.os.AsyncTask;
 
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.utils.FileUtils;
 
 /**
  * Created by Big Cake on 4/17/2017
@@ -17,28 +19,86 @@ public class ChallengeImageManager {
         mChallengeRepository = challengeRepository;
     }
 
-    public static synchronized ChallengeImageManager getConstance(ChallengeRepository challengeRepository) {
+    public static synchronized ChallengeImageManager getInstance(ChallengeRepository challengeRepository) {
         if (mInstance == null)
             mInstance = new ChallengeImageManager(challengeRepository);
         return mInstance;
     }
 
-    public void displayThumbnail(final int challengeId, final DisplayThumbnailCallback callback) {
-        mChallengeRepository.getChallengeDayThumbnail(challengeId, new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
+    public void displayThumbnail(final int challengeDayId, final DisplayImageCallback callback) {
+        final byte[][] image = {null};
+        new AsyncTask<Void, Void, byte[]>() {
             @Override
-            public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
-                callback.onChallengeDayThumbnailLoaded(thumbnail);
+            protected byte[] doInBackground(Void... voids) {
+                mChallengeRepository.getChallengeDayThumbnail(challengeDayId, new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
+                    @Override
+                    public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                        image[0] = thumbnail;
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                    }
+                });
+                return image[0];
             }
 
             @Override
-            public void onDataNotAvailable() {
+            protected void onPostExecute(byte[] image) {
+                super.onPostExecute(image);
+                if (image != null)
+                    callback.onImageLoaded(image);
+                else
+                    callback.onDataNotAvailable();
+            }
+        }.execute();
+    }
+
+    public void displayLastThumbnail(final int challengeId, final DisplayImageCallback callback) {
+        final byte[][] image = {null};
+        new AsyncTask<Void, Void, byte[]>() {
+            @Override
+            protected byte[] doInBackground(Void... voids) {
+                mChallengeRepository.getLastChallengeDayThumbnail(challengeId, new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
+                    @Override
+                    public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                        image[0] = thumbnail;
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                    }
+                });
+                return image[0];
+            }
+
+            @Override
+            protected void onPostExecute(byte[] image) {
+                super.onPostExecute(image);
+                if (image != null)
+                    callback.onImageLoaded(image);
+                else
+                    callback.onDataNotAvailable();
+            }
+        }.execute();
+    }
+
+    public void displayLastChallengeImage(final int challengeId, final DisplayImageCallback callback) {
+        mChallengeRepository.getLastChallengeDayHasImage(challengeId, new ChallengeDataSource.GetLastChallengeDay() {
+            @Override
+            public void onSuccess(ChallengeDay challengeDay) {
+                callback.onImageLoaded(FileUtils.loadImage(challengeDay.getImage()));
+            }
+
+            @Override
+            public void onError() {
                 callback.onDataNotAvailable();
             }
         });
     }
 
-    public interface DisplayThumbnailCallback {
-        void onChallengeDayThumbnailLoaded(byte[] thumbnail);
+    public interface DisplayImageCallback {
+        void onImageLoaded(byte[] thumbnail);
 
         void onDataNotAvailable();
     }

@@ -72,7 +72,8 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
 
         isLastImageShown = true;
 
-        mPresenter = new CameraPresenter(this, Injection.provideChallengeRepository(this));
+        mPresenter = new CameraPresenter(this, Injection.provideChallengeRepository(this),
+                (ChallengeDay) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY));
         mPresenter.start();
     }
 

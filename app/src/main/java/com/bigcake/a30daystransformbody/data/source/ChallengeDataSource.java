@@ -37,10 +37,17 @@ public interface ChallengeDataSource {
         void onError();
     }
 
+    interface GetLastChallengeDay {
+        void onSuccess(ChallengeDay challengeDay);
+        void onError();
+    }
+
     void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
     void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack);
     void getLastImage(int challengeId, LoadLastImageCallBack callBack);
     void getChallengeDayThumbnail(int challengeDayId, @NonNull LoadChallengeDayThumbnailCallback callback);
+    void getLastChallengeDayThumbnail(int challengeId, @NonNull LoadChallengeDayThumbnailCallback callback);
+    void getLastChallengeDayHasImage(int challengeId, @NonNull GetLastChallengeDay callback);
     void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
 }

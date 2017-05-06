@@ -87,8 +87,38 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
+    public void getLastChallengeDayHasImage(int challengeId, @NonNull final GetLastChallengeDay callback) {
+        mChallengeDataSource.getLastChallengeDayHasImage(challengeId, new GetLastChallengeDay() {
+            @Override
+            public void onSuccess(ChallengeDay challengeDay) {
+                callback.onSuccess(challengeDay);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
     public void getChallengeDayThumbnail(int challengeDayId, @NonNull final LoadChallengeDayThumbnailCallback callback) {
         mChallengeDataSource.getChallengeDayThumbnail(challengeDayId, new LoadChallengeDayThumbnailCallback() {
+            @Override
+            public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                callback.onChallengeDayThumbnailLoaded(thumbnail);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
+    public void getLastChallengeDayThumbnail(int challengeId, @NonNull final LoadChallengeDayThumbnailCallback callback) {
+        mChallengeDataSource.getLastChallengeDayThumbnail(challengeId, new LoadChallengeDayThumbnailCallback() {
             @Override
             public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
                 callback.onChallengeDayThumbnailLoaded(thumbnail);

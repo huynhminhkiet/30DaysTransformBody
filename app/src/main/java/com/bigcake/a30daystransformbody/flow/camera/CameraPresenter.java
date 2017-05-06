@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
+import com.bigcake.a30daystransformbody.utils.FileUtils;
 
 /**
  * Created by Big Cake on 4/22/2017
@@ -13,16 +15,18 @@ import com.bigcake.a30daystransformbody.data.source.repository.ChallengeReposito
 public class CameraPresenter implements CameraContract.Presenter {
     private CameraContract.View mView;
     private ChallengeRepository mChallengeRepository;
+    private ChallengeDay mChallengeDay;
     private byte[] lastImage;
 
-    public CameraPresenter(CameraContract.View view, ChallengeRepository challengeRepository) {
+    public CameraPresenter(CameraContract.View view, ChallengeRepository challengeRepository, ChallengeDay challengeDay) {
         this.mView = view;
         this.mChallengeRepository = challengeRepository;
+        this.mChallengeDay = challengeDay;
     }
 
     @Override
     public void start() {
-        getLastImage();
+        getLastImage(mChallengeDay);
     }
 
     @Override
@@ -43,21 +47,33 @@ public class CameraPresenter implements CameraContract.Presenter {
 
     @Override
     public void onButtonLastImageClick() {
-        mView.displayLastImagePreview(lastImage);
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastChallengeImage(mChallengeDay.getChallengeId(),
+                new ChallengeImageManager.DisplayImageCallback() {
+                    @Override
+                    public void onImageLoaded(byte[] thumbnail) {
+                        mView.displayLastImagePreview(thumbnail);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+
+                    }
+                });
     }
 
-    private void getLastImage() {
-        mChallengeRepository.getLastImage(0, new ChallengeDataSource.LoadLastImageCallBack() {
-            @Override
-            public void onSuccess(byte[] image) {
-                lastImage = image;
-                mView.displayShowLastImageButton(image);
-            }
+    private void getLastImage(ChallengeDay challengeDay) {
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastThumbnail(challengeDay.getChallengeId(),
+                new ChallengeImageManager.DisplayImageCallback() {
+                    @Override
+                    public void onImageLoaded(byte[] thumbnail) {
+                        lastImage = thumbnail;
+                        mView.displayShowLastImageButton(thumbnail);
+                    }
 
-            @Override
-            public void onError() {
+                    @Override
+                    public void onDataNotAvailable() {
 
-            }
-        });
+                    }
+                });
     }
 }

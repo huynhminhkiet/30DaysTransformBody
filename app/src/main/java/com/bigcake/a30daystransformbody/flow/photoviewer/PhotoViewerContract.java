@@ -13,6 +13,6 @@ public interface PhotoViewerContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void onShowPhoto();
+        void onShowPhoto(byte [] image);
     }
 }

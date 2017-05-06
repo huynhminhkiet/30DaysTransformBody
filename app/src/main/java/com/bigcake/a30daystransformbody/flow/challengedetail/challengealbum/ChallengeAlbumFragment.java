@@ -17,6 +17,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
@@ -55,7 +56,8 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private void initViews(View view) {
         rvAlbum = (RecyclerView) view.findViewById(R.id.rv_album);
         rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        mAlbumAdapter = new AlbumAdapter(getContext(), new ArrayList<ChallengeDayImage>());
+        mAlbumAdapter = new AlbumAdapter(getContext(), new ArrayList<ChallengeDayImage>(),
+                ChallengeImageManager.getInstance(Injection.provideChallengeRepository(getContext())));
         mAlbumAdapter.setItemClickListener(this);
         rvAlbum.setAdapter(mAlbumAdapter);
         mGifPanel = (LinearLayout) view.findViewById(R.id.ln_gif_panel);

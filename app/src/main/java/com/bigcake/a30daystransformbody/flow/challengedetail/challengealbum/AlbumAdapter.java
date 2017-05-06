@@ -10,6 +10,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
+import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 
 import java.util.List;
 
@@ -21,10 +22,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private Context mContext;
     private List<ChallengeDayImage> mChallengeDayImageList;
     private AlbumAdapterListener mListener;
+    private ChallengeImageManager mChallengeImageManager;
 
-    public AlbumAdapter(Context context, List<ChallengeDayImage> challengeDayImageList) {
+    public AlbumAdapter(Context context, List<ChallengeDayImage> challengeDayImageList, ChallengeImageManager challengeImageManager) {
         mContext = context;
         mChallengeDayImageList = challengeDayImageList;
+        mChallengeImageManager = challengeImageManager;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     @Override
     public void onBindViewHolder(final AlbumViewHolder holder, int position) {
         final ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(position);
-        holder.bind(challengeDayImage);
+        holder.bind(challengeDayImage, mChallengeImageManager);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

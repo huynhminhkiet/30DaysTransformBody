@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
-import com.bigcake.a30daystransformbody.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
@@ -36,9 +35,9 @@ class ChallengeViewHolder extends RecyclerView.ViewHolder {
             tvDay.setBackgroundResource(R.drawable.shape_challenge_day_done);
             ivDay.setVisibility(View.VISIBLE);
             if (challengeDay.getImage() != null && !challengeDay.getImage().isEmpty())
-                challengeImageManager.displayThumbnail(challengeDay.getId(), new ChallengeImageManager.DisplayThumbnailCallback() {
+                challengeImageManager.displayThumbnail(challengeDay.getId(), new ChallengeImageManager.DisplayImageCallback() {
                     @Override
-                    public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
+                    public void onImageLoaded(byte[] thumbnail) {
                         Glide.with(itemView.getContext()).load(thumbnail).asBitmap().centerCrop().into(new BitmapImageViewTarget(ivDay) {
                             @Override
                             protected void setResource(Bitmap resource) {
@@ -70,11 +69,11 @@ class ChallengeViewHolder extends RecyclerView.ViewHolder {
             tvDay.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorOrange));
             tvDay.setBackgroundResource(R.drawable.shape_challenge_day_current);
             ivDay.setVisibility(View.GONE);
-            tvDay.setText(challengeDay.getDay() + "");
+            tvDay.setText(String.valueOf(challengeDay.getDay()));
         } else {
             tvDay.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorGreenYellow));
             tvDay.setBackgroundResource(R.drawable.shape_challenge_day);
-            tvDay.setText(challengeDay.getDay() + "");
+            tvDay.setText(String.valueOf(challengeDay.getDay()));
             ivDay.setVisibility(View.GONE);
         }
     }
