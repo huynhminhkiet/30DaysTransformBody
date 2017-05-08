@@ -97,6 +97,35 @@ public class ChallengeImageManager {
         });
     }
 
+    public void displayChangeThumbnail(final int ChallengeImageId, final DisplayImageCallback callback) {
+        final byte[][] image = {null};
+        new AsyncTask<Void, Void, byte[]>() {
+            @Override
+            protected byte[] doInBackground(Void... voids) {
+                mChallengeRepository.getChangeThumbnail(ChallengeImageId, new ChallengeDataSource.LoadThumbnailCallBack() {
+                    @Override
+                    public void onSuccess(byte[] thumbnail) {
+                        image[0] = thumbnail;
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                });
+                return image[0];
+            }
+
+            @Override
+            protected void onPostExecute(byte[] image) {
+                super.onPostExecute(image);
+                if (image != null)
+                    callback.onImageLoaded(image);
+                else
+                    callback.onDataNotAvailable();
+            }
+        }.execute();
+    }
+
     public interface DisplayImageCallback {
         void onImageLoaded(byte[] thumbnail);
 

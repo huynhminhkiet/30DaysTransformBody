@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CHALLENGE_DAY_TABLE =
             "CREATE TABLE " + TableContent.ChallengeDay.TABLE_NAME + " (" +
                     TableContent.ChallengeDay._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
-                    TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + INTEGER_TYPE + COMMA_SEP +
+                    TableContent.ChallengeDay.COLUMN_EXERCISE_ID + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_DATE + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_IMAGE + TEXT_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
@@ -53,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CHALLENGE_IMAGE =
             "CREATE TABLE " + TableContent.ChallengeImage.TABLE_NAME + " (" +
                     TableContent.ChallengeImage._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
-                    TableContent.ChallengeImage.COLUMN_CHALLENGE_ID + INTEGER_TYPE + COMMA_SEP +
+                    TableContent.ChallengeImage.COLUMN_EXERCISE_ID + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
                     TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE + TEXT_TYPE +
                     " )";

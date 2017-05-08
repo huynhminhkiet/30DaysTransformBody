@@ -35,13 +35,13 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void getChallengeDays(int challengeid, LoadChallengeDaysCallBack callBack) {
+    public void getChallengeDays(int exerciseId, LoadChallengeDaysCallBack callBack) {
         List<ChallengeDay> challengeDayList = new ArrayList<>();
         SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
 
         String[] projection = {
                 TableContent.ChallengeDay._ID,
-                TableContent.ChallengeDay.COLUMN_CHALLENGE_ID,
+                TableContent.ChallengeDay.COLUMN_EXERCISE_ID,
                 TableContent.ChallengeDay.COLUMN_DATE,
                 TableContent.ChallengeDay.COLUMN_IMAGE,
                 TableContent.ChallengeDay.COLUMN_STATUS,
@@ -54,7 +54,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
                 int id = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay._ID));
-                int challengeId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID));
+                int challengeId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_EXERCISE_ID));
                 int challengeDate = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_DATE));
                 String image = c.getString(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
                 int status = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_STATUS));
@@ -63,30 +63,30 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
                 ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, status, null, image);
                 challengeDayList.add(challengeDay);
             }
-        } else {
-            callBack.onError();
         }
-
         if (c != null) {
             c.close();
         }
-
         db.close();
-        callBack.onChallengeDaysLoaded(challengeDayList);
+        if (challengeDayList.isEmpty())
+            callBack.onError();
+        else
+            callBack.onChallengeDaysLoaded(challengeDayList);
     }
 
     @Override
-    public void generateChallengesDay(int challengeId, ChallengeCallBack callBack) {
+    public void generateChallengesDay(int exerciseId, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         for (int i = 0; i < 30; i++) {
             ContentValues values = new ContentValues();
-            values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeId);
+            values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, exerciseId);
             values.put(TableContent.ChallengeDay.COLUMN_STATUS,
                     i == 20 ? ChallengeDay.STATUS_CURRENT : i < 21 ? ChallengeDay.STATUS_DONE : ChallengeDay.STATUS_IN_PROGRESS);
             values.put(TableContent.ChallengeDay.COLUMN_DATE, i + 1);
 
             if (db.insert(TableContent.ChallengeDay.TABLE_NAME, null, values) == -1) {
+                db.close();
                 callBack.onError();
                 return;
             }
@@ -97,16 +97,16 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void getLastImage(int challengeId, LoadLastImageCallBack callBack) {
+    public void getLastImage(int exerciseId, LoadThumbnailCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         String[] projection = {
                 TableContent.ChallengeDay.COLUMN_IMAGE
         };
 
-        String selection = TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + " = ?";
+        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ?";
         String orderBy = TableContent.ChallengeDay.COLUMN_DATE + " DESC";
-        String[] selectionArgs = { String.valueOf(challengeId) };
+        String[] selectionArgs = {String.valueOf(exerciseId)};
 
         Cursor c = db.query(
                 TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
@@ -114,21 +114,19 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         byte[] image = null;
 
         if (c != null && c.getCount() > 0) {
-            while (c.moveToNext()) {
+            if (c.moveToNext()) {
                 image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
-                if (image != null) {
-                    callBack.onSuccess(image);
-                    return;
-                }
             }
         }
-
         if (c != null) {
             c.close();
         }
 
         db.close();
-        callBack.onSuccess(image);
+        if (image == null)
+            callBack.onError();
+        else
+            callBack.onSuccess(image);
     }
 
     @Override
@@ -140,55 +138,48 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         };
 
         String selection = TableContent.ChallengeDay._ID + " = ?";
-        String[] selectionArgs = { String.valueOf(challengeDayId) };
+        String[] selectionArgs = {String.valueOf(challengeDayId)};
 
         Cursor c = db.query(
                 TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
-
+        byte[] image = null;
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                byte[] image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
-                if (image != null) {
-                    callback.onChallengeDayThumbnailLoaded(image);
-                    return;
-                }
+                image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
             }
-        } else {
-            callback.onDataNotAvailable();
         }
 
         if (c != null) {
             c.close();
         }
-
         db.close();
+        if (image != null)
+            callback.onChallengeDayThumbnailLoaded(image);
+        else
+            callback.onDataNotAvailable();
+
     }
 
     @Override
-    public void getLastChallengeDayThumbnail(int challengeId, @NonNull LoadChallengeDayThumbnailCallback callback) {
+    public void getLastChallengeDayThumbnail(int exerciseId, @NonNull LoadChallengeDayThumbnailCallback callback) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         String[] projection = {
                 TableContent.ChallengeDay.COLUMN_THUMBNAIL
         };
 
-        String selection = TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + " = ?";
-        String[] selectionArgs = { String.valueOf(challengeId) };
+        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(exerciseId)};
         String orderBy = TableContent.ChallengeDay._ID + " DESC";
 
         Cursor c = db.query(
                 TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
-
+        byte[] image = null;
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                byte[] image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
-                if (image != null) {
-                    callback.onChallengeDayThumbnailLoaded(image);
-                    return;
-                }
+                image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
+
             }
-        } else {
-            callback.onDataNotAvailable();
         }
 
         if (c != null) {
@@ -196,49 +187,54 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         }
 
         db.close();
+        if (image != null)
+            callback.onChallengeDayThumbnailLoaded(image);
+        else
+            callback.onDataNotAvailable();
     }
 
     @Override
-    public void getLastChallengeDayHasImage(int challengeId, @NonNull GetLastChallengeDay callback) {
+    public void getLastChallengeDayHasImage(int exerciseId, @NonNull GetLastChallengeDay callback) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         String[] projection = {
                 TableContent.ChallengeDay._ID,
-                TableContent.ChallengeDay.COLUMN_CHALLENGE_ID,
+                TableContent.ChallengeDay.COLUMN_EXERCISE_ID,
                 TableContent.ChallengeDay.COLUMN_DATE,
                 TableContent.ChallengeDay.COLUMN_IMAGE,
                 TableContent.ChallengeDay.COLUMN_STATUS,
                 TableContent.ChallengeDay.COLUMN_LEVEL_ID
         };
 
-        String selection = TableContent.ChallengeDay.COLUMN_CHALLENGE_ID + " = ? AND " +
+        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ? AND " +
                 TableContent.ChallengeDay.COLUMN_IMAGE + " is not null";
-        String[] selectionArgs = { String.valueOf(challengeId) };
+        String[] selectionArgs = {String.valueOf(exerciseId)};
         String orderBy = TableContent.ChallengeDay._ID + " DESC";
 
         Cursor c = db.query(
                 TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
 
+        ChallengeDay challengeDay = null;
         if (c != null && c.getCount() > 0) {
-            while (c.moveToNext()) {
+            if (c.moveToNext()) {
                 int id = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay._ID));
                 int challengeDate = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_DATE));
                 String image = c.getString(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_IMAGE));
                 int status = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_STATUS));
                 int levelId = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_LEVEL_ID));
 
-                ChallengeDay challengeDay = new ChallengeDay(id, challengeId, challengeDate, status, null, image);
-                callback.onSuccess(challengeDay);
-                return;
+                challengeDay = new ChallengeDay(id, exerciseId, challengeDate, status, null, image);
             }
         }
 
         if (c != null) {
             c.close();
         }
-
         db.close();
-        callback.onError();
+        if (challengeDay != null)
+            callback.onSuccess(challengeDay);
+        else
+            callback.onError();
     }
 
     @Override
@@ -252,6 +248,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
 
         if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,
                 TableContent.ChallengeDay._ID + "=" + challengeDayId, null) == -1) {
+            db.close();
             callBack.onError();
             return;
         }
@@ -264,27 +261,27 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     public void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getChallengeId());
+        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getChallengeId());
         values.put(TableContent.ChallengeDay.COLUMN_STATUS, challengeDay.getStatus());
         values.put(TableContent.ChallengeDay.COLUMN_DATE, challengeDay.getDay());
-        values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getLevel() != null ? 1 : 0);
+        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getLevel() != null ? 1 : 0);
 
         if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,
                 TableContent.ChallengeDay._ID + "=" + challengeDay.getId(), null) == -1) {
+            db.close();
             callBack.onError();
             return;
         }
-
 
         db.close();
         callBack.onSuccess();
     }
 
     @Override
-    public void insertChallengeGif(int challengeId, byte[] gifFile, byte[] thumbnail, ChallengeCallBack callBack) {
+    public void insertChallengeGif(int exerciseId, byte[] gifFile, byte[] thumbnail, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(TableContent.ChallengeImage.COLUMN_CHALLENGE_ID, challengeId);
+        values.put(TableContent.ChallengeImage.COLUMN_EXERCISE_ID, exerciseId);
         values.put(TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL, thumbnail);
         long id = db.insert(TableContent.ChallengeImage.TABLE_NAME, null, values);
         if (id == -1) {
@@ -292,14 +289,83 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
             return;
         }
         values.clear();
-        String imageName = "gif-" + challengeId + "-" + id;
+        String imageName = "gif-" + exerciseId + "-" + id;
         values.put(TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE, imageName + ".gif");
         if (db.update(TableContent.ChallengeImage.TABLE_NAME, values,
                 TableContent.ChallengeImage._ID + "=" + id, null) == -1) {
+            db.close();
             callBack.onError();
             return;
         }
+
+        db.close();
         FileUtils.saveGifImage(gifFile, imageName);
         callBack.onSuccess();
+    }
+
+    @Override
+    public void getChangeThumbnail(int changeImageId, @NonNull LoadThumbnailCallBack callback) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+
+        String[] projection = {
+                TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL
+        };
+
+        String selection = TableContent.ChallengeImage._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(changeImageId)};
+
+        Cursor c = db.query(
+                TableContent.ChallengeImage.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+        byte[] image = null;
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL));
+            }
+        }
+
+        if (c != null) {
+            c.close();
+        }
+        db.close();
+        if (image != null)
+            callback.onSuccess(image);
+        else
+            callback.onError();
+    }
+
+    @Override
+    public void getAllChangeImages(int exerciseId, GetChangeImagesCallback callback) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        List<ChallengeImage> challengeImageList = new ArrayList<>();
+
+        String[] projection = {
+                TableContent.ChallengeImage._ID,
+                TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE
+        };
+
+        String selection = TableContent.ChallengeImage.COLUMN_EXERCISE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(exerciseId)};
+        String orderBy = TableContent.ChallengeImage._ID + " ASC";
+
+        Cursor c = db.query(
+                TableContent.ChallengeImage.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                int id = c.getInt(c.getColumnIndexOrThrow(TableContent.ChallengeImage._ID));
+                String image = c.getString(c.getColumnIndexOrThrow(TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE));
+                ChallengeImage challengeImage = new ChallengeImage(id, exerciseId, image);
+                challengeImageList.add(challengeImage);
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+        db.close();
+
+        if (challengeImageList.isEmpty())
+            callback.onError();
+        else
+            callback.onSuccess(challengeImageList);
     }
 }

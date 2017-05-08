@@ -23,7 +23,7 @@ public interface ChallengeDataSource {
         void onError();
     }
 
-    interface LoadLastImageCallBack {
+    interface LoadThumbnailCallBack {
         void onSuccess(byte [] image);
         void onError();
     }
@@ -43,14 +43,21 @@ public interface ChallengeDataSource {
         void onError();
     }
 
-    void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
-    void generateChallengesDay(int challengeId, ChallengeCallBack callBack);
+    interface GetChangeImagesCallback {
+        void onSuccess(List<ChallengeImage> challengeImageList);
+        void onError();
+    }
+
+    void getChallengeDays(int exerciseId, LoadChallengeDaysCallBack callBack);
+    void generateChallengesDay(int exerciseId, ChallengeCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack);
-    void getLastImage(int challengeId, LoadLastImageCallBack callBack);
+    void getLastImage(int exerciseId, LoadThumbnailCallBack callBack);
     void getChallengeDayThumbnail(int challengeDayId, @NonNull LoadChallengeDayThumbnailCallback callback);
-    void getLastChallengeDayThumbnail(int challengeId, @NonNull LoadChallengeDayThumbnailCallback callback);
-    void getLastChallengeDayHasImage(int challengeId, @NonNull GetLastChallengeDay callback);
+    void getLastChallengeDayThumbnail(int exerciseId, @NonNull LoadChallengeDayThumbnailCallback callback);
+    void getLastChallengeDayHasImage(int exerciseId, @NonNull GetLastChallengeDay callback);
     void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
 
-    void insertChallengeGif(int challengeId, byte[] gif, byte[] thumbnail, ChallengeCallBack callBack);
+    void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, ChallengeCallBack callBack);
+    void getAllChangeImages(int exerciseId, GetChangeImagesCallback callback);
+    void getChangeThumbnail(int changeImageId, @NonNull LoadThumbnailCallBack callback);
 }
