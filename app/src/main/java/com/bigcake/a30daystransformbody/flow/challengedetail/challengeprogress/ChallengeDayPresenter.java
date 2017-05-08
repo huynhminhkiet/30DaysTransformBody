@@ -38,7 +38,6 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
 
                 }
             });
-
         else {
             mView.displayChallengeDays(mChallengeDayList);
             mView.displayProgressBar(13);

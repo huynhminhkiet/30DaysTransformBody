@@ -15,4 +15,12 @@ public class TableContent {
         public static final String COLUMN_STATUS = "status";
         public static final String COLUMN_LEVEL_ID = "levelId";
     }
+
+    public abstract class ChallengeImage {
+        public static final String TABLE_NAME = "challenge_image";
+        public static final String _ID= "id";
+        public static final String COLUMN_CHALLENGE_ID = "challenge_id";
+        public static final String COLUMN_CHANGE_THUMBNAIL = "change_thumbnail";
+        public static final String COLUMN_CHANGE_IMAGE = "change_image";
+    }
 }

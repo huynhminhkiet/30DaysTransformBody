@@ -32,11 +32,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CHALLENGE_DAY_TABLE);
+        db.execSQL(SQL_CREATE_CHALLENGE_IMAGE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
     }
 
     private static final String SQL_CREATE_CHALLENGE_DAY_TABLE =
@@ -48,5 +48,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TableContent.ChallengeDay.COLUMN_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_STATUS + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeDay.COLUMN_LEVEL_ID + INTEGER_TYPE +
+                    " )";
+
+    private static final String SQL_CREATE_CHALLENGE_IMAGE =
+            "CREATE TABLE " + TableContent.ChallengeImage.TABLE_NAME + " (" +
+                    TableContent.ChallengeImage._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
+                    TableContent.ChallengeImage.COLUMN_CHALLENGE_ID + INTEGER_TYPE + COMMA_SEP +
+                    TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
+                    TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE + TEXT_TYPE +
                     " )";
 }

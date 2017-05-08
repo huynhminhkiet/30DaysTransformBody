@@ -8,6 +8,12 @@
     <string name="bullet">•</string>
     <string name="start">Start</string>
     <string name="gen_item_selected">%d selected</string>
+    <string name="ok">OK</string>
+    <string name="gen_ms">ms</string>
+    <string name="hint_delay">from 100 to 1000</string>
+    <string name="error_delay">Invalid value!</string>
+    <string name="btn_ok">OK</string>
+    <string name="gen_delay_dialog_title">Set delay between frames</string>
     <string name="gen_title">Title</string>
     <string name="gen_select_exercise">Select Exercise</string>
     <string name="btn_start">Start</string>

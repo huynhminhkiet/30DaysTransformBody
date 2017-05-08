@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity
         initSlideMenu();
 
         if (savedInstanceState == null) {
-            mCurrentFragment = WeightManagerFragment.newInstance();
-            ((WeightManagerFragment) mCurrentFragment).setPresenter(new WeightManagerPresenter((WeightManagerFragment) mCurrentFragment));
+            mCurrentFragment = ExercisesCategoriesFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         } else {
             mCurrentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);

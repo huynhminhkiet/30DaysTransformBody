@@ -6,15 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeDayPresenter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
-import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.GifAlbumFragment;
+import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.ChangeFragment;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View {
@@ -60,12 +57,12 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     public void displayChallenge(Challenge challenge) {
         ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
         ChallengeAlbumFragment challengeAlbumFragment = new ChallengeAlbumFragment();
-        GifAlbumFragment gifAlbumFragment = new GifAlbumFragment();
+        ChangeFragment changeFragment = new ChangeFragment();
 
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
         mChallengeDetailAdapter.addFragment(challengeAlbumFragment, "Album");
-        mChallengeDetailAdapter.addFragment(gifAlbumFragment, "Gif");
+        mChallengeDetailAdapter.addFragment(changeFragment, "Change");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

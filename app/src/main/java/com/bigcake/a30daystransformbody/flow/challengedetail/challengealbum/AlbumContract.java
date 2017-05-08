@@ -19,13 +19,15 @@ public interface AlbumContract {
         void updateNumberSelected(int count);
         void updateAllSelectedButton(Boolean isOnSelectAll);
         void hideGifPanel();
+        void setProgressDialog(boolean b);
+        void showDelayDialog();
     }
 
     interface Presenter extends BasePresenter {
         void onImageLongClick(ChallengeDayImage challengeDayImage);
         void onImageClick(ChallengeDayImage challengeDayImage);
         void selectAll();
-        void createGif();
+        void createGif(int delay);
         void closeGifPanel();
     }
 }

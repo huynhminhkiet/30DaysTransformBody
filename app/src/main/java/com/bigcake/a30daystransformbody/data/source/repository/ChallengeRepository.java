@@ -42,8 +42,8 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void generateChallengesDay(int challengeId, final ChallengeDayCallBack callBack) {
-        mChallengeDataSource.generateChallengesDay(challengeId, new ChallengeDayCallBack() {
+    public void generateChallengesDay(int challengeId, final ChallengeCallBack callBack) {
+        mChallengeDataSource.generateChallengesDay(challengeId, new ChallengeCallBack() {
             @Override
             public void onSuccess() {
                 callBack.onSuccess();
@@ -57,8 +57,8 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void updateChallengeDay(ChallengeDay challengeDay, final ChallengeDayCallBack callBack) {
-        mChallengeDataSource.updateChallengeDay(challengeDay, new ChallengeDayCallBack() {
+    public void updateChallengeDay(ChallengeDay challengeDay, final ChallengeCallBack callBack) {
+        mChallengeDataSource.updateChallengeDay(challengeDay, new ChallengeCallBack() {
             @Override
             public void onSuccess() {
                 callBack.onSuccess();
@@ -82,6 +82,21 @@ public class ChallengeRepository implements ChallengeDataSource {
             @Override
             public void onError() {
 
+            }
+        });
+    }
+
+    @Override
+    public void insertChallengeGif(int challengeId, byte[] gif, byte[] thumbnail, final ChallengeCallBack callBack) {
+        mChallengeDataSource.insertChallengeGif(challengeId, gif, thumbnail, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
             }
         });
     }

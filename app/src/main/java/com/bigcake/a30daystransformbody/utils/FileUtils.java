@@ -56,18 +56,35 @@ public class FileUtils {
 
     private static File getImageDir() {
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
+        File myDir = new File(root + "/bigcake/images");
         myDir.mkdirs();
         return myDir;
     }
 
-    public static String genarateImageRandomName() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.getDefault());
-        return simpleDateFormat.format(new Date());
+    private static File getImageGifDir() {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/bigcake/gifs");
+        myDir.mkdirs();
+        return myDir;
     }
 
     public static Bitmap scaleBitmap(Bitmap bitmap, int newHeight) {
         float scale = (float) newHeight / bitmap.getHeight();
         return Bitmap.createScaledBitmap(bitmap, (int) (scale * bitmap.getWidth()), newHeight, true);
+    }
+
+    public static void saveGifImage(byte[] gifImage, String fileName) {
+        String imageName = fileName + ".gif";
+        File file = new File(getImageGifDir(), imageName);
+        if (file.exists())
+            file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(gifImage);
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

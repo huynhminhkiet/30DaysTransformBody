@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
@@ -75,7 +76,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack) {
+    public void generateChallengesDay(int challengeId, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         for (int i = 0; i < 30; i++) {
@@ -260,7 +261,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack) {
+    public void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TableContent.ChallengeDay.COLUMN_CHALLENGE_ID, challengeDay.getChallengeId());
@@ -279,4 +280,26 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         callBack.onSuccess();
     }
 
+    @Override
+    public void insertChallengeGif(int challengeId, byte[] gifFile, byte[] thumbnail, ChallengeCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TableContent.ChallengeImage.COLUMN_CHALLENGE_ID, challengeId);
+        values.put(TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL, thumbnail);
+        long id = db.insert(TableContent.ChallengeImage.TABLE_NAME, null, values);
+        if (id == -1) {
+            callBack.onError();
+            return;
+        }
+        values.clear();
+        String imageName = "gif-" + challengeId + "-" + id;
+        values.put(TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE, imageName + ".gif");
+        if (db.update(TableContent.ChallengeImage.TABLE_NAME, values,
+                TableContent.ChallengeImage._ID + "=" + id, null) == -1) {
+            callBack.onError();
+            return;
+        }
+        FileUtils.saveGifImage(gifFile, imageName);
+        callBack.onSuccess();
+    }
 }

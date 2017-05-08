@@ -14,7 +14,7 @@ import com.bigcake.a30daystransformbody.base.BaseFragment;
  * Created by kiethuynh on 24/04/2017
  */
 
-public class GifAlbumFragment extends BaseFragment {
+public class ChangeFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface ChallengeDataSource {
         void onError();
     }
 
-    interface ChallengeDayCallBack {
+    interface ChallengeCallBack {
         void onSuccess();
         void onError();
     }
@@ -43,11 +44,13 @@ public interface ChallengeDataSource {
     }
 
     void getChallengeDays(int challengeId, LoadChallengeDaysCallBack callBack);
-    void generateChallengesDay(int challengeId, ChallengeDayCallBack callBack);
-    void updateChallengeDay(ChallengeDay challengeDay, ChallengeDayCallBack callBack);
+    void generateChallengesDay(int challengeId, ChallengeCallBack callBack);
+    void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack);
     void getLastImage(int challengeId, LoadLastImageCallBack callBack);
     void getChallengeDayThumbnail(int challengeDayId, @NonNull LoadChallengeDayThumbnailCallback callback);
     void getLastChallengeDayThumbnail(int challengeId, @NonNull LoadChallengeDayThumbnailCallback callback);
     void getLastChallengeDayHasImage(int challengeId, @NonNull GetLastChallengeDay callback);
     void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
+
+    void insertChallengeGif(int challengeId, byte[] gif, byte[] thumbnail, ChallengeCallBack callBack);
 }

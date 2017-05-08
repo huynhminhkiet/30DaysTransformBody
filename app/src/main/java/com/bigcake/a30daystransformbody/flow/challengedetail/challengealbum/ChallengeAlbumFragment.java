@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
+import com.bigcake.a30daystransformbody.interfaces.SetDelayDialogCallback;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
@@ -27,7 +29,8 @@ import java.util.List;
  * Created by Big Cake on 4/14/2017
  */
 
-public class ChallengeAlbumFragment extends BaseFragment implements AlbumContract.View, AlbumAdapterListener, View.OnClickListener {
+public class ChallengeAlbumFragment extends BaseFragment implements AlbumContract.View, AlbumAdapterListener,
+        View.OnClickListener{
     private AlbumAdapter mAlbumAdapter;
     private RecyclerView rvAlbum;
     private LinearLayout mGifPanel;
@@ -35,6 +38,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private int mPositionSelected;
     private TextView tvNumberItemSelected;
     private TextView btnSelectAll, btnCreateGif, btnCancel;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +57,25 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         return view;
     }
 
+    @Override
+    public void showDelayDialog() {
+        SetDelayDialog setDelayDialog = SetDelayDialog.create(getContext(), new SetDelayDialogCallback() {
+            @Override
+            public void onDelaySetted(int delayValue) {
+                mPresenter.createGif(delayValue);
+            }
+        });
+        setDelayDialog.show();
+    }
+
+    @Override
+    public void setProgressDialog(boolean b) {
+        if (b)
+            mProgressDialog.show();
+        else
+            mProgressDialog.dismiss();
+    }
+
     private void initViews(View view) {
         rvAlbum = (RecyclerView) view.findViewById(R.id.rv_album);
         rvAlbum.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -68,7 +91,10 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         btnCreateGif.setOnClickListener(this);
         btnCancel = (TextView) view.findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
+        mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setMessage("Creating..");
     }
+
     @Override
     public void showAllImages(List<ChallengeDayImage> challengeDayImageList) {
         mAlbumAdapter.replaceAllData(challengeDayImageList);
@@ -109,7 +135,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
                 mPresenter.selectAll();
                 break;
             case R.id.btn_create_gif:
-                mPresenter.createGif();
+                showDelayDialog();
                 break;
             case R.id.btn_cancel:
                 mPresenter.closeGifPanel();
