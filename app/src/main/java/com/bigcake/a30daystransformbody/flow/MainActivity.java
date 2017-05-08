@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
+import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerFragment;
+import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerPresenter;
 import com.bigcake.a30daystransformbody.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         initSlideMenu();
 
         if (savedInstanceState == null) {
-            mCurrentFragment = ExercisesCategoriesFragment.newInstance();
+            mCurrentFragment = WeightManagerFragment.newInstance();
+            ((WeightManagerFragment) mCurrentFragment).setPresenter(new WeightManagerPresenter((WeightManagerFragment) mCurrentFragment));
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         } else {
             mCurrentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);

@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".flow.exercisedetail.ExerciseDetailActivity" />
-        <activity android:name=".flow.addchallenge.AddChallengeActivity" />
         <activity
             android:name=".flow.challengedetail.ChallengeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -36,7 +35,8 @@
             android:name=".flow.camera.CameraActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".flow.photoviewer.PhotoViewerActivity"
+        <activity
+            android:name=".flow.photoviewer.PhotoViewerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -8,4 +8,7 @@
     <string name="bullet">•</string>
     <string name="start">Start</string>
     <string name="gen_item_selected">%d selected</string>
+    <string name="gen_title">Title</string>
+    <string name="gen_select_exercise">Select Exercise</string>
+    <string name="btn_start">Start</string>
 </resources>
