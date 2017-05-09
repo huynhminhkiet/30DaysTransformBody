@@ -2,6 +2,7 @@ package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,5 +72,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     public void updateItem(ChallengeDayImage challengeDayImage, int position) {
         mChallengeDayImageList.set(position, challengeDayImage);
         notifyItemChanged(position);
+    }
+
+    public void insertItem(ChallengeDayImage challengeDayImage, int position) {
+        mChallengeDayImageList.add(position + 1, challengeDayImage);
+        for (int i = 0; i < mChallengeDayImageList.size(); i++)
+            Log.d(getClass().getSimpleName(), challengeDayImage.getChallengeDay().getDay()+"");
+        notifyDataSetChanged();
     }
 }

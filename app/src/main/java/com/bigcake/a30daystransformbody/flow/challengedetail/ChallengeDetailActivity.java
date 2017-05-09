@@ -9,18 +9,23 @@ import android.util.Log;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.ChangeFragment;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
-public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View {
+public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View, ChallengeProgressFragmentListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ChallengeDetailAdapter mChallengeDetailAdapter;
     ContextWrapper wrapper;
+    private ChallengeProgressFragment challengeProgressFragment;
+    private ChallengeAlbumFragment challengeAlbumFragment;
+    private ChangeFragment changeFragment;
 
     private ChallengeDetailContract.Presenter mPresenter;
 
@@ -55,9 +60,9 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
 
     @Override
     public void displayChallenge(Challenge challenge) {
-        ChallengeProgressFragment challengeProgressFragment = new ChallengeProgressFragment();
-        ChallengeAlbumFragment challengeAlbumFragment = new ChallengeAlbumFragment();
-        ChangeFragment changeFragment = new ChangeFragment();
+        challengeProgressFragment = new ChallengeProgressFragment();
+        challengeAlbumFragment = new ChallengeAlbumFragment();
+        changeFragment = new ChangeFragment();
 
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
@@ -65,5 +70,10 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
         mChallengeDetailAdapter.addFragment(changeFragment, "Change");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onChallengeDayImageUpdated(ChallengeDay challengeDay) {
+        challengeAlbumFragment.onChallengeDayImageOnBoardUpdated(challengeDay);
     }
 }

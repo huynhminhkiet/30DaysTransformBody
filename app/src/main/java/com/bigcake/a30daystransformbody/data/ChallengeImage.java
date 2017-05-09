@@ -1,10 +1,12 @@
 package com.bigcake.a30daystransformbody.data;
 
+import java.io.Serializable;
+
 /**
  * Created by Big Cake on 5/7/2017
  */
 
-public class ChallengeImage {
+public class ChallengeImage implements Serializable {
     private int id;
     private int challengeId;
     private String challengeImage;

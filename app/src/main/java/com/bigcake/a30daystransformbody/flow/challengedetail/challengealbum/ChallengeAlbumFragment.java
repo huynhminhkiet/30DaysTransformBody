@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.SetDelayDialogCallback;
@@ -66,6 +67,21 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
             }
         });
         setDelayDialog.show();
+    }
+
+    @Override
+    public void onChallengeDayImageOnBoardUpdated(ChallengeDay challengeDay) {
+        mPresenter.selectImageToUpdate(challengeDay);
+    }
+
+    @Override
+    public void addNewImageOnAlbum(ChallengeDayImage challengeDayImage, int position) {
+        mAlbumAdapter.insertItem(challengeDayImage, position);
+    }
+
+    @Override
+    public void updateChallengeImageOnAlbum(ChallengeDayImage challengeDayImage, int position) {
+        mAlbumAdapter.updateItem(challengeDayImage, position);
     }
 
     @Override

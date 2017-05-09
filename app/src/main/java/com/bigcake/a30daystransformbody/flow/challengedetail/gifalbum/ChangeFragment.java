@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,8 +16,10 @@ import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumAdapter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeDayImage;
+import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
+import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,9 @@ public class ChangeFragment extends BaseFragment implements ChangeImagesContract
 
     @Override
     public void onItemClick(ChallengeImage item, int position) {
-
+        Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
+        intent.putExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHAGE_IMAGE);
+        intent.putExtra(Constants.EXTRA_CHALLENGE_IMAGE, item);
+        startActivity(intent);
     }
 }

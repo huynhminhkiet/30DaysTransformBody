@@ -25,11 +25,11 @@ public class ChangeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final ChallengeImage challengeImage, ChallengeImageManager challengeImageManager) {
+        frameSelected.setVisibility(View.GONE);
         challengeImageManager.displayChangeThumbnail(challengeImage.getId(), new ChallengeImageManager.DisplayImageCallback() {
             @Override
             public void onImageLoaded(byte[] thumbnail) {
                 Glide.with(itemView.getContext()).load(thumbnail).into(ivImage);
-                frameSelected.setVisibility(View.GONE);
             }
 
             @Override

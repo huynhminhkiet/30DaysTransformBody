@@ -8,6 +8,7 @@ import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.utils.AnimatedGifEncoder;
+import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
@@ -121,7 +122,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 for (int i = 0; i < mChallengeDayImageList.size(); i++) {
                     ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(i);
                     if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
-                        byte[] image = FileUtils.loadImage(challengeDayImage.getChallengeDay().getImage());
+                        byte[] image = FileUtils.loadImage(challengeDayImage.getChallengeDay().getImage(), Constants.JPG_DIR);
                         if (i == 0)
                             mChallengeRepository.getChallengeDayThumbnail(challengeDayImage.getChallengeDay().getId(), new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
                                 @Override
@@ -160,6 +161,20 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 mView.setProgressDialog(false);
             }
         }.execute();
+    }
+
+    @Override
+    public void selectImageToUpdate(ChallengeDay challengeDay) {
+        for (int i = 0; i < mChallengeDayImageList.size(); i++) {
+            ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(i);
+            if (challengeDay.getId() == challengeDayImage.getChallengeDay().getId()) {
+                mView.updateChallengeImageOnAlbum(challengeDayImage, i);
+                return;
+            } else if (challengeDay.getId() < challengeDayImage.getChallengeDay().getId()) {
+                mView.addNewImageOnAlbum(challengeDayImage, i);
+                return;
+            }
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
@@ -37,6 +39,13 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     private ProgressBar progressBar;
 
     private int mPositionUpdating;
+    private ChallengeProgressFragmentListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (ChallengeProgressFragmentListener) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +105,9 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST_CODE) {
             if(resultCode == Activity.RESULT_OK){
-                mChallengeDayAdapter.updateItem((ChallengeDay) data.getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY), mPositionUpdating);
+                ChallengeDay challengeDay = (ChallengeDay) data.getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY);
+                mChallengeDayAdapter.updateItem(challengeDay, mPositionUpdating);
+                mListener.onChallengeDayImageUpdated(challengeDay);
             }
         }
     }

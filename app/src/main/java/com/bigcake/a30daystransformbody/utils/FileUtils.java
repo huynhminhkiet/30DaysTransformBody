@@ -34,9 +34,10 @@ public class FileUtils {
         return fileName;
     }
 
-    public static byte[] loadImage(String imageName) {
+    public static byte[] loadImage(String imageName, int directory) {
         FileInputStream inputStream = null;
-        File file = new File (getImageDir(), imageName);
+        File imageDirectory = (directory == Constants.JPG_DIR) ? getImageDir() : getImageGifDir();
+        File file = new File (imageDirectory, imageName);
         try {
             inputStream = new FileInputStream(file);
             return Utils.convertBitmapToByteArray(BitmapFactory.decodeStream(inputStream));
@@ -54,14 +55,14 @@ public class FileUtils {
         return null;
     }
 
-    private static File getImageDir() {
+    public static File getImageDir() {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/bigcake/images");
         myDir.mkdirs();
         return myDir;
     }
 
-    private static File getImageGifDir() {
+    public static File getImageGifDir() {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/bigcake/gifs");
         myDir.mkdirs();

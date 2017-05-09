@@ -21,6 +21,9 @@ public interface AlbumContract {
         void hideGifPanel();
         void setProgressDialog(boolean b);
         void showDelayDialog();
+        void onChallengeDayImageOnBoardUpdated(ChallengeDay challengeDay);
+        void updateChallengeImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
+        void addNewImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
     }
 
     interface Presenter extends BasePresenter {
@@ -29,5 +32,6 @@ public interface AlbumContract {
         void selectAll();
         void createGif(int delay);
         void closeGifPanel();
+        void selectImageToUpdate(ChallengeDay challengeDay);
     }
 }

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
+import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
 
 /**
@@ -87,7 +88,7 @@ public class ChallengeImageManager {
         mChallengeRepository.getLastChallengeDayHasImage(challengeId, new ChallengeDataSource.GetLastChallengeDay() {
             @Override
             public void onSuccess(ChallengeDay challengeDay) {
-                callback.onImageLoaded(FileUtils.loadImage(challengeDay.getImage()));
+                callback.onImageLoaded(FileUtils.loadImage(challengeDay.getImage(), Constants.JPG_DIR));
             }
 
             @Override
