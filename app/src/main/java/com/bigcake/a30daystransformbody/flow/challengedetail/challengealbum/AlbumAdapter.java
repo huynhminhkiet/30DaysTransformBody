@@ -75,9 +75,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     }
 
     public void insertItem(ChallengeDayImage challengeDayImage, int position) {
-        mChallengeDayImageList.add(position + 1, challengeDayImage);
+        mChallengeDayImageList.add(position, challengeDayImage);
         for (int i = 0; i < mChallengeDayImageList.size(); i++)
             Log.d(getClass().getSimpleName(), challengeDayImage.getChallengeDay().getDay()+"");
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int mPositionSelected) {
+        mChallengeDayImageList.remove(mPositionSelected);
+        notifyItemRemoved(mPositionSelected);
     }
 }

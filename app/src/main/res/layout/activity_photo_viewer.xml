@@ -3,31 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorGreenYellow"
     tools:context="com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity">
 
     <ImageView
-        android:scaleType="centerInside"
         android:id="@+id/photo_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerInside" />
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:id="@+id/gif_view"/>
+        android:layout_centerInParent="true" />
 
-    <ImageButton
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:id="@+id/btn_delete_image"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/_60sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:orientation="vertical">
 
-    <ImageButton
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:id="@+id/btn_share_image"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        <ImageButton
+            android:id="@+id/btn_share_image"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_fb" />
+
+        <ImageButton
+            android:id="@+id/btn_delete_image"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete"
+            android:scaleType="fitCenter"/>
+
+
+    </LinearLayout>
+
 </RelativeLayout>

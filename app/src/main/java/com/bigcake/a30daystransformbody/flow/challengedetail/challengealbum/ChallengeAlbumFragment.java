@@ -1,6 +1,8 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeAlbumFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.SetDelayDialogCallback;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bigcake.a30daystransformbody.utils.Constants;
@@ -40,6 +43,14 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private TextView tvNumberItemSelected;
     private TextView btnSelectAll, btnCreateGif, btnCancel;
     private ProgressDialog mProgressDialog;
+    public static final int REQUEST_CODE_CHALLENGE_DAY_ALBUM = 100;
+    private ChallengeAlbumFragmentListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (ChallengeAlbumFragmentListener) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,6 +145,11 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     }
 
     @Override
+    public void createChangeImageDone() {
+        mListener.onChangeImageCreated();
+    }
+
+    @Override
     public void updateNumberSelected(int count) {
         tvNumberItemSelected.setText(String.format(getContext().getString(R.string.gen_item_selected), count));
     }
@@ -174,6 +190,16 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
         intent.putExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHALLENGE_ALBUM);
         intent.putExtra(Constants.EXTRA_CHALLENGE_DAY, challengeDayImage.getChallengeDay());
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_CHALLENGE_DAY_ALBUM);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CHALLENGE_DAY_ALBUM) {
+            if(resultCode == Activity.RESULT_OK){
+                mAlbumAdapter.deleteItem(mPositionSelected);
+                mListener.onChallengeDayImageDeleted((ChallengeDay) data.getSerializableExtra(Constants.EXTRA_CHALLENGE_DAY));
+            }
+        }
     }
 }

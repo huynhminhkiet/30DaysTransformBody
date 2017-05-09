@@ -88,4 +88,9 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
+    public static void deleteImage(File dir,String fileName) {
+        File file = new File (dir, fileName);
+        if (file.exists ()) file.delete ();
+    }
 }

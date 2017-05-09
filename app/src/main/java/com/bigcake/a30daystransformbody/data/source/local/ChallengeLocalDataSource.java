@@ -304,6 +304,30 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
+    public void deleteChallengeDayImage(ChallengeDay challengeDay, ChallengeCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TableContent.ChallengeDay.COLUMN_THUMBNAIL, (byte[]) null);
+        values.put(TableContent.ChallengeDay.COLUMN_IMAGE, (byte[]) null);
+
+        if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,
+                TableContent.ChallengeDay._ID + "=" + challengeDay.getId(), null) == -1) {
+            db.close();
+            callBack.onError();
+            return;
+        }
+
+        db.close();
+        FileUtils.deleteImage(FileUtils.getImageDir(), challengeDay.getImage());
+        callBack.onSuccess();
+    }
+
+    @Override
+    public void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback) {
+
+    }
+
+    @Override
     public void getChangeThumbnail(int changeImageId, @NonNull LoadThumbnailCallBack callback) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 

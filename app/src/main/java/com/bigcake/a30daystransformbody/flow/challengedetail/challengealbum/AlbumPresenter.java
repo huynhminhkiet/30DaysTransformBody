@@ -119,11 +119,12 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 encoder.setDelay(delay);
                 encoder.start(bos);
                 final byte[][] firstImage = {null};
+                boolean isThumbnailSetted = false;
                 for (int i = 0; i < mChallengeDayImageList.size(); i++) {
                     ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(i);
                     if (challengeDayImage.getStatus() == ChallengeDayImage.SELECTED) {
                         byte[] image = FileUtils.loadImage(challengeDayImage.getChallengeDay().getImage(), Constants.JPG_DIR);
-                        if (i == 0)
+                        if (!isThumbnailSetted) {
                             mChallengeRepository.getChallengeDayThumbnail(challengeDayImage.getChallengeDay().getId(), new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
                                 @Override
                                 public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
@@ -135,6 +136,8 @@ public class AlbumPresenter implements AlbumContract.Presenter {
 
                                 }
                             });
+                            isThumbnailSetted = true;
+                        }
                         encoder.addFrame(BitmapFactory.decodeByteArray(image, 0, image.length));
                     }
                 }
@@ -158,6 +161,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
             @Override
             protected void onPostExecute(Integer status) {
                 super.onPostExecute(status);
+                mView.createChangeImageDone();
                 mView.setProgressDialog(false);
             }
         }.execute();
@@ -165,16 +169,26 @@ public class AlbumPresenter implements AlbumContract.Presenter {
 
     @Override
     public void selectImageToUpdate(ChallengeDay challengeDay) {
-        for (int i = 0; i < mChallengeDayImageList.size(); i++) {
+        int listImageSize = mChallengeDayImageList.size();
+        if (listImageSize == 0) {
+            mView.addNewImageOnAlbum(new ChallengeDayImage(challengeDay, ChallengeDayImage.NOT_SELECTED), 0);
+            return;
+        }
+        for (int i = 0; i < listImageSize - 1; i++) {
             ChallengeDayImage challengeDayImage = mChallengeDayImageList.get(i);
             if (challengeDay.getId() == challengeDayImage.getChallengeDay().getId()) {
                 mView.updateChallengeImageOnAlbum(challengeDayImage, i);
                 return;
-            } else if (challengeDay.getId() < challengeDayImage.getChallengeDay().getId()) {
-                mView.addNewImageOnAlbum(challengeDayImage, i);
+            } else if (challengeDay.getId() < mChallengeDayImageList.get(i + 1).getChallengeDay().getId()) {
+                mView.addNewImageOnAlbum(new ChallengeDayImage(challengeDay, ChallengeDayImage.NOT_SELECTED), i + 1);
                 return;
             }
         }
+        if (challengeDay.getId() == mChallengeDayImageList.get(listImageSize - 1).getChallengeDay().getId())
+            mView.updateChallengeImageOnAlbum(mChallengeDayImageList.get(listImageSize - 1), listImageSize - 1);
+        else
+            mView.addNewImageOnAlbum(new ChallengeDayImage(challengeDay, ChallengeDayImage.NOT_SELECTED), listImageSize);
+        return;
     }
 
     @Override

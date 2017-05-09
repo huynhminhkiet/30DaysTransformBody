@@ -76,4 +76,7 @@ public class ChangeFragment extends BaseFragment implements ChangeImagesContract
         intent.putExtra(Constants.EXTRA_CHALLENGE_IMAGE, item);
         startActivity(intent);
     }
+
+    public void refreshData() {
+    }
 }

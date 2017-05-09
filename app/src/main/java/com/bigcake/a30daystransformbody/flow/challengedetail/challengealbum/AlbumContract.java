@@ -24,6 +24,7 @@ public interface AlbumContract {
         void onChallengeDayImageOnBoardUpdated(ChallengeDay challengeDay);
         void updateChallengeImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
         void addNewImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
+        void createChangeImageDone();
     }
 
     interface Presenter extends BasePresenter {

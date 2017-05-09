@@ -1,5 +1,9 @@
 package com.bigcake.a30daystransformbody.flow.photoviewer;
 
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
+import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
@@ -18,9 +22,11 @@ public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
     private PhotoViewerContract.View mView;
     private int mDirectory;
     private String mImage;
+    private ChallengeRepository mChallengeRepository;
 
-    public PhotoViewerPresenter(PhotoViewerContract.View mView, String image, int directory) {
-        this.mView = mView;
+    public PhotoViewerPresenter(ChallengeRepository challengeRepository, PhotoViewerContract.View view, String image, int directory) {
+        mChallengeRepository = challengeRepository;
+        mView = view;
         mImage = image;
         mDirectory = directory;
     }
@@ -31,8 +37,23 @@ public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
     }
 
     @Override
-    public void deleteImage() {
+    public void deleteChangeImage(ChallengeImage challengeImage) {
 
+    }
+
+    @Override
+    public void deleteChallengeDayImage(ChallengeDay challengeDay) {
+        mChallengeRepository.deleteChallengeDayImage(challengeDay, new ChallengeDataSource.ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                mView.onImageDeleted();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
     @Override

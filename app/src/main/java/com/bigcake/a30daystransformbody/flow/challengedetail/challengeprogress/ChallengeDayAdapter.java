@@ -68,6 +68,15 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
         notifyItemChanged(position);
     }
 
+    public void updateItem(ChallengeDay challengeDay) {
+        for (int i = 0; i < mChallengeDayList.size(); i++)
+            if (mChallengeDayList.get(i).getId() == challengeDay.getId()) {
+                mChallengeDayList.set(i, challengeDay);
+                notifyItemChanged(i);
+                return;
+            }
+    }
+
     public void setItemClickListener(ItemClickListener<ChallengeDay> listener) {
         mListener = listener;
     }

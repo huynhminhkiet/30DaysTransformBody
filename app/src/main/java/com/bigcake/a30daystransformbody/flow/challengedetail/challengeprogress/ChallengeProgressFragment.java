@@ -111,4 +111,8 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
             }
         }
     }
+
+    public void deleteImage(ChallengeDay challengeDay) {
+        mChallengeDayAdapter.updateItem(challengeDay);
+    }
 }

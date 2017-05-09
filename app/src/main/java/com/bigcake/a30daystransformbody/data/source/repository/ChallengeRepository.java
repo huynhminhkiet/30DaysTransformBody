@@ -191,4 +191,24 @@ public class ChallengeRepository implements ChallengeDataSource {
             }
         });
     }
+
+    @Override
+    public void deleteChallengeDayImage(ChallengeDay challengeDay, final ChallengeCallBack callBack) {
+        mChallengeDataSource.deleteChallengeDayImage(challengeDay, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
+            }
+        });
+    }
+
+    @Override
+    public void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback) {
+
+    }
 }

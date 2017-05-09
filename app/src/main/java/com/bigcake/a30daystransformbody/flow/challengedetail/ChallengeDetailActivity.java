@@ -13,10 +13,12 @@ import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.ChangeFragment;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeAlbumFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
-public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View, ChallengeProgressFragmentListener {
+public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View,
+        ChallengeProgressFragmentListener, ChallengeAlbumFragmentListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -75,5 +77,15 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     @Override
     public void onChallengeDayImageUpdated(ChallengeDay challengeDay) {
         challengeAlbumFragment.onChallengeDayImageOnBoardUpdated(challengeDay);
+    }
+
+    @Override
+    public void onChallengeDayImageDeleted(ChallengeDay challengeDay) {
+        challengeProgressFragment.deleteImage(challengeDay);
+    }
+
+    @Override
+    public void onChangeImageCreated() {
+        changeFragment.refreshData();
     }
 }

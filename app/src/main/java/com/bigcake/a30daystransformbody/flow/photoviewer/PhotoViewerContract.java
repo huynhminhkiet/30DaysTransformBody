@@ -2,6 +2,8 @@ package com.bigcake.a30daystransformbody.flow.photoviewer;
 
 import com.bigcake.a30daystransformbody.base.BasePresenter;
 import com.bigcake.a30daystransformbody.base.BaseView;
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -12,11 +14,13 @@ import pl.droidsonroids.gif.GifDrawable;
 public interface PhotoViewerContract {
     interface Presenter extends BasePresenter {
         void shareImage();
-        void deleteImage();
+        void deleteChangeImage(ChallengeImage challengeImage);
+        void deleteChallengeDayImage(ChallengeDay challengeDay);
     }
 
     interface View extends BaseView<Presenter> {
         void onShowJPGPhoto(byte [] image);
         void onShowGIFPhoto(GifDrawable image);
+        void onImageDeleted();
     }
 }
