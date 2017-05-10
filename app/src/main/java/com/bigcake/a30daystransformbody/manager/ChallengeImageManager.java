@@ -55,12 +55,12 @@ public class ChallengeImageManager {
         }.execute();
     }
 
-    public void displayLastThumbnail(final int challengeId, final DisplayImageCallback callback) {
+    public void displayLastThumbnail(final int challengeId, final int limitDay, final DisplayImageCallback callback) {
         final byte[][] image = {null};
         new AsyncTask<Void, Void, byte[]>() {
             @Override
             protected byte[] doInBackground(Void... voids) {
-                mChallengeRepository.getLastChallengeDayThumbnail(challengeId, new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
+                mChallengeRepository.getLastChallengeDayThumbnail(challengeId, limitDay, new ChallengeDataSource.LoadChallengeDayThumbnailCallback() {
                     @Override
                     public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
                         image[0] = thumbnail;
@@ -84,8 +84,8 @@ public class ChallengeImageManager {
         }.execute();
     }
 
-    public void displayLastChallengeImage(final int challengeId, final DisplayImageCallback callback) {
-        mChallengeRepository.getLastChallengeDayHasImage(challengeId, new ChallengeDataSource.GetLastChallengeDay() {
+    public void displayLastChallengeImage(final int challengeId, int limitDay, final DisplayImageCallback callback) {
+        mChallengeRepository.getLastChallengeDayHasImage(challengeId, limitDay, new ChallengeDataSource.GetLastChallengeDay() {
             @Override
             public void onSuccess(ChallengeDay challengeDay) {
                 callback.onImageLoaded(FileUtils.loadImage(challengeDay.getImage(), Constants.JPG_DIR));

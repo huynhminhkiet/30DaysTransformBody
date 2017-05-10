@@ -47,7 +47,7 @@ public class CameraPresenter implements CameraContract.Presenter {
 
     @Override
     public void onButtonLastImageClick() {
-        ChallengeImageManager.getInstance(mChallengeRepository).displayLastChallengeImage(mChallengeDay.getChallengeId(),
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastChallengeImage(mChallengeDay.getChallengeId(), mChallengeDay.getDay(),
                 new ChallengeImageManager.DisplayImageCallback() {
                     @Override
                     public void onImageLoaded(byte[] thumbnail) {
@@ -62,7 +62,7 @@ public class CameraPresenter implements CameraContract.Presenter {
     }
 
     private void getLastImage(ChallengeDay challengeDay) {
-        ChallengeImageManager.getInstance(mChallengeRepository).displayLastThumbnail(challengeDay.getChallengeId(),
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastThumbnail(challengeDay.getChallengeId(), challengeDay.getDay(),
                 new ChallengeImageManager.DisplayImageCallback() {
                     @Override
                     public void onImageLoaded(byte[] thumbnail) {

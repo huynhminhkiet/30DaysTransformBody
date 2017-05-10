@@ -103,8 +103,8 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void getLastChallengeDayHasImage(int exerciseId, @NonNull final GetLastChallengeDay callback) {
-        mChallengeDataSource.getLastChallengeDayHasImage(exerciseId, new GetLastChallengeDay() {
+    public void getLastChallengeDayHasImage(int exerciseId, int limitDay, @NonNull final GetLastChallengeDay callback) {
+        mChallengeDataSource.getLastChallengeDayHasImage(exerciseId, limitDay, new GetLastChallengeDay() {
             @Override
             public void onSuccess(ChallengeDay challengeDay) {
                 callback.onSuccess(challengeDay);
@@ -133,8 +133,8 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void getLastChallengeDayThumbnail(int exerciseId, @NonNull final LoadChallengeDayThumbnailCallback callback) {
-        mChallengeDataSource.getLastChallengeDayThumbnail(exerciseId, new LoadChallengeDayThumbnailCallback() {
+    public void getLastChallengeDayThumbnail(int exerciseId, int limitDay, @NonNull final LoadChallengeDayThumbnailCallback callback) {
+        mChallengeDataSource.getLastChallengeDayThumbnail(exerciseId, limitDay, new LoadChallengeDayThumbnailCallback() {
             @Override
             public void onChallengeDayThumbnailLoaded(byte[] thumbnail) {
                 callback.onChallengeDayThumbnailLoaded(thumbnail);

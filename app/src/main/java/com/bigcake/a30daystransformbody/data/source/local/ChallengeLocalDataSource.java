@@ -161,22 +161,24 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void getLastChallengeDayThumbnail(int exerciseId, @NonNull LoadChallengeDayThumbnailCallback callback) {
+    public void getLastChallengeDayThumbnail(int exerciseId, int limitDay, @NonNull LoadChallengeDayThumbnailCallback callback) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         String[] projection = {
                 TableContent.ChallengeDay.COLUMN_THUMBNAIL
         };
 
-        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(exerciseId)};
+        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ? AND " +
+                TableContent.ChallengeDay.COLUMN_DATE + " < ? AND " +
+                TableContent.ChallengeDay.COLUMN_IMAGE + " is not null";
+        String[] selectionArgs = {String.valueOf(exerciseId), String.valueOf(limitDay)};
         String orderBy = TableContent.ChallengeDay._ID + " DESC";
 
         Cursor c = db.query(
                 TableContent.ChallengeDay.TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
         byte[] image = null;
         if (c != null && c.getCount() > 0) {
-            while (c.moveToNext()) {
+            if (c.moveToNext()) {
                 image = c.getBlob(c.getColumnIndexOrThrow(TableContent.ChallengeDay.COLUMN_THUMBNAIL));
 
             }
@@ -194,7 +196,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void getLastChallengeDayHasImage(int exerciseId, @NonNull GetLastChallengeDay callback) {
+    public void getLastChallengeDayHasImage(int exerciseId, int limitDay, @NonNull GetLastChallengeDay callback) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
         String[] projection = {
@@ -207,8 +209,9 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         };
 
         String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ? AND " +
+                TableContent.ChallengeDay.COLUMN_DATE + " < ? AND " +
                 TableContent.ChallengeDay.COLUMN_IMAGE + " is not null";
-        String[] selectionArgs = {String.valueOf(exerciseId)};
+        String[] selectionArgs = {String.valueOf(exerciseId), String.valueOf(limitDay)};
         String orderBy = TableContent.ChallengeDay._ID + " DESC";
 
         Cursor c = db.query(
