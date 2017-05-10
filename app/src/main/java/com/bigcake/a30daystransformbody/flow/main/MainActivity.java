@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow;
+package com.bigcake.a30daystransformbody.flow.main;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,18 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
+import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
 import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerFragment;
 import com.bigcake.a30daystransformbody.utils.ActivityUtils;
+import com.bigcake.a30daystransformbody.utils.Constants;
+import com.bigcake.a30daystransformbody.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
     private static final String KEY_CURRENT_FRAGMENT = "key_current_fragment";
-
     private Toolbar toolbar;
-
     private Fragment mCurrentFragment;
+    private MainContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initSlideMenu();
+
+        mPresenter = new MainPresenter(this, Injection.provideChallengeRepository(this));
+        mPresenter.start();
 
         if (savedInstanceState == null) {
             mCurrentFragment = ExercisesCategoriesFragment.newInstance();
@@ -104,5 +110,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void resetWeightTracker() {
+        Utils.putBooleanPrefs(this, Constants.PREFS_TODAY_WEIGHT_UPDATED, false);
+    }
+
+    @Override
+    public void trackWeight(Weight weight) {
+        Utils.putBooleanPrefs(this, Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
     }
 }

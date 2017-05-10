@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/edt_weight"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:hint="@string/hint_update_weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

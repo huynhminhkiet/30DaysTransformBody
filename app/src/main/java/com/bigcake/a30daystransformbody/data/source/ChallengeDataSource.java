@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Weight;
 
 import java.util.List;
 
@@ -53,6 +54,16 @@ public interface ChallengeDataSource {
         void onError();
     }
 
+    interface GetAllWeightCallback {
+        void onSuccess(List<Weight> weightList);
+        void onError();
+    }
+
+    interface GetLastWeightCallback {
+        void onSuccess(Weight weight);
+        void onError();
+    }
+
     void getChallengeDays(int exerciseId, LoadChallengeDaysCallBack callBack);
     void generateChallengesDay(int exerciseId, ChallengeCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack);
@@ -67,4 +78,9 @@ public interface ChallengeDataSource {
     void getAllChangeImages(int exerciseId, GetChangeImagesCallback callback);
     void getChangeThumbnail(int changeImageId, @NonNull LoadThumbnailCallBack callback);
     void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback);
+
+    void insertWeight(Weight weight, ChallengeCallBack callBack);
+    void updateWeight(Weight weight, ChallengeCallBack callBack);
+    void getAllWeight(GetAllWeightCallback callback);
+    void getLastWeight(GetLastWeightCallback callback);
 }

@@ -13,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ThirtyDaysTransformBody.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
+    private static final String REAL_TYPE = " REAL";
     private static final String BLOB_TYPE = " BLOB";
     private static final String COMMA_SEP = ",";
 
@@ -62,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_WEIGHT =
             "CREATE TABLE " + TableContent.Weight.TABLE_NAME + " (" +
                     TableContent.Weight._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
-                    TableContent.Weight.COLUMN_WEIGHT + INTEGER_TYPE + COMMA_SEP +
-                    TableContent.Weight.COLUMN_DATE + INTEGER_TYPE +
+                    TableContent.Weight.COLUMN_WEIGHT + REAL_TYPE + COMMA_SEP +
+                    TableContent.Weight.COLUMN_DATE + TEXT_TYPE +
                     " )";
 }

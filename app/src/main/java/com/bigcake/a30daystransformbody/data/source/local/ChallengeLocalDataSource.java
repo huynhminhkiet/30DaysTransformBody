@@ -9,11 +9,14 @@ import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -367,6 +370,112 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         db.close();
         if (image != null)
             callback.onSuccess(image);
+        else
+            callback.onError();
+    }
+
+    @Override
+    public void getLastWeight(GetLastWeightCallback callback) {
+        SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
+
+        String[] projection = {
+                TableContent.Weight._ID,
+                TableContent.Weight.COLUMN_DATE,
+                TableContent.Weight.COLUMN_WEIGHT
+        };
+
+        String orderBy = TableContent.Weight.COLUMN_DATE + " DESC";
+
+        Cursor c = db.query(
+                TableContent.Weight.TABLE_NAME, projection, null, null, null, null, orderBy);
+
+        Weight weight = null;
+        if (c != null && c.getCount() > 0) {
+            if (c.moveToNext()) {
+                int id = c.getInt(c.getColumnIndexOrThrow(TableContent.Weight._ID));
+                long dateMillis = Long.parseLong(c.getString(c.getColumnIndexOrThrow(TableContent.Weight.COLUMN_DATE)));
+                float w = c.getFloat(c.getColumnIndexOrThrow(TableContent.Weight.COLUMN_WEIGHT));
+
+                weight = new Weight(id, Utils.convertTimeInMillis(dateMillis), w);
+            }
+        }
+
+        if (c != null) {
+            c.close();
+        }
+        db.close();
+        if (weight != null)
+            callback.onSuccess(weight);
+        else
+            callback.onError();
+    }
+
+    @Override
+    public void insertWeight(Weight weight, ChallengeCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TableContent.Weight.COLUMN_DATE, String.valueOf(Utils.convertTimeToMillis(weight.getDate())));
+        values.put(TableContent.Weight.COLUMN_WEIGHT, weight.getWeight());
+
+        long id = db.insert(TableContent.Weight.TABLE_NAME, null, values);
+        db.close();
+
+        if (id == -1) {
+            callBack.onError();
+            return;
+        }
+        callBack.onSuccess();
+    }
+
+    @Override
+    public void updateWeight(Weight weight, ChallengeCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TableContent.Weight.COLUMN_DATE, String.valueOf(Utils.convertTimeToMillis(weight.getDate())));
+        values.put(TableContent.Weight.COLUMN_WEIGHT, weight.getWeight());
+
+        long id = db.update(TableContent.Weight.TABLE_NAME, values, TableContent.Weight._ID + "=" + weight.getId(), null);
+        db.close();
+
+        if (id == -1) {
+            callBack.onError();
+            return;
+        }
+        callBack.onSuccess();
+    }
+
+    @Override
+    public void getAllWeight(GetAllWeightCallback callback) {
+        List<Weight> weightList = null;
+        SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
+
+        String[] projection = {
+                TableContent.Weight._ID,
+                TableContent.Weight.COLUMN_DATE,
+                TableContent.Weight.COLUMN_WEIGHT
+        };
+
+        Cursor c = db.query(
+                TableContent.Weight.TABLE_NAME, projection, null, null, null, null, null);
+
+        if (c != null && c.getCount() > 0) {
+            weightList = new ArrayList<>();
+            while (c.moveToNext()) {
+                int id = c.getInt(c.getColumnIndexOrThrow(TableContent.Weight._ID));
+                long dateMillis = Long.parseLong(c.getString(c.getColumnIndexOrThrow(TableContent.Weight.COLUMN_DATE)));
+                float weight = c.getFloat(c.getColumnIndexOrThrow(TableContent.Weight.COLUMN_WEIGHT));
+
+                Weight w = new Weight(id, Utils.convertTimeInMillis(dateMillis), weight);
+                weightList.add(w);
+            }
+        }
+
+        if (c != null) {
+            c.close();
+        }
+        db.close();
+        if (weightList != null)
+            callback.onSuccess(weightList);
         else
             callback.onError();
     }

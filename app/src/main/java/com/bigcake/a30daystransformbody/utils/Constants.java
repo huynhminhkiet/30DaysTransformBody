@@ -13,4 +13,5 @@ public class Constants {
     public static final String EXTRA_CHALLENGE_IMAGE = "extra_challenge_day";
     public static final int JPG_DIR = 0;
     public static final int GIF_DIR = 1;
+    public static final String PREFS_TODAY_WEIGHT_UPDATED = "today_weight_updated";
 }

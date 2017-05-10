@@ -7,9 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.interfaces.UpdateWeightDialogCallback;
+import com.bigcake.a30daystransformbody.utils.Constants;
+import com.bigcake.a30daystransformbody.utils.Utils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -17,6 +21,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +32,7 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
     private LineChart lineChart;
     private Button btnUpdateWeight;
     private WeightManagerContract.Presenter mPresenter;
+    private Weight mCurrentWeight;
 
     public static WeightManagerFragment newInstance() {
         return new WeightManagerFragment();
@@ -35,7 +41,7 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new WeightManagerPresenter(this);
+        mPresenter = new WeightManagerPresenter(this, Injection.provideChallengeRepository(getContext()));
     }
 
     @Nullable
@@ -48,13 +54,19 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
     }
 
     @Override
-    public void showUpdateWeightForm() {
+    public void showUpdateWeightForm(String lastWeight) {
         UpdateWeightDialog dialog = UpdateWeightDialog.create(getContext(), new UpdateWeightDialogCallback() {
             @Override
             public void onWeightSubmitted(int weight) {
-                mPresenter.updateWeight(weight);
+                if (!Utils.getBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, false)) {
+                    mPresenter.insertWeight(weight);
+                    Utils.putBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
+                } else {
+                    mPresenter.updateWeight(weight);
+                }
             }
         });
+        dialog.setLastWeight(lastWeight);
         dialog.show();
     }
 
@@ -64,7 +76,8 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
         btnUpdateWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUpdateWeightForm();
+                mCurrentWeight = mPresenter.getCurrentWeight();
+                showUpdateWeightForm(mCurrentWeight == null ? "" : String.valueOf(mCurrentWeight.getWeight()));
             }
         });
     }

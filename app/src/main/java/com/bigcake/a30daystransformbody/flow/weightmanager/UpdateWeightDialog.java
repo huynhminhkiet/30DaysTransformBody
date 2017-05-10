@@ -19,6 +19,7 @@ import com.bigcake.a30daystransformbody.interfaces.UpdateWeightDialogCallback;
 public class UpdateWeightDialog extends Dialog {
     private UpdateWeightDialogCallback mCallback;
     private EditText edtWeight;
+    private String lastWeightData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class UpdateWeightDialog extends Dialog {
 
     private void initViews() {
         edtWeight = (EditText) findViewById(R.id.edt_weight);
+        edtWeight.setText(lastWeightData);
     }
 
     private UpdateWeightDialog(@NonNull Context context) {
@@ -55,5 +57,9 @@ public class UpdateWeightDialog extends Dialog {
         dialog.mCallback = callback;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    public void setLastWeight(String lastWeight) {
+        lastWeightData = lastWeight;
     }
 }

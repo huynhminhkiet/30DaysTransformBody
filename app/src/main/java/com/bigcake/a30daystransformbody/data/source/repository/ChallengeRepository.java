@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class ChallengeRepository implements ChallengeDataSource {
         mChallengeDataSource = challengeDataSource;
     }
 
-    public static synchronized  ChallengeRepository getInstance(ChallengeDataSource challengeDataSource) {
+    public static synchronized ChallengeRepository getInstance(ChallengeDataSource challengeDataSource) {
         if (mInstance == null)
             mInstance = new ChallengeRepository(challengeDataSource);
         return mInstance;
@@ -83,6 +84,36 @@ public class ChallengeRepository implements ChallengeDataSource {
             @Override
             public void onError() {
 
+            }
+        });
+    }
+
+    @Override
+    public void getAllWeight(final GetAllWeightCallback callback) {
+        mChallengeDataSource.getAllWeight(new GetAllWeightCallback() {
+            @Override
+            public void onSuccess(List<Weight> weightList) {
+                callback.onSuccess(weightList);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void getLastWeight(final GetLastWeightCallback callback) {
+        mChallengeDataSource.getLastWeight(new GetLastWeightCallback() {
+            @Override
+            public void onSuccess(Weight weight) {
+                callback.onSuccess(weight);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
             }
         });
     }
@@ -218,6 +249,36 @@ public class ChallengeRepository implements ChallengeDataSource {
             @Override
             public void onError() {
                 callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void insertWeight(Weight weight, final ChallengeCallBack callBack) {
+        mChallengeDataSource.insertWeight(weight, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
+            }
+        });
+    }
+
+    @Override
+    public void updateWeight(Weight weight, final ChallengeCallBack callBack) {
+        mChallengeDataSource.updateWeight(weight, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
             }
         });
     }
