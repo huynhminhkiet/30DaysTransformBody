@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
 import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerFragment;
-import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerPresenter;
 import com.bigcake.a30daystransformbody.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -38,6 +37,7 @@ public class MainActivity extends AppCompatActivity
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         } else {
             mCurrentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         }
     }
 
@@ -80,16 +80,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.weight_manager) {
+            mCurrentFragment = WeightManagerFragment.newInstance();
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        } else if (id == R.id.exercises) {
+            mCurrentFragment = ExercisesCategoriesFragment.newInstance();
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        } else if (id == R.id.feedback) {
 
         }
 

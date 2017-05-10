@@ -14,8 +14,9 @@ import java.util.Map;
 public interface WeightManagerContract {
     interface View extends BaseView<Presenter> {
         void showWeightChart(List<Entry> entries, List<String> label);
+        void showUpdateWeightForm();
     }
     interface Presenter extends BasePresenter {
-
+        void updateWeight(int weight);
     }
 }

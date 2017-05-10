@@ -23,4 +23,11 @@ public class TableContent {
         public static final String COLUMN_CHANGE_THUMBNAIL = "change_thumbnail";
         public static final String COLUMN_CHANGE_IMAGE = "change_image";
     }
+
+    public abstract class Weight {
+        public static final String TABLE_NAME = "weight";
+        public static final String _ID= "id";
+        public static final String COLUMN_WEIGHT = "weight";
+        public static final String COLUMN_DATE = "date";
+    }
 }

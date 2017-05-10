@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.interfaces.UpdateWeightDialogCallback;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -23,10 +25,17 @@ import java.util.List;
 
 public class WeightManagerFragment extends BaseFragment implements WeightManagerContract.View {
     private LineChart lineChart;
+    private Button btnUpdateWeight;
     private WeightManagerContract.Presenter mPresenter;
 
     public static WeightManagerFragment newInstance() {
         return new WeightManagerFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter = new WeightManagerPresenter(this);
     }
 
     @Nullable
@@ -38,8 +47,26 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
         return view;
     }
 
+    @Override
+    public void showUpdateWeightForm() {
+        UpdateWeightDialog dialog = UpdateWeightDialog.create(getContext(), new UpdateWeightDialogCallback() {
+            @Override
+            public void onWeightSubmitted(int weight) {
+                mPresenter.updateWeight(weight);
+            }
+        });
+        dialog.show();
+    }
+
     private void initViews(View view) {
         lineChart = (LineChart) view.findViewById(R.id.line_chart);
+        btnUpdateWeight = (Button) view.findViewById(R.id.btn_update_weight);
+        btnUpdateWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUpdateWeightForm();
+            }
+        });
     }
 
     @Override
@@ -59,8 +86,13 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
         yAxisRight.setStartAtZero(false);
 
         LineDataSet dataset = new LineDataSet(entries, "Weight");
+        dataset.setColor(getContext().getResources().getColor(R.color.colorOrange));
+        dataset.setCircleColor(getContext().getResources().getColor(R.color.colorDarkGreen));
+        dataset.setLineWidth(3);
         LineData data = new LineData(labels, dataset);
         lineChart.setDescription(null);
+        lineChart.zoom(entries.size() / 5, 1, 0, 0);
+        lineChart.moveViewToX(entries.size());
         lineChart.setData(data);
     }
 }

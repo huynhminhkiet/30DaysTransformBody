@@ -17,4 +17,8 @@
     <string name="gen_title">Title</string>
     <string name="gen_select_exercise">Select Exercise</string>
     <string name="btn_start">Start</string>
+    <string name="btn_update_weight">Update your weight today</string>
+    <string name="gen_update_weight_dialog_title">Your weight today</string>
+    <string name="hint_update_weight">e.g. 50</string>
+    <string name="gen_kg">kg</string>
 </resources>

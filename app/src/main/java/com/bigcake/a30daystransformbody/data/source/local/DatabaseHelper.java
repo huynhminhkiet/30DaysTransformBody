@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CHALLENGE_DAY_TABLE);
         db.execSQL(SQL_CREATE_CHALLENGE_IMAGE);
+        db.execSQL(SQL_CREATE_WEIGHT);
     }
 
     @Override
@@ -56,5 +57,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TableContent.ChallengeImage.COLUMN_EXERCISE_ID + INTEGER_TYPE + COMMA_SEP +
                     TableContent.ChallengeImage.COLUMN_CHANGE_THUMBNAIL + BLOB_TYPE + COMMA_SEP +
                     TableContent.ChallengeImage.COLUMN_CHANGE_IMAGE + TEXT_TYPE +
+                    " )";
+
+    private static final String SQL_CREATE_WEIGHT =
+            "CREATE TABLE " + TableContent.Weight.TABLE_NAME + " (" +
+                    TableContent.Weight._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
+                    TableContent.Weight.COLUMN_WEIGHT + INTEGER_TYPE + COMMA_SEP +
+                    TableContent.Weight.COLUMN_DATE + INTEGER_TYPE +
                     " )";
 }
