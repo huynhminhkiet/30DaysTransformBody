@@ -10,6 +10,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
 import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.ChangeFragment;
@@ -85,7 +86,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     }
 
     @Override
-    public void onChangeImageCreated() {
-        changeFragment.refreshData();
+    public void onChangeImageCreated(ChallengeImage challengeImage) {
+        changeFragment.refreshNewImage(challengeImage);
     }
 }

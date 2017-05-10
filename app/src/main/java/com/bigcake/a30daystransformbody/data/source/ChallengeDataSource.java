@@ -48,6 +48,11 @@ public interface ChallengeDataSource {
         void onError();
     }
 
+    interface InsertChangeImageCallBack {
+        void onSuccess(ChallengeImage challengeImage);
+        void onError();
+    }
+
     void getChallengeDays(int exerciseId, LoadChallengeDaysCallBack callBack);
     void generateChallengesDay(int exerciseId, ChallengeCallBack callBack);
     void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack);
@@ -58,7 +63,7 @@ public interface ChallengeDataSource {
     void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
     void deleteChallengeDayImage(ChallengeDay challengeDay, ChallengeCallBack callBack);
 
-    void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, ChallengeCallBack callBack);
+    void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, InsertChangeImageCallBack callBack);
     void getAllChangeImages(int exerciseId, GetChangeImagesCallback callback);
     void getChangeThumbnail(int changeImageId, @NonNull LoadThumbnailCallBack callback);
     void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback);

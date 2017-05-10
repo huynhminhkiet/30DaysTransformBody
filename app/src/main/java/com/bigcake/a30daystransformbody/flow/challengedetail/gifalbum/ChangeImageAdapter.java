@@ -63,8 +63,13 @@ public class ChangeImageAdapter extends RecyclerView.Adapter<ChangeViewHolder> {
         mListener = listener;
     }
 
-    public void updateItem(ChallengeImage challengeImage, int position) {
-        mChangeImageList.set(position, challengeImage);
-        notifyItemChanged(position);
+    public void deleteItem(int mPositionSelected) {
+        mChangeImageList.remove(mPositionSelected);
+        notifyDataSetChanged();
+    }
+
+    public void addNewImage(ChallengeImage challengeImage) {
+        mChangeImageList.add(challengeImage);
+        notifyDataSetChanged();
     }
 }

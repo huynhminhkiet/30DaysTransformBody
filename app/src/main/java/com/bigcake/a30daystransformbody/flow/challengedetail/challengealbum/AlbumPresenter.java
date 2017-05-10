@@ -109,9 +109,11 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     public void createGif(final int delay) {
         mView.setProgressDialog(true);
         new AsyncTask<Void, Void, Integer>() {
+            ChallengeImage challengeImage = null;
+            int status;
             @Override
             protected Integer doInBackground(Void... voids) {
-                final int[] status = new int[1];
+
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 AnimatedGifEncoder encoder = new AnimatedGifEncoder();
                 encoder.setQuality(20);
@@ -144,24 +146,25 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 encoder.finish();
 
                 mChallengeRepository.insertChallengeGif(mChallengeDayImageList.get(0).getChallengeDay().getChallengeId(),
-                        bos.toByteArray(), firstImage[0], new ChallengeDataSource.ChallengeCallBack() {
+                        bos.toByteArray(), firstImage[0], new ChallengeDataSource.InsertChangeImageCallBack() {
                             @Override
-                            public void onSuccess() {
-                                status[0] = 1;
+                            public void onSuccess(ChallengeImage image) {
+                                status = 1;
+                                challengeImage = image;
                             }
 
                             @Override
                             public void onError() {
-                                status[0] = 0;
+                                status = 0;
                             }
                         });
-                return status[0];
+                return status;
             }
 
             @Override
             protected void onPostExecute(Integer status) {
                 super.onPostExecute(status);
-                mView.createChangeImageDone();
+                mView.createChangeImageDone(challengeImage);
                 mView.setProgressDialog(false);
             }
         }.execute();

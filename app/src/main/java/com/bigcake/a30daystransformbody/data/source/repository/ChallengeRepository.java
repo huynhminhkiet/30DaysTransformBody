@@ -88,11 +88,11 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, final ChallengeCallBack callBack) {
-        mChallengeDataSource.insertChallengeGif(exerciseId, gif, thumbnail, new ChallengeCallBack() {
+    public void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, final InsertChangeImageCallBack callBack) {
+        mChallengeDataSource.insertChallengeGif(exerciseId, gif, thumbnail, new InsertChangeImageCallBack() {
             @Override
-            public void onSuccess() {
-                callBack.onSuccess();
+            public void onSuccess(ChallengeImage challengeImage) {
+                callBack.onSuccess(challengeImage);
             }
 
             @Override
@@ -208,7 +208,17 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
-    public void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback) {
+    public void deleteChangeImage(ChallengeImage challengeImage, @NonNull final ChallengeCallBack callback) {
+        mChallengeDataSource.deleteChangeImage(challengeImage, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
 
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
     }
 }

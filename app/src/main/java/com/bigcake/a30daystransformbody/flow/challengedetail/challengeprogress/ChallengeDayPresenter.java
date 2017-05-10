@@ -25,22 +25,12 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
     @Override
     public void start() {
         if (mChallengeDayList == null)
-            mChallengeRepository.generateChallengesDay(0, new ChallengeDataSource.ChallengeCallBack() {
+            mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
                 @Override
-                public void onSuccess() {
-                    mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
-                        @Override
-                        public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
-                            mChallengeDayList = challengeDayList;
-                            mView.displayChallengeDays(mChallengeDayList);
-                            mView.displayProgressBar(13);
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
+                public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
+                    mChallengeDayList = challengeDayList;
+                    mView.displayChallengeDays(mChallengeDayList);
+                    mView.displayProgressBar(13);
                 }
 
                 @Override
@@ -48,6 +38,7 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
 
                 }
             });
+                
 
         else {
             mView.displayChallengeDays(mChallengeDayList);

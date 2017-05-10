@@ -2,6 +2,7 @@ package com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum;
 
 import com.bigcake.a30daystransformbody.base.BasePresenter;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface AlbumContract {
         void onChallengeDayImageOnBoardUpdated(ChallengeDay challengeDay);
         void updateChallengeImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
         void addNewImageOnAlbum(ChallengeDayImage challengeDayImage, int position);
-        void createChangeImageDone();
+        void createChangeImageDone(ChallengeImage challengeImage);
     }
 
     interface Presenter extends BasePresenter {

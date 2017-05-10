@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumAdapter;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeDayImage;
@@ -29,9 +31,11 @@ import java.util.List;
  */
 
 public class ChangeFragment extends BaseFragment implements ChangeImagesContract.View, ItemClickListener<ChallengeImage> {
+    private static final int REQUEST_CHANGE_IMAGE_ALBUM = 101;
     private ChangeImagesContract.Presenter mPresenter;
     private RecyclerView rvChangeImages;
     private ChangeImageAdapter mChangeImageAdapter;
+    private int mPositionSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,12 +75,23 @@ public class ChangeFragment extends BaseFragment implements ChangeImagesContract
 
     @Override
     public void onItemClick(ChallengeImage item, int position) {
+        mPositionSelected = position;
         Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
         intent.putExtra(Constants.FLOW_PHOTO_VIEWER, Constants.TAG_CHAGE_IMAGE);
         intent.putExtra(Constants.EXTRA_CHALLENGE_IMAGE, item);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CHANGE_IMAGE_ALBUM);
     }
 
-    public void refreshData() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CHANGE_IMAGE_ALBUM) {
+            if(resultCode == Activity.RESULT_OK){
+                mChangeImageAdapter.deleteItem(mPositionSelected);
+            }
+        }
+    }
+
+    public void refreshNewImage(ChallengeImage challengeImage) {
+        mChangeImageAdapter.addNewImage(challengeImage);
     }
 }

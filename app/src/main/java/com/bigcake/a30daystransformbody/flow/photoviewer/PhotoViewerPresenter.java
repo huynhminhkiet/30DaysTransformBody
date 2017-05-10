@@ -38,7 +38,17 @@ public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
 
     @Override
     public void deleteChangeImage(ChallengeImage challengeImage) {
+        mChallengeRepository.deleteChangeImage(challengeImage, new ChallengeDataSource.ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                mView.onImageDeleted();
+            }
 
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
     @Override

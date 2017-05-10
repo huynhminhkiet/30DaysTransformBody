@@ -74,6 +74,8 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
         Intent returnIntent = new Intent();
         if (tag == Constants.TAG_CHALLENGE_ALBUM)
             returnIntent.putExtra(Constants.EXTRA_CHALLENGE_DAY, challengeDay);
+        else
+            returnIntent.putExtra(Constants.EXTRA_CHALLENGE_IMAGE, challengeImage);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }

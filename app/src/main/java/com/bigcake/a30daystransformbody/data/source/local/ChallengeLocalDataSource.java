@@ -278,7 +278,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
-    public void insertChallengeGif(int exerciseId, byte[] gifFile, byte[] thumbnail, ChallengeCallBack callBack) {
+    public void insertChallengeGif(int exerciseId, byte[] gifFile, byte[] thumbnail, InsertChangeImageCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TableContent.ChallengeImage.COLUMN_EXERCISE_ID, exerciseId);
@@ -300,7 +300,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
 
         db.close();
         FileUtils.saveGifImage(gifFile, imageName);
-        callBack.onSuccess();
+        callBack.onSuccess(new ChallengeImage((int) id, exerciseId, imageName + ".gif"));
     }
 
     @Override
@@ -324,7 +324,18 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
 
     @Override
     public void deleteChangeImage(ChallengeImage challengeImage, @NonNull ChallengeCallBack callback) {
+        FileUtils.deleteImage(FileUtils.getImageGifDir(), challengeImage.getChallengeImage());
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 
+        if (db.delete(TableContent.ChallengeImage.TABLE_NAME,
+                TableContent.ChallengeImage._ID + "=" + challengeImage.getId(), null) == -1) {
+            db.close();
+            callback.onError();
+            return;
+        }
+
+        db.close();
+        callback.onSuccess();
     }
 
     @Override

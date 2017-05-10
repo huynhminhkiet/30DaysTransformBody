@@ -19,6 +19,7 @@ import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeAlbumFragmentListener;
@@ -145,8 +146,8 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     }
 
     @Override
-    public void createChangeImageDone() {
-        mListener.onChangeImageCreated();
+    public void createChangeImageDone(ChallengeImage challengeImage) {
+        mListener.onChangeImageCreated(challengeImage);
     }
 
     @Override
