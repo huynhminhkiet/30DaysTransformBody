@@ -97,7 +97,23 @@ public class Utils {
     }
 
     public static String formatDateChart(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
-        return simpleDateFormat.format(date);
+        SimpleDateFormat simpleDateFormat;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        if (day == 1) {
+            if (month == Calendar.DECEMBER) {
+                simpleDateFormat = new SimpleDateFormat("dd/M", Locale.getDefault());
+                return simpleDateFormat.format(date) + year % 100;
+            } else {
+                simpleDateFormat = new SimpleDateFormat("dd/M", Locale.getDefault());
+                return simpleDateFormat.format(date);
+            }
+        } else {
+            simpleDateFormat = new SimpleDateFormat("d", Locale.getDefault());
+            return simpleDateFormat.format(date);
+        }
     }
 }

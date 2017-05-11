@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kiethuynh on 08/05/2017
@@ -19,19 +20,26 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
     private WeightManagerContract.View mView;
     private ChallengeRepository mChallengeRepository;
     private Weight mCurrentWeight;
+    private List<Entry> mEntries;
+    private List<String> mLabels;
+    private List<Weight> mWeightList;
 
     public WeightManagerPresenter(WeightManagerContract.View view, ChallengeRepository challengeRepository) {
         this.mView = view;
         mChallengeRepository = challengeRepository;
+        mEntries = new ArrayList<>();
+        mLabels = new ArrayList<>();
     }
 
     @Override
-    public void updateWeight(float weight) {
+    public void updateWeight(final float weight) {
         mCurrentWeight.setWeight(weight);
         mChallengeRepository.updateWeight(mCurrentWeight, new ChallengeDataSource.ChallengeCallBack() {
             @Override
             public void onSuccess() {
-
+                int space = (int) TimeUnit.DAYS.convert((Utils.convertTimeToMillis(Utils.getZeroTimeDate(mCurrentWeight.getDate())) - Utils.convertTimeToMillis(Utils.getZeroTimeDate(mWeightList.get(0).getDate()))), TimeUnit.MILLISECONDS);
+                mEntries.set(mEntries.size() - 1, new Entry(weight, space));
+                mView.showWeightChart(mEntries, mLabels);
             }
 
             @Override
@@ -42,12 +50,23 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
     }
 
     @Override
-    public void insertWeight(float weight) {
-        mCurrentWeight = new Weight(new Date(), weight);
+    public void insertWeight(final float weight) {
+        final Date date = new Date();
+        mCurrentWeight = new Weight(date, weight);
         mChallengeRepository.insertWeight(mCurrentWeight, new ChallengeDataSource.ChallengeCallBack() {
             @Override
             public void onSuccess() {
+                mWeightList.add(mCurrentWeight);
 
+                int space = (int) TimeUnit.DAYS.convert((Utils.convertTimeToMillis(Utils.getZeroTimeDate(date)) - Utils.convertTimeToMillis(Utils.getZeroTimeDate(mWeightList.get(0).getDate()))), TimeUnit.MILLISECONDS);
+                // gen new labels
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(mWeightList.get(mWeightList.size() - 2).getDate());
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                generateChartLabels(calendar.getTime());
+
+                mEntries.add(new Entry(weight, space));
+                mView.showWeightChart(mEntries, mLabels);
             }
 
             @Override
@@ -77,7 +96,11 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
         mChallengeRepository.getAllWeight(new ChallengeDataSource.GetAllWeightCallback() {
             @Override
             public void onSuccess(List<Weight> weightList) {
-                setChartData(weightList);
+                mWeightList = weightList;
+                if (weightList.size() > 0) {
+                    generateChartLabels(weightList.get(0).getDate());
+                    setChartData(weightList);
+                }
             }
 
             @Override
@@ -88,23 +111,30 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
     }
 
     private void setChartData(List<Weight> weightList) {
-        List<Entry> entries = new ArrayList<>();
-        List<String> labels = new ArrayList<>();
+        if (weightList == null) return;
 
-        if (weightList != null && weightList.get(0) != null) {
-            entries.add(new Entry(weightList.get(0).getWeight(), 0));
-            labels.add(Utils.formatDateChart(weightList.get(0).getDate()));
+        if (weightList.get(0) != null) {
+            mEntries.add(new Entry(weightList.get(0).getWeight(), 0));
         }
 
         if (weightList.size() > 1)
             for (int i = 1; i < weightList.size(); i++) {
                 Weight w = weightList.get(i);
-                Weight wBefore = weightList.get(i - 1);
-                entries.add(new Entry(weightList.get(i).getWeight(),
-                        (int) Utils.convertTimeToMillis(Utils.getZeroTimeDate(w.getDate()))));
-                labels.add(Utils.formatDateChart(w.getDate()));
-        }
+                int space = (int) TimeUnit.DAYS.convert((Utils.convertTimeToMillis(Utils.getZeroTimeDate(w.getDate())) - Utils.convertTimeToMillis(Utils.getZeroTimeDate(weightList.get(0).getDate()))), TimeUnit.MILLISECONDS);
+                mEntries.add(new Entry(weightList.get(i).getWeight(), space));
+            }
 
-        mView.showWeightChart(entries, labels);
+
+        mView.showWeightChart(mEntries, mLabels);
     }
+
+    private void generateChartLabels(Date startDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        while (calendar.getTime().compareTo(mWeightList.get(mWeightList.size() - 1).getDate()) <= 0) {
+            mLabels.add(Utils.formatDateChart(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+    }
+
 }

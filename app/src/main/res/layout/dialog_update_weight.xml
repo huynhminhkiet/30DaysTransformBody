@@ -18,11 +18,11 @@
 
         <EditText
             android:id="@+id/edt_weight"
-            android:inputType="numberSigned"
+            android:inputType="numberDecimal"
             android:hint="@string/hint_update_weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLength="3"
+            android:maxLength="5"
             android:layout_weight="1"
             android:textSize="@dimen/text_medium"/>
 

@@ -33,6 +33,9 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
     private Button btnUpdateWeight;
     private WeightManagerContract.Presenter mPresenter;
     private Weight mCurrentWeight;
+    private List<Entry> mEntries;
+    private List<String> mLabels;
+
 
     public static WeightManagerFragment newInstance() {
         return new WeightManagerFragment();
@@ -57,7 +60,7 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
     public void showUpdateWeightForm(String lastWeight) {
         UpdateWeightDialog dialog = UpdateWeightDialog.create(getContext(), new UpdateWeightDialogCallback() {
             @Override
-            public void onWeightSubmitted(int weight) {
+            public void onWeightSubmitted(float weight) {
                 if (!Utils.getBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, false)) {
                     mPresenter.insertWeight(weight);
                     Utils.putBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
@@ -89,6 +92,8 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
 
     @Override
     public void showWeightChart(List<Entry> entries, List<String> labels) {
+        mEntries = entries;
+        mLabels = labels;
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
@@ -98,11 +103,11 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setStartAtZero(false);
 
-        LineDataSet dataset = new LineDataSet(entries, "Weight");
+        LineDataSet dataset = new LineDataSet(mEntries, getString(R.string.gen_gragh_desc));
         dataset.setColor(getContext().getResources().getColor(R.color.colorOrange));
         dataset.setCircleColor(getContext().getResources().getColor(R.color.colorDarkGreen));
         dataset.setLineWidth(3);
-        LineData data = new LineData(labels, dataset);
+        LineData data = new LineData(mLabels, dataset);
         lineChart.setDescription(null);
         lineChart.zoom(entries.size() / 5, 1, 0, 0);
         lineChart.moveViewToX(entries.size());

@@ -5,5 +5,5 @@ package com.bigcake.a30daystransformbody.interfaces;
  */
 
 public interface UpdateWeightDialogCallback {
-    void onWeightSubmitted(int weight);
+    void onWeightSubmitted(float weight);
 }

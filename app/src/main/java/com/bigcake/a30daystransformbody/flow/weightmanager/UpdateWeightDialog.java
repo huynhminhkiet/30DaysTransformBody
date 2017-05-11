@@ -32,7 +32,7 @@ public class UpdateWeightDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 if (validate(edtWeight.getText().toString())) {
-                    mCallback.onWeightSubmitted(Integer.parseInt(edtWeight.getText().toString()));
+                    mCallback.onWeightSubmitted(Float.parseFloat(edtWeight.getText().toString()));
                     dismiss();
                 }
             }

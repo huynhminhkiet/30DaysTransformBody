@@ -21,4 +21,5 @@
     <string name="gen_update_weight_dialog_title">Your weight today</string>
     <string name="hint_update_weight">e.g. 50</string>
     <string name="gen_kg">kg</string>
+    <string name="gen_gragh_desc">Weight (kg)</string>
 </resources>
