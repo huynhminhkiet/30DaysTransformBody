@@ -27,6 +27,7 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
     public WeightManagerPresenter(WeightManagerContract.View view, ChallengeRepository challengeRepository) {
         this.mView = view;
         mChallengeRepository = challengeRepository;
+        mWeightList = new ArrayList<>();
         mEntries = new ArrayList<>();
         mLabels = new ArrayList<>();
     }
@@ -61,8 +62,12 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
                 int space = (int) TimeUnit.DAYS.convert((Utils.convertTimeToMillis(Utils.getZeroTimeDate(date)) - Utils.convertTimeToMillis(Utils.getZeroTimeDate(mWeightList.get(0).getDate()))), TimeUnit.MILLISECONDS);
                 // gen new labels
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(mWeightList.get(mWeightList.size() - 2).getDate());
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                if (mWeightList.size() >= 2) {
+                    calendar.setTime(mWeightList.get(mWeightList.size() - 2).getDate());
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                } else {
+                    calendar.setTime(date);
+                }
                 generateChartLabels(calendar.getTime());
 
                 mEntries.add(new Entry(weight, space));
