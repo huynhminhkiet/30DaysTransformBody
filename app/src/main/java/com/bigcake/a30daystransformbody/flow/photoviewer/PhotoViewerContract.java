@@ -1,9 +1,13 @@
 package com.bigcake.a30daystransformbody.flow.photoviewer;
 
+import android.graphics.Bitmap;
+
 import com.bigcake.a30daystransformbody.base.BasePresenter;
 import com.bigcake.a30daystransformbody.base.BaseView;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+
+import java.io.File;
 
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -22,5 +26,6 @@ public interface PhotoViewerContract {
         void onShowJPGPhoto(byte [] image);
         void onShowGIFPhoto(GifDrawable image);
         void onImageDeleted();
+        void shareImage(File file);
     }
 }

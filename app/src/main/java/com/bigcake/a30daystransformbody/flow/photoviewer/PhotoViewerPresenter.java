@@ -1,5 +1,7 @@
 package com.bigcake.a30daystransformbody.flow.photoviewer;
 
+import android.graphics.BitmapFactory;
+
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
@@ -33,7 +35,9 @@ public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
 
     @Override
     public void shareImage() {
-
+        File dir = mDirectory == Constants.JPG_DIR ? FileUtils.getImageDir() : FileUtils.getImageGifDir();
+        File file = new File(dir, mImage);
+        mView.shareImage(file);
     }
 
     @Override
@@ -68,9 +72,10 @@ public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
 
     @Override
     public void start() {
-        if (mDirectory == Constants.JPG_DIR)
-            mView.onShowJPGPhoto(FileUtils.loadImage(mImage, mDirectory));
-        else {
+        if (mDirectory == Constants.JPG_DIR) {
+            byte [] image = FileUtils.loadImage(mImage, mDirectory);
+            mView.onShowJPGPhoto(image);
+        } else {
             File gifFile = new File(FileUtils.getImageGifDir(), mImage);
             try {
                 GifDrawable gifFromFile = new GifDrawable(gifFile);

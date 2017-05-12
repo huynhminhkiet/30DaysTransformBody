@@ -8,6 +8,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_id"/>
         <activity
             android:name=".flow.main.MainActivity"
             android:label="@string/app_name"
@@ -38,6 +40,9 @@
         <activity
             android:name=".flow.photoviewer.PhotoViewerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1714483425234592"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
     </application>
 
 </manifest>

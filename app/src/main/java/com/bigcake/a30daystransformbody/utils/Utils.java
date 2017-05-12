@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import java.io.ByteArrayOutputStream;
@@ -115,5 +116,9 @@ public class Utils {
             simpleDateFormat = new SimpleDateFormat("d", Locale.getDefault());
             return simpleDateFormat.format(date);
         }
+    }
+
+    public static Bitmap convertByteArrayToBitmap(byte[] bytes) {
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

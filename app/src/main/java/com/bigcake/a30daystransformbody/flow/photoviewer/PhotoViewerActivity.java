@@ -3,10 +3,10 @@ package com.bigcake.a30daystransformbody.flow.photoviewer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
@@ -15,7 +15,7 @@ import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-
+import java.io.File;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -78,6 +78,15 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
             returnIntent.putExtra(Constants.EXTRA_CHALLENGE_IMAGE, challengeImage);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    @Override
+    public void shareImage(File file) {
+        Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareIntent.setType("image/gif");
+        Uri uri = Uri.fromFile(file);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(shareIntent, "Share Emoji"));
     }
 
     private void bindViews() {
