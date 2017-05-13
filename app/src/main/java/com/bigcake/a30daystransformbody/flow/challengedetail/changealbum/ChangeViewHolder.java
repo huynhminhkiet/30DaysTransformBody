@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
+package com.bigcake.a30daystransformbody.flow.challengedetail.changealbum;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeDayImage;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bumptech.glide.Glide;
 

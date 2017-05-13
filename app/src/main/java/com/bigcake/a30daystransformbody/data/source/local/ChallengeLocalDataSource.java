@@ -15,8 +15,6 @@ import com.bigcake.a30daystransformbody.utils.FileUtils;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -267,7 +265,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     public void updateChallengeDay(ChallengeDay challengeDay, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getChallengeId());
+        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getExerciseId());
         values.put(TableContent.ChallengeDay.COLUMN_STATUS, challengeDay.getStatus());
         values.put(TableContent.ChallengeDay.COLUMN_DATE, challengeDay.getDay());
         values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getLevel() != null ? 1 : 0);

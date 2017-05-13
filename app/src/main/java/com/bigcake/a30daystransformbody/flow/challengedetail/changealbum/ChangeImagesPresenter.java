@@ -1,19 +1,10 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
+package com.bigcake.a30daystransformbody.flow.challengedetail.changealbum;
 
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
-import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumContract;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeDayImage;
-import com.bigcake.a30daystransformbody.utils.AnimatedGifEncoder;
-import com.bigcake.a30daystransformbody.utils.FileUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,16 +15,18 @@ public class ChangeImagesPresenter implements ChangeImagesContract.Presenter {
     private ChangeImagesContract.View mView;
     private ChallengeRepository mChallengeRepository;
     private List<ChallengeImage> mChallengeImages;
+    private Exercise mExercise;
 
-    public ChangeImagesPresenter(ChangeImagesContract.View view, ChallengeRepository challengeRepository) {
+    public ChangeImagesPresenter(ChangeImagesContract.View view, ChallengeRepository challengeRepository, Exercise exercise) {
         this.mView = view;
         this.mChallengeRepository = challengeRepository;
+        mExercise = exercise;
     }
 
     @Override
     public void start() {
         if (mChallengeImages == null)
-            mChallengeRepository.getAllChangeImages(0, new ChallengeDataSource.GetChangeImagesCallback() {
+            mChallengeRepository.getAllChangeImages(mExercise.getId(), new ChallengeDataSource.GetChangeImagesCallback() {
                 @Override
                 public void onSuccess(List<ChallengeImage> challengeImageList) {
                     mChallengeImages = challengeImageList;

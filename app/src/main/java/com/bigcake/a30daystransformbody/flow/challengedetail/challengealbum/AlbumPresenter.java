@@ -5,12 +5,12 @@ import android.os.AsyncTask;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.utils.AnimatedGifEncoder;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.FileUtils;
-import com.bigcake.a30daystransformbody.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -26,17 +26,19 @@ public class AlbumPresenter implements AlbumContract.Presenter {
     private List<ChallengeDayImage> mChallengeDayImageList;
     private boolean isGifPanelShown, isSelectAll;
     private int mNumberItemSelected;
+    private Exercise mExercise;
 
-    public AlbumPresenter(AlbumContract.View view, ChallengeRepository challengeRepository) {
+    public AlbumPresenter(AlbumContract.View view, ChallengeRepository challengeRepository, Exercise exercise) {
         this.mView = view;
         this.mChallengeRepository = challengeRepository;
         isSelectAll = true;
+        mExercise = exercise;
     }
 
     @Override
     public void start() {
         if (mChallengeDayImageList == null)
-            mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
+            mChallengeRepository.getChallengeDays(mExercise.getId(), new ChallengeDataSource.LoadChallengeDaysCallBack() {
                 @Override
                 public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
                     filterChallengeDaysHasImage(challengeDayList);
@@ -145,7 +147,7 @@ public class AlbumPresenter implements AlbumContract.Presenter {
                 }
                 encoder.finish();
 
-                mChallengeRepository.insertChallengeGif(mChallengeDayImageList.get(0).getChallengeDay().getChallengeId(),
+                mChallengeRepository.insertChallengeGif(mChallengeDayImageList.get(0).getChallengeDay().getExerciseId(),
                         bos.toByteArray(), firstImage[0], new ChallengeDataSource.InsertChangeImageCallBack() {
                             @Override
                             public void onSuccess(ChallengeImage image) {

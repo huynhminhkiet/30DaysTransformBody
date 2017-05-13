@@ -6,7 +6,6 @@ import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
-import com.bigcake.a30daystransformbody.utils.FileUtils;
 
 /**
  * Created by Big Cake on 4/22/2017
@@ -47,7 +46,7 @@ public class CameraPresenter implements CameraContract.Presenter {
 
     @Override
     public void onButtonLastImageClick() {
-        ChallengeImageManager.getInstance(mChallengeRepository).displayLastChallengeImage(mChallengeDay.getChallengeId(), mChallengeDay.getDay(),
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastChallengeImage(mChallengeDay.getExerciseId(), mChallengeDay.getDay(),
                 new ChallengeImageManager.DisplayImageCallback() {
                     @Override
                     public void onImageLoaded(byte[] thumbnail) {
@@ -62,7 +61,7 @@ public class CameraPresenter implements CameraContract.Presenter {
     }
 
     private void getLastImage(ChallengeDay challengeDay) {
-        ChallengeImageManager.getInstance(mChallengeRepository).displayLastThumbnail(challengeDay.getChallengeId(), challengeDay.getDay(),
+        ChallengeImageManager.getInstance(mChallengeRepository).displayLastThumbnail(challengeDay.getExerciseId(), challengeDay.getDay(),
                 new ChallengeImageManager.DisplayImageCallback() {
                     @Override
                     public void onImageLoaded(byte[] thumbnail) {

@@ -20,6 +20,7 @@ import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.AlbumAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeAlbumFragmentListener;
@@ -47,6 +48,14 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     public static final int REQUEST_CODE_CHALLENGE_DAY_ALBUM = 100;
     private ChallengeAlbumFragmentListener mListener;
 
+    public static ChallengeAlbumFragment newInstance(Exercise exercise) {
+        ChallengeAlbumFragment fragment = new ChallengeAlbumFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.EXTRA_EXERCISE, exercise);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -57,7 +66,8 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(getClass().getSimpleName(), "onCreate");
-        mPresenter = new AlbumPresenter(this, Injection.provideChallengeRepository(getContext()));
+        Exercise exercise = (Exercise) getArguments().getSerializable(Constants.EXTRA_EXERCISE);
+        mPresenter = new AlbumPresenter(this, Injection.provideChallengeRepository(getContext()), exercise);
     }
 
     @Nullable

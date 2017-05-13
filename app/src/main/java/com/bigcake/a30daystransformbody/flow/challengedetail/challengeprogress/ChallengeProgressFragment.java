@@ -17,6 +17,7 @@ import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
@@ -41,6 +42,14 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     private int mPositionUpdating;
     private ChallengeProgressFragmentListener mListener;
 
+    public static ChallengeProgressFragment newInstance(Exercise exercise) {
+        ChallengeProgressFragment fragment = new ChallengeProgressFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.EXTRA_EXERCISE, exercise);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -51,7 +60,8 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(getClass().getSimpleName(), "onCreate");
-        mPresenter = new ChallengeDayPresenter(this, Injection.provideChallengeRepository(getContext()));
+        Exercise exercise = (Exercise) getArguments().getSerializable(Constants.EXTRA_EXERCISE);
+        mPresenter = new ChallengeDayPresenter(this, Injection.provideChallengeRepository(getContext()), exercise);
     }
 
     @Nullable

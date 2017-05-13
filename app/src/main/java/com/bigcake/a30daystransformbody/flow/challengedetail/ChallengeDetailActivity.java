@@ -8,19 +8,18 @@ import android.util.Log;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
-import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeAlbumFragment;
 import com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress.ChallengeProgressFragment;
-import com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum.ChangeFragment;
+import com.bigcake.a30daystransformbody.flow.challengedetail.changealbum.ChangeFragment;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeAlbumFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
 public class ChallengeDetailActivity extends BaseActivity implements ChallengeDetailContract.View,
         ChallengeProgressFragmentListener, ChallengeAlbumFragmentListener {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -42,9 +41,9 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
         Log.d(getClass().getSimpleName(), "onCreate");
         bindViews();
 
-        Challenge challenge = (Challenge) getIntent().getSerializableExtra(Constants.EXTRA_CHALLENGE);
+        Exercise exercise = (Exercise) getIntent().getSerializableExtra(Constants.EXTRA_EXERCISE);
         wrapper = new ContextWrapper(getApplicationContext());
-        mPresenter = new ChallengeDetailPresenter(this, challenge);
+        mPresenter = new ChallengeDetailPresenter(this, exercise);
         mPresenter.start();
     }
 
@@ -62,10 +61,10 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
     }
 
     @Override
-    public void displayChallenge(Challenge challenge) {
-        challengeProgressFragment = new ChallengeProgressFragment();
-        challengeAlbumFragment = new ChallengeAlbumFragment();
-        changeFragment = new ChangeFragment();
+    public void displayChallenge(Exercise exercise) {
+        challengeProgressFragment = ChallengeProgressFragment.newInstance(exercise);
+        challengeAlbumFragment = ChallengeAlbumFragment.newInstance(exercise);
+        changeFragment = ChangeFragment.newInstance(exercise);
 
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");

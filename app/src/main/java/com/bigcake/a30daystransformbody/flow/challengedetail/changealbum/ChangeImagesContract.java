@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
+package com.bigcake.a30daystransformbody.flow.challengedetail.changealbum;
 
 import com.bigcake.a30daystransformbody.base.BasePresenter;
 import com.bigcake.a30daystransformbody.base.BaseView;

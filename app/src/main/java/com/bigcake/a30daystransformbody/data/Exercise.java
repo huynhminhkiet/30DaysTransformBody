@@ -1,12 +1,13 @@
 package com.bigcake.a30daystransformbody.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Big Cake on 4/7/2017
  */
 
-public class Exercise {
+public class Exercise implements Serializable {
     private int id;
     private int categoryId;
     private String title;

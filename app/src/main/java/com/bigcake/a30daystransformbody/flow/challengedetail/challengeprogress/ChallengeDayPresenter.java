@@ -3,6 +3,7 @@ package com.bigcake.a30daystransformbody.flow.challengedetail.challengeprogress;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 
@@ -16,19 +17,20 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
     private ChallengeProgressContract.View mView;
     private ChallengeRepository mChallengeRepository;
     private List<ChallengeDay> mChallengeDayList;
+    private Exercise mExercise;
 
-    public ChallengeDayPresenter(@NonNull ChallengeProgressContract.View view, @NonNull ChallengeRepository challengeRepository) {
+    public ChallengeDayPresenter(@NonNull ChallengeProgressContract.View view,
+                                 @NonNull ChallengeRepository challengeRepository,
+                                 @NonNull Exercise exercise) {
         this.mView = view;
         this.mChallengeRepository = challengeRepository;
+        this.mExercise = exercise;
     }
 
     @Override
     public void start() {
         if (mChallengeDayList == null)
-            mChallengeRepository.generateChallengesDay(0, new ChallengeDataSource.ChallengeCallBack() {
-                @Override
-                public void onSuccess() {
-                    mChallengeRepository.getChallengeDays(0, new ChallengeDataSource.LoadChallengeDaysCallBack() {
+                    mChallengeRepository.getChallengeDays(mExercise.getId(), new ChallengeDataSource.LoadChallengeDaysCallBack() {
                         @Override
                         public void onChallengeDaysLoaded(List<ChallengeDay> challengeDayList) {
                             mChallengeDayList = challengeDayList;
@@ -41,22 +43,11 @@ public class ChallengeDayPresenter implements ChallengeProgressContract.Presente
 
                         }
                     });
-                }
-
-                @Override
-                public void onError() {
-
-                }
-            });
-
-                
 
         else {
             mView.displayChallengeDays(mChallengeDayList);
             mView.displayProgressBar(13);
         }
-
-
     }
 
     @Override

@@ -118,7 +118,4 @@ public class Utils {
         }
     }
 
-    public static Bitmap convertByteArrayToBitmap(byte[] bytes) {
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
 }

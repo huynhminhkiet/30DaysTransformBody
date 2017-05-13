@@ -12,7 +12,7 @@ public class ChallengeDay implements Serializable {
     public static final int STATUS_IN_PROGRESS= 0;
 
     private int id;
-    private int challengeId;
+    private int exerciseId;
     private int day;
     private int status;
     private ChallengeLevel level;
@@ -21,9 +21,9 @@ public class ChallengeDay implements Serializable {
     public ChallengeDay() {
     }
 
-    public ChallengeDay(int id, int challengeId, int day, int status, ChallengeLevel level, String image) {
+    public ChallengeDay(int id, int exerciseId, int day, int status, ChallengeLevel level, String image) {
         this.id = id;
-        this.challengeId = challengeId;
+        this.exerciseId = exerciseId;
         this.day = day;
         this.status = status;
         this.level = level;
@@ -62,12 +62,12 @@ public class ChallengeDay implements Serializable {
         this.level = level;
     }
 
-    public int getChallengeId() {
-        return challengeId;
+    public int getExerciseId() {
+        return exerciseId;
     }
 
-    public void setChallengeId(int challengeId) {
-        this.challengeId = challengeId;
+    public void setExerciseId(int exerciseId) {
+        this.exerciseId = exerciseId;
     }
 
     public String getImage() {

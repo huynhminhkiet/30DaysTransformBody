@@ -1,4 +1,4 @@
-package com.bigcake.a30daystransformbody.flow.challengedetail.gifalbum;
+package com.bigcake.a30daystransformbody.flow.challengedetail.changealbum;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
-import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.AlbumAdapter;
-import com.bigcake.a30daystransformbody.flow.challengedetail.challengealbum.ChallengeDayImage;
+import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
@@ -37,11 +35,20 @@ public class ChangeFragment extends BaseFragment implements ChangeImagesContract
     private ChangeImageAdapter mChangeImageAdapter;
     private int mPositionSelected;
 
+    public static ChangeFragment newInstance(Exercise exercise) {
+        ChangeFragment fragment = new ChangeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.EXTRA_EXERCISE, exercise);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(getClass().getSimpleName(), "onCreate");
-        mPresenter = new ChangeImagesPresenter(this, Injection.provideChallengeRepository(getContext()));
+        Exercise exercise = (Exercise) getArguments().getSerializable(Constants.EXTRA_EXERCISE);
+        mPresenter = new ChangeImagesPresenter(this, Injection.provideChallengeRepository(getContext()), exercise);
     }
 
     @Nullable

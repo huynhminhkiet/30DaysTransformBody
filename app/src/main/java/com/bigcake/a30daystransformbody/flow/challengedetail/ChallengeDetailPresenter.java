@@ -2,7 +2,7 @@ package com.bigcake.a30daystransformbody.flow.challengedetail;
 
 import android.support.annotation.NonNull;
 
-import com.bigcake.a30daystransformbody.data.Challenge;
+import com.bigcake.a30daystransformbody.data.Exercise;
 
 /**
  * Created by kiethuynh on 10/04/2017
@@ -10,15 +10,15 @@ import com.bigcake.a30daystransformbody.data.Challenge;
 
 public class ChallengeDetailPresenter implements ChallengeDetailContract.Presenter {
     private ChallengeDetailContract.View mView;
-    private Challenge mChallenge;
+    private Exercise mExercise;
 
-    public ChallengeDetailPresenter(@NonNull ChallengeDetailContract.View view, @NonNull Challenge challenge) {
+    public ChallengeDetailPresenter(@NonNull ChallengeDetailContract.View view, @NonNull Exercise exercise) {
         this.mView = view;
-        this.mChallenge = challenge;
+        this.mExercise = exercise;
     }
 
     @Override
     public void start() {
-        mView.displayChallenge(mChallenge);
+        mView.displayChallenge(mExercise);
     }
 }

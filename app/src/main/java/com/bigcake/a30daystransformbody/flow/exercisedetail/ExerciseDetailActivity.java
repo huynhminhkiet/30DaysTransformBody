@@ -7,13 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
-import com.bigcake.a30daystransformbody.data.Challenge;
 import com.bigcake.a30daystransformbody.data.Exercise;
+import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.flow.challengedetail.ChallengeDetailActivity;
 import com.bigcake.a30daystransformbody.utils.Constants;
 
@@ -41,6 +43,22 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
 
     private void bindViews() {
         tvTag = (TextView) findViewById(R.id.tv_tag);
+        tvTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Injection.provideChallengeRepository(ExerciseDetailActivity.this).generateChallengesDay(0, new ChallengeDataSource.ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(ExerciseDetailActivity.this, "hacked", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+            }
+        });
 
         rvImage = (RecyclerView) findViewById(R.id.rv_exercise_image);
         rvImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -77,9 +95,9 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_start) {
-            Challenge challenge = new Challenge();
+            Exercise exercise = new Exercise(0, 0, "title", "tag", 1, null, null);
             Intent intent = new Intent(this, ChallengeDetailActivity.class);
-            intent.putExtra(Constants.EXTRA_CHALLENGE, challenge);
+            intent.putExtra(Constants.EXTRA_EXERCISE, exercise);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
