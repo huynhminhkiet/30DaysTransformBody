@@ -27,7 +27,13 @@ public interface ExerciseDataSource {
         void onDataNotAvailable();
     }
 
+    interface DefaultCallback {
+        void onSuccess();
+        void onError();
+    }
+
     void getExerciseCategorise(@NonNull LoadExerciseCategoryCallBack callBack);
     void getExercise(@NonNull LoadExerciseCallBack callBack);
     void getExerciseList(@NonNull LoadExerciseListCallBack callBack);
+    void saveExercise(@NonNull Exercise exercise, @NonNull DefaultCallback callback);
 }

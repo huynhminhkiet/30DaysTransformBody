@@ -12,8 +12,8 @@ import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepositor
  */
 
 public class Injection {
-    public static ExerciseRepository provideExerciseCategoriesRepository() {
-        return ExerciseRepository.getInstance(ExerciseLocalDataSource.getInstance());
+    public static ExerciseRepository provideExerciseCategoriesRepository(Context context) {
+        return ExerciseRepository.getInstance(ExerciseLocalDataSource.getInstance(context));
     }
 
     public static ChallengeRepository provideChallengeRepository(Context context) {

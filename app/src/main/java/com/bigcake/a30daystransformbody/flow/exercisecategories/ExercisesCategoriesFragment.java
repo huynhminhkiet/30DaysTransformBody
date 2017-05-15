@@ -48,7 +48,7 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
     protected void initViews(View view) {
         bindViews(view);
-        mPresenter = new ExerciseCategoryPresenter(this, Injection.provideExerciseCategoriesRepository());
+        mPresenter = new ExerciseCategoryPresenter(this, Injection.provideExerciseCategoriesRepository(getContext()));
         mPresenter.start();
     }
 

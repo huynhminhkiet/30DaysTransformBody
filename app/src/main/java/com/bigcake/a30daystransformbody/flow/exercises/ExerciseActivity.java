@@ -27,7 +27,7 @@ public class ExerciseActivity extends BaseActivity implements ExercisesContract.
     @Override
     protected void initViews() {
         bindViews();
-        mPresenter = new ExercisesPresenter(this, Injection.provideExerciseCategoriesRepository());
+        mPresenter = new ExercisesPresenter(this, Injection.provideExerciseCategoriesRepository(this));
         mPresenter.start();
     }
 

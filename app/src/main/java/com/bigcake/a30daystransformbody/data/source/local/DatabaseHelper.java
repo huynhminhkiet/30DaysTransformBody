@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (mInstance == null)
-            mInstance = new DatabaseHelper(context);
+            mInstance = new DatabaseHelper(context.getApplicationContext());
         return mInstance;
     }
 
@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_CHALLENGE_DAY_TABLE);
         db.execSQL(SQL_CREATE_CHALLENGE_IMAGE);
         db.execSQL(SQL_CREATE_WEIGHT);
+        db.execSQL(SQL_CREATE_EXERCISE);
     }
 
     @Override
@@ -65,5 +66,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TableContent.Weight._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
                     TableContent.Weight.COLUMN_WEIGHT + REAL_TYPE + COMMA_SEP +
                     TableContent.Weight.COLUMN_DATE + TEXT_TYPE +
+                    " )";
+
+    private static final String SQL_CREATE_EXERCISE =
+            "CREATE TABLE " + TableContent.Exercise.TABLE_NAME + " (" +
+                    TableContent.Exercise._ID + INTEGER_TYPE +" PRIMARY KEY AUTOINCREMENT," +
+                    TableContent.Exercise.COLUMN_CATEGORY_ID + INTEGER_TYPE + COMMA_SEP +
+                    TableContent.Exercise.COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
+                    TableContent.Exercise.COLUMN_TAG + TEXT_TYPE + COMMA_SEP +
+                    TableContent.Exercise.COLUMN_IMAGES + TEXT_TYPE + COMMA_SEP +
+                    TableContent.Exercise.COLUMN_DESCRIPTIONS + TEXT_TYPE + COMMA_SEP +
                     " )";
 }

@@ -9,10 +9,10 @@ import java.util.List;
  */
 
 public interface HardData {
-    void getExercises(GetExercisesCallback callback);
+    void saveExercises(SaveExercisesCallback callback);
 
-    interface GetExercisesCallback {
-        void onSuccess(List<Exercise> exercises);
+    interface SaveExercisesCallback {
+        void onSuccess();
         void onError();
     }
 }

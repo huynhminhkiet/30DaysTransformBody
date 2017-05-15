@@ -30,4 +30,14 @@ public class TableContent {
         public static final String COLUMN_WEIGHT = "weight";
         public static final String COLUMN_DATE = "date";
     }
+
+    public abstract class Exercise {
+        public static final String TABLE_NAME = "exercise";
+        public static final String _ID = "id";
+        public static final String COLUMN_CATEGORY_ID = "exercise_id";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_TAG = "tag";
+        public static final String COLUMN_IMAGES = "images";
+        public static final String COLUMN_DESCRIPTIONS = "descriptions";
+    }
 }

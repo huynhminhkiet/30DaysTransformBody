@@ -1,114 +1,26 @@
 [
   {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
-    "id": 0,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "push1",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
-    "categoryId": 1
-  },
-  {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
+    "images": "step1.png;;step2.png;;step3.png",
     "id": 1,
     "tag": "pectorals, triceps, deltoids",
-    "title": "push2",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
+    "title": "push1",
+    "descriptions": "description1;;description2;;description3",
     "categoryId": 1
   },
   {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
+    "images": "step1.png;;step2.png;;step3.png",
     "id": 2,
     "tag": "pectorals, triceps, deltoids",
-    "title": "push3",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
+    "title": "push2",
+    "descriptions": "description1;;description2;;description3",
     "categoryId": 1
   },
   {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
+    "images": "step1.png;;step2.png;;step3.png",
     "id": 3,
     "tag": "pectorals, triceps, deltoids",
-    "title": "pull1",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
-    "categoryId": 2
-  },
-  {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
-    "id": 4,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "pull2",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
-    "categoryId": 2
-  },
-  {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
-    "id": 5,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "Led & Glute 1",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
-    "categoryId": 3
-  },
-  {
-    "images": [
-      "step1",
-      "step2",
-      "step3"
-    ],
-    "id": 6,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "Core 1",
-    "descriptions": [
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups",
-      "With your legs straight and feet spread a few inches apart, bend over at the waist and put your hands on the ground, about three to four feet in front of your toes as you would for Classic Push Ups"
-    ],
-    "categoryId": 4
+    "title": "push3",
+    "descriptions": "description1;;description2;;description3",
+    "categoryId": 1
   }
 ]

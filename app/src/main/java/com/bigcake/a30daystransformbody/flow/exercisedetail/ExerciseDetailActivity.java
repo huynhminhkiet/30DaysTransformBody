@@ -37,7 +37,7 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
     @Override
     protected void initViews() {
         bindViews();
-        mPresenter = new ExerciseDetailPresenter(this, Injection.provideExerciseCategoriesRepository());
+        mPresenter = new ExerciseDetailPresenter(this, Injection.provideExerciseCategoriesRepository(this));
         mPresenter.start();
     }
 

@@ -12,19 +12,17 @@ public class Exercise implements Serializable {
     private int categoryId;
     private String title;
     private String tag;
-    private int type;
-    private List<Integer> images;
-    private List<String> descriptions;
+    private String images;
+    private String descriptions;
 
     public Exercise() {
     }
 
-    public Exercise(int id, int categoryId, String title, String tag, int type, List<Integer> images, List<String> descriptions) {
+    public Exercise(int id, int categoryId, String title, String tag, String images, String descriptions) {
         this.id = id;
         this.categoryId = categoryId;
         this.title = title;
         this.tag = tag;
-        this.type = type;
         this.images = images;
         this.descriptions = descriptions;
     }
@@ -57,27 +55,19 @@ public class Exercise implements Serializable {
         this.tag = tag;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public List<Integer> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(List<Integer> images) {
+    public void setImages(String images) {
         this.images = images;
     }
 
-    public List<String> getDescriptions() {
+    public String getDescriptions() {
         return descriptions;
     }
 
-    public void setDescriptions(List<String> descriptions) {
+    public void setDescriptions(String descriptions) {
         this.descriptions = descriptions;
     }
 }
