@@ -48,9 +48,11 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
                 TableContent.ChallengeDay.COLUMN_STATUS,
                 TableContent.ChallengeDay.COLUMN_LEVEL_ID
         };
+        String selection = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ?";
+        String [] selectionArgs = {String.valueOf(exerciseId)};
 
         Cursor c = db.query(TableContent.ChallengeDay.TABLE_NAME,
-                projection, null, null, null, null, null);
+                projection, selection, selectionArgs, null, null, null);
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
@@ -83,7 +85,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
             ContentValues values = new ContentValues();
             values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, exerciseId);
             values.put(TableContent.ChallengeDay.COLUMN_STATUS,
-                    i == 28 ? ChallengeDay.STATUS_CURRENT : i < 29 ? ChallengeDay.STATUS_DONE : ChallengeDay.STATUS_IN_PROGRESS);
+                    i == 0 ? ChallengeDay.STATUS_CURRENT : ChallengeDay.STATUS_IN_PROGRESS);
             values.put(TableContent.ChallengeDay.COLUMN_DATE, i + 1);
 
             if (db.insert(TableContent.ChallengeDay.TABLE_NAME, null, values) == -1) {
@@ -268,7 +270,7 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
         values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getExerciseId());
         values.put(TableContent.ChallengeDay.COLUMN_STATUS, challengeDay.getStatus());
         values.put(TableContent.ChallengeDay.COLUMN_DATE, challengeDay.getDay());
-        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getLevel() != null ? 1 : 0);
+//        values.put(TableContent.ChallengeDay.COLUMN_EXERCISE_ID, challengeDay.getLevel() != null ? 1 : 0);
 
         if (db.update(TableContent.ChallengeDay.TABLE_NAME, values,
                 TableContent.ChallengeDay._ID + "=" + challengeDay.getId(), null) == -1) {

@@ -15,6 +15,5 @@ public interface ExercisesContract {
         void displayExercises(List<Exercise> exerciseList);
     }
     interface Presenter extends BasePresenter{
-
     }
 }

@@ -40,6 +40,13 @@ class ExerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
         });
         holder.tvTitle.setText(exercise.getTitle());
         holder.tvTag.setText(exercise.getTag());
+        if (exercise.getDay() >= 0) {
+            holder.tvProgressDay.setVisibility(View.VISIBLE);
+            holder.tvProgressDay.setText(String.format(holder.itemView.getContext().getString(R.string.gen_progress_day),
+                    String.valueOf(exercise.getDay())));
+        } else {
+            holder.tvProgressDay.setVisibility(View.GONE);
+        }
     }
 
     @Override

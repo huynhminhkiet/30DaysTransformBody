@@ -11,8 +11,11 @@ import com.bigcake.a30daystransformbody.data.Exercise;
 public interface ExerciseDetailContract {
     interface View extends BaseView<Presenter> {
         void displayExercise(Exercise exercise);
+        void openChallengeScreen(Exercise exercise);
+        void finishActivityAndUpdateData(Exercise exercise);
     }
 
     interface Presenter extends BasePresenter {
+        void openChallenge();
     }
 }

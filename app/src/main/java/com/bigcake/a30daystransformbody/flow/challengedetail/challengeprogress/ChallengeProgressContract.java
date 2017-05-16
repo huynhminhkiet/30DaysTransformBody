@@ -20,5 +20,7 @@ public interface ChallengeProgressContract {
 
     interface Presenter extends BasePresenter {
         void challengeDayClick(ChallengeDay challengeDay);
+        void updateDataOnDatabase(ChallengeDay challengeDay);
+        void updateProgress(int day);
     }
 }

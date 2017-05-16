@@ -14,4 +14,5 @@ public class Constants {
     public static final int JPG_DIR = 0;
     public static final int GIF_DIR = 1;
     public static final String PREFS_TODAY_WEIGHT_UPDATED = "today_weight_updated";
+    public static final String EXTRA_EXERCISE_CATEGORY = "extra_exercise_category";
 }

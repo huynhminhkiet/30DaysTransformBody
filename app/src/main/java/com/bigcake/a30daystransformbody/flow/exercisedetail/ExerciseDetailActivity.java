@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class ExerciseDetailActivity extends BaseActivity implements ExerciseDetailContract.View {
     private TextView tvTag;
+    private Button btnStart;
     private RecyclerView rvImage, rvDescription;
     private ExerciseImageAdaper mExerciseImageAdaper;
     private ExerciseDescriptionAdapter mExerciseDescriptionAdapter;
@@ -37,32 +39,27 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
     @Override
     protected void initViews() {
         bindViews();
-        mPresenter = new ExerciseDetailPresenter(this, Injection.provideExerciseCategoriesRepository(this));
+        Exercise exercise = (Exercise) getIntent().getSerializableExtra(Constants.EXTRA_EXERCISE);
+        mPresenter = new ExerciseDetailPresenter(this,
+                Injection.provideExerciseCategoriesRepository(this),
+                Injection.provideChallengeRepository(this),
+                exercise);
         mPresenter.start();
     }
 
     private void bindViews() {
         tvTag = (TextView) findViewById(R.id.tv_tag);
-        tvTag.setOnClickListener(new View.OnClickListener() {
+        btnStart = (Button) findViewById(R.id.btn_start);
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Injection.provideChallengeRepository(ExerciseDetailActivity.this).generateChallengesDay(0, new ChallengeDataSource.ChallengeCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(ExerciseDetailActivity.this, "hacked", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
+            public void onClick(View v) {
+                mPresenter.openChallenge();
             }
         });
 
         rvImage = (RecyclerView) findViewById(R.id.rv_exercise_image);
         rvImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mExerciseImageAdaper = new ExerciseImageAdaper(new ArrayList<Integer>());
+        mExerciseImageAdaper = new ExerciseImageAdaper(new ArrayList<String>(), this);
         rvImage.setAdapter(mExerciseImageAdaper);
 
         rvDescription = (RecyclerView) findViewById(R.id.rv_exercise_desc);
@@ -81,25 +78,25 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
     public void displayExercise(Exercise exercise) {
         getSupportActionBar().setTitle(exercise.getTitle());
         tvTag.setText(exercise.getTag());
-        mExerciseImageAdaper.replaceAllData(exercise.getImages());
-        mExerciseDescriptionAdapter.replaceAllData(exercise.getDescriptions());
+        btnStart.setText(exercise.getDay() >= 0 ? String.format(getString(R.string.gen_start_day), String.valueOf(exercise.getDay())) : getString(R.string.btn_start));
+        mExerciseImageAdaper.replaceAllData(exercise.getImageList());
+        mExerciseDescriptionAdapter.replaceAllData(exercise.getDescriptionList());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.simple_menu, menu);
-        return true;
+    public void finishActivityAndUpdateData(Exercise exercise) {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_start) {
-            Exercise exercise = new Exercise(0, 0, "title", "tag", 1, null, null);
-            Intent intent = new Intent(this, ChallengeDetailActivity.class);
-            intent.putExtra(Constants.EXTRA_EXERCISE, exercise);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
+    public void openChallengeScreen(Exercise exercise) {
+        Intent intent = new Intent(this, ChallengeDetailActivity.class);
+        intent.putExtra(Constants.EXTRA_EXERCISE, exercise);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 }

@@ -1,11 +1,15 @@
 package com.bigcake.a30daystransformbody.flow.exercisedetail;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bigcake.a30daystransformbody.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -14,10 +18,12 @@ import java.util.List;
 
 public class ExerciseImageAdaper extends RecyclerView.Adapter<ExerciseImageViewHolder> {
 
-    private List<Integer> mImageList;
+    private List<String> mImageList;
+    private Context mContext;
 
-    public ExerciseImageAdaper(List<Integer> imageList) {
+    public ExerciseImageAdaper(List<String> imageList, Context context) {
         mImageList = imageList;
+        this.mContext = context;
     }
 
     @Override
@@ -28,7 +34,16 @@ public class ExerciseImageAdaper extends RecyclerView.Adapter<ExerciseImageViewH
 
     @Override
     public void onBindViewHolder(ExerciseImageViewHolder holder, int position) {
-        holder.ivExerciseImage.setImageResource(mImageList.get(position));
+        try {
+            InputStream ims = mContext.getAssets().open("avatar.jpg");
+            Drawable d = Drawable.createFromStream(ims, null);
+            holder.ivExerciseImage.setImageDrawable(d);
+            ims .close();
+        }
+        catch(IOException ex)
+        {
+            return;
+        }
     }
 
     @Override
@@ -36,7 +51,7 @@ public class ExerciseImageAdaper extends RecyclerView.Adapter<ExerciseImageViewH
         return mImageList.size();
     }
 
-    public void replaceAllData(List<Integer> imageList) {
+    public void replaceAllData(List<String> imageList) {
         mImageList = imageList;
         notifyDataSetChanged();
     }

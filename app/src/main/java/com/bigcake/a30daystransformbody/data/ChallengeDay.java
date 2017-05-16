@@ -62,7 +62,7 @@ public class ChallengeDay implements Serializable {
         this.level = level;
     }
 
-    public int getExerciseId() {
+    public int  getExerciseId() {
         return exerciseId;
     }
 

@@ -13,15 +13,18 @@ import android.view.MenuItem;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
+import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
+import com.bigcake.a30daystransformbody.flow.exercises.ExerciseFragment;
 import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerFragment;
+import com.bigcake.a30daystransformbody.interfaces.ExercisesCategoriesFragmentListener;
 import com.bigcake.a30daystransformbody.utils.ActivityUtils;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
+        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, ExercisesCategoriesFragmentListener {
     private static final String KEY_CURRENT_FRAGMENT = "key_current_fragment";
     private Toolbar toolbar;
     private Fragment mCurrentFragment;
@@ -92,8 +95,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.exercises) {
             mCurrentFragment = ExercisesCategoriesFragment.newInstance();
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
-        } else if (id == R.id.feedback) {
-
+        } else if (id == R.id.my_exercises) {
+            mCurrentFragment = ExerciseFragment.newInstance(null);
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,5 +124,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void trackWeight(Weight weight) {
         Utils.putBooleanPrefs(this, Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
+    }
+
+    @Override
+    public void onOpenExerciseList(ExerciseCategory exerciseCategory) {
+        mCurrentFragment = ExerciseFragment.newInstance(exerciseCategory);
+        ActivityUtils.replaceFragmentToActivityWithBackstack(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
     }
 }

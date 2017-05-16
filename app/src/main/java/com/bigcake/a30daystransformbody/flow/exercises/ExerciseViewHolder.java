@@ -11,10 +11,11 @@ import com.bigcake.a30daystransformbody.R;
  */
 
 class ExerciseViewHolder extends RecyclerView.ViewHolder  {
-    TextView tvTitle, tvTag;
+    TextView tvTitle, tvTag, tvProgressDay;
     public ExerciseViewHolder(View itemView) {
         super(itemView);
         tvTitle = (TextView) itemView.findViewById(R.id.tv_exercise_title);
         tvTag = (TextView) itemView.findViewById(R.id.tv_tag);
+        tvProgressDay = (TextView) itemView.findViewById(R.id.progress_day);
     }
 }

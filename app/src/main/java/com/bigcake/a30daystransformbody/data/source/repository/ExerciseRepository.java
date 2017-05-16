@@ -43,8 +43,8 @@ public class ExerciseRepository implements ExerciseDataSource {
     }
 
     @Override
-    public void getExercise(@NonNull final LoadExerciseCallBack callBack) {
-        mExerciseDataSource.getExercise(new LoadExerciseCallBack() {
+    public void getExercise(int exerciseId, @NonNull final LoadExerciseCallBack callBack) {
+        mExerciseDataSource.getExercise(exerciseId, new LoadExerciseCallBack() {
             @Override
             public void onExerciseLoaded(Exercise exercise) {
                 callBack.onExerciseLoaded(exercise);
@@ -52,14 +52,29 @@ public class ExerciseRepository implements ExerciseDataSource {
 
             @Override
             public void onDataNotAvailable() {
-
+                callBack.onDataNotAvailable();
             }
         });
     }
 
     @Override
-    public void getExerciseList(@NonNull final LoadExerciseListCallBack callBack) {
-        mExerciseDataSource.getExerciseList(new LoadExerciseListCallBack() {
+    public void saveExercise(@NonNull Exercise exercise, @NonNull final DefaultCallback callback) {
+        mExerciseDataSource.saveExercise(exercise, new DefaultCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void getExercisesOnProgress(@NonNull final LoadExerciseListCallBack callBack) {
+        mExerciseDataSource.getExercisesOnProgress(new LoadExerciseListCallBack() {
             @Override
             public void onExerciseListLoaded(List<Exercise> exerciseList) {
                 callBack.onExerciseListLoaded(exerciseList);
@@ -67,7 +82,52 @@ public class ExerciseRepository implements ExerciseDataSource {
 
             @Override
             public void onDataNotAvailable() {
+                callBack.onDataNotAvailable();
+            }
+        });
+    }
 
+    @Override
+    public void getExercisesByCategory(int exerciseCategoryId, @NonNull final LoadExerciseListCallBack callBack) {
+        mExerciseDataSource.getExercisesByCategory(exerciseCategoryId, new LoadExerciseListCallBack() {
+            @Override
+            public void onExerciseListLoaded(List<Exercise> exerciseList) {
+                callBack.onExerciseListLoaded(exerciseList);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callBack.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
+    public void checkFullData(@NonNull final CheckFullDataCallback callback) {
+        mExerciseDataSource.checkFullData(new CheckFullDataCallback() {
+            @Override
+            public void onFull() {
+                callback.onFull();
+            }
+
+            @Override
+            public void onNotFull() {
+                callback.onNotFull();
+            }
+        });
+    }
+
+    @Override
+    public void updateExercise(Exercise exercise, @NonNull final DefaultCallback callback) {
+        mExerciseDataSource.updateExercise(exercise, new DefaultCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,8 +16,10 @@ import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ExerciseCategory;
-import com.bigcake.a30daystransformbody.flow.exercisedetail.ExerciseDetailActivity;
-import com.bigcake.a30daystransformbody.flow.exercises.ExerciseActivity;
+import com.bigcake.a30daystransformbody.flow.exercises.ExerciseFragment;
+import com.bigcake.a30daystransformbody.interfaces.ExercisesCategoriesFragmentListener;
+import com.bigcake.a30daystransformbody.utils.ActivityUtils;
+import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,13 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
     private ExerciseCategoryAdapter mExerciseCategoryAdapter;
 
     private ImageButton ivBtnOpenExercises;
+    private ExercisesCategoriesFragmentListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (ExercisesCategoriesFragmentListener) context;
+    }
 
     @Nullable
     @Override
@@ -63,6 +73,11 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
         mExerciseCatViewPager = (ViewPager) view.findViewById(R.id.pager);
         mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getActivity().getSupportFragmentManager());
+        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
+
         mExerciseCatViewPager.setAdapter(mExerciseCategoryDescriptionAdapter);
         mExerciseCatViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -110,7 +125,6 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
 
     @Override
     public void showExercises(ExerciseCategory exerciseCategory) {
-        Intent intent = new Intent(getContext(), ExerciseActivity.class);
-        startActivity(intent);
+        mListener.onOpenExerciseList(exerciseCategory);
     }
 }

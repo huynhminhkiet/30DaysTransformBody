@@ -19,6 +19,7 @@ import com.bigcake.a30daystransformbody.base.BaseFragment;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeDayAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ChallengeProgressFragmentListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
@@ -31,7 +32,7 @@ import java.util.List;
  * Created by kiethuynh on 10/04/2017
  */
 
-public class ChallengeProgressFragment extends BaseFragment implements ChallengeProgressContract.View, ItemClickListener<ChallengeDay> {
+public class ChallengeProgressFragment extends BaseFragment implements ChallengeProgressContract.View, ItemClickListener<ChallengeDay>, ChallengeDayAdapterListener {
     public static final int CAMERA_REQUEST_CODE = 100;
     private ChallengeProgressContract.Presenter mPresenter;
 
@@ -61,7 +62,10 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
         super.onCreate(savedInstanceState);
         Log.d(getClass().getSimpleName(), "onCreate");
         Exercise exercise = (Exercise) getArguments().getSerializable(Constants.EXTRA_EXERCISE);
-        mPresenter = new ChallengeDayPresenter(this, Injection.provideChallengeRepository(getContext()), exercise);
+        mPresenter = new ChallengeDayPresenter(this,
+                Injection.provideChallengeRepository(getContext()),
+                Injection.provideExerciseCategoriesRepository(getContext()),
+                exercise);
     }
 
     @Nullable
@@ -79,6 +83,7 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
         rvChallengeDay.setLayoutManager(new GridLayoutManager(getContext(), 6));
         mChallengeDayAdapter = new ChallengeDayAdapter(getContext(), new ArrayList<ChallengeDay>(), ChallengeImageManager.getInstance(Injection.provideChallengeRepository(getContext())));
         mChallengeDayAdapter.setItemClickListener(this);
+        mChallengeDayAdapter.setChallengeDayAdapterListener(this);
         rvChallengeDay.setAdapter(mChallengeDayAdapter);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
     }
@@ -124,5 +129,15 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
 
     public void deleteImage(ChallengeDay challengeDay) {
         mChallengeDayAdapter.updateItem(challengeDay);
+    }
+
+    @Override
+    public void requestUpdateProgress(int day) {
+        mPresenter.updateProgress(day);
+    }
+
+    @Override
+    public void requestUpdateOnDatabase(ChallengeDay challengeDay) {
+        mPresenter.updateDataOnDatabase(challengeDay);
     }
 }

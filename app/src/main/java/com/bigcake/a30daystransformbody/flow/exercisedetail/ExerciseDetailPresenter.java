@@ -3,6 +3,8 @@ package com.bigcake.a30daystransformbody.flow.exercisedetail;
 import android.support.annotation.NonNull;
 
 import com.bigcake.a30daystransformbody.data.Exercise;
+import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
+import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepository;
 import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 
@@ -12,16 +14,23 @@ import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 
 public class ExerciseDetailPresenter implements ExerciseDetailContract.Presenter {
     private ExerciseDetailContract.View mView;
-    private ExerciseRepository exerciseRository;
+    private ExerciseRepository mExerciseRository;
+    private ChallengeRepository mChallengeRepository;
+    private Exercise mExercise;
 
-    public ExerciseDetailPresenter(@NonNull ExerciseDetailContract.View mView,@NonNull ExerciseRepository exerciseRository) {
+    public ExerciseDetailPresenter(@NonNull ExerciseDetailContract.View mView,
+                                   @NonNull ExerciseRepository mExerciseRository,
+                                   @NonNull ChallengeRepository challengeRepository,
+                                   Exercise exercise) {
         this.mView = mView;
-        this.exerciseRository = exerciseRository;
+        this.mExerciseRository = mExerciseRository;
+        this.mChallengeRepository = challengeRepository;
+        mExercise = exercise;
     }
 
     @Override
     public void start() {
-        exerciseRository.getExercise(new ExerciseDataSource.LoadExerciseCallBack() {
+        mExerciseRository.getExercise(mExercise.getId(), new ExerciseDataSource.LoadExerciseCallBack() {
             @Override
             public void onExerciseLoaded(Exercise exercise) {
                 mView.displayExercise(exercise);
@@ -33,4 +42,36 @@ public class ExerciseDetailPresenter implements ExerciseDetailContract.Presenter
             }
         });
     }
+
+    @Override
+    public void openChallenge() {
+        if (mExercise.getDay() == -1) {
+            mChallengeRepository.generateChallengesDay(mExercise.getId(), new ChallengeDataSource.ChallengeCallBack() {
+                @Override
+                public void onSuccess() {
+                    mExercise.setDay(0);
+                    mExerciseRository.updateExercise(mExercise, new ExerciseDataSource.DefaultCallback() {
+                        @Override
+                        public void onSuccess() {
+                            mView.openChallengeScreen(mExercise);
+                            mView.finishActivityAndUpdateData(mExercise);
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+        } else {
+            mView.openChallengeScreen(mExercise);
+        }
+    }
 }
+

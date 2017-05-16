@@ -76,5 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TableContent.Exercise.COLUMN_TAG + TEXT_TYPE + COMMA_SEP +
                     TableContent.Exercise.COLUMN_IMAGES + TEXT_TYPE + COMMA_SEP +
                     TableContent.Exercise.COLUMN_DESCRIPTIONS + TEXT_TYPE + COMMA_SEP +
+                    TableContent.Exercise.COLUMN_DAY + INTEGER_TYPE +
                     " )";
 }

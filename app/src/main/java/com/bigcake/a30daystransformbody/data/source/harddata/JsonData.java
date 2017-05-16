@@ -34,18 +34,18 @@ public class JsonData implements HardData {
             List<Exercise> exerciseList = null;
             @Override
             protected Void doInBackground(Void... params) {
-                String json = mAssetsManager.convertJsonFileToString("exercises.json");
-                JSONArray testsArray = null;
+                String json = mAssetsManager.convertJsonFileToString("json/exercises.json");
                 try {
-                    testsArray = new JSONArray(json);
+                    exerciseList = new ArrayList<>();
+                    JSONArray testsArray = new JSONArray(json);
                     for (int i = 0; i < testsArray.length(); i++) {
                         JSONObject jsonObject = testsArray.getJSONObject(i);
-                        Exercise exercise = new Exercise(jsonObject.getInt("id"), jsonObject.getInt("categoryId"),
-                                jsonObject.getString("title"), jsonObject.getString("tag"), 1, jsonObject.getString("images"), jsonObject.getString("descriptions"));
+                        final Exercise exercise = new Exercise(jsonObject.getInt("id"), jsonObject.getInt("categoryId"),
+                                jsonObject.getString("title"), jsonObject.getString("tag"), jsonObject.getString("images"), jsonObject.getString("descriptions"), -1);
                         mExerciseRepository.saveExercise(exercise, new ExerciseDataSource.DefaultCallback() {
                             @Override
                             public void onSuccess() {
-
+                                exerciseList.add(exercise);
                             }
 
                             @Override

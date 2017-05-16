@@ -25,4 +25,6 @@
     <string name="success">Success</string>
     <string name="error">Error</string>
     <string name="successfully_posted_post">Post ID: %1$s</string>
+    <string name="gen_progress_day">day %s</string>
+    <string name="gen_start_day">Start (%s)</string>
 </resources>

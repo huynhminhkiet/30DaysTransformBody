@@ -39,5 +39,6 @@ public class TableContent {
         public static final String COLUMN_TAG = "tag";
         public static final String COLUMN_IMAGES = "images";
         public static final String COLUMN_DESCRIPTIONS = "descriptions";
+        public static final String COLUMN_DAY = "progressDay";
     }
 }

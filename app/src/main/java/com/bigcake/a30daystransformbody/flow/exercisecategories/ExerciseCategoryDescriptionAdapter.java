@@ -2,13 +2,18 @@ package com.bigcake.a30daystransformbody.flow.exercisecategories;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Big Cake on 4/1/2017
  */
 
-public class ExerciseCategoryDescriptionAdapter extends FragmentStatePagerAdapter {
+public class ExerciseCategoryDescriptionAdapter extends FragmentPagerAdapter {
+    private final List<Fragment> mFragmentList = new ArrayList<>();
 
     public ExerciseCategoryDescriptionAdapter(FragmentManager fm) {
         super(fm);
@@ -16,12 +21,16 @@ public class ExerciseCategoryDescriptionAdapter extends FragmentStatePagerAdapte
 
     @Override
     public Fragment getItem(int position) {
-        BaseExerciseCategoryFragment fragment = new PullExerciseFragment();
-        return fragment;
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return mFragmentList.size();
     }
+
+    public void addFragment(Fragment fragment) {
+        mFragmentList.add(fragment);
+    }
+
 }

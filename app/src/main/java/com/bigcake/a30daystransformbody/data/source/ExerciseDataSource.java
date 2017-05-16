@@ -32,8 +32,16 @@ public interface ExerciseDataSource {
         void onError();
     }
 
+    interface CheckFullDataCallback {
+        void onFull();
+        void onNotFull();
+    }
+
     void getExerciseCategorise(@NonNull LoadExerciseCategoryCallBack callBack);
-    void getExercise(@NonNull LoadExerciseCallBack callBack);
-    void getExerciseList(@NonNull LoadExerciseListCallBack callBack);
+    void getExercise(int exerciseId, @NonNull LoadExerciseCallBack callBack);
+    void getExercisesByCategory(int exerciseCategoryId, @NonNull LoadExerciseListCallBack callBack);
+    void getExercisesOnProgress(@NonNull LoadExerciseListCallBack callBack);
     void saveExercise(@NonNull Exercise exercise, @NonNull DefaultCallback callback);
+    void checkFullData(@NonNull CheckFullDataCallback callback);
+    void updateExercise(Exercise exercise, @NonNull DefaultCallback callback);
 }

@@ -29,4 +29,11 @@ public class ActivityUtils {
         transaction.commit();
     }
 
+    public static void replaceFragmentToActivityWithBackstack (@NonNull FragmentManager fragmentManager,
+                                                  @NonNull Fragment fragment, int frameId) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

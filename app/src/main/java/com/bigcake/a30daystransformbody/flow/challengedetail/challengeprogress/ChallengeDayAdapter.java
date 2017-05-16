@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
+import com.bigcake.a30daystransformbody.interfaces.ChallengeDayAdapterListener;
 import com.bigcake.a30daystransformbody.interfaces.ItemClickListener;
 import com.bigcake.a30daystransformbody.manager.ChallengeImageManager;
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
     private List<ChallengeDay> mChallengeDayList;
     private ItemClickListener<ChallengeDay> mListener;
     private ChallengeImageManager mChallengeImageManager;
+    private ChallengeDayAdapterListener mChallengeDayAdapterListener;
 
     public ChallengeDayAdapter(Context context, List<ChallengeDay> challengeDayList, ChallengeImageManager challengeImageManager) {
         mContext = context;
@@ -64,8 +66,20 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
     }
 
     public void updateItem(ChallengeDay challengeDay, int position) {
+        if (challengeDay.getStatus() == ChallengeDay.STATUS_CURRENT) {
+            if (challengeDay.getDay() < 30) {
+                ChallengeDay nextDay = mChallengeDayList.get(position + 1);
+                nextDay.setStatus(ChallengeDay.STATUS_CURRENT);
+                mChallengeDayList.set(position + 1, nextDay);
+                notifyItemChanged(position + 1);
+                mChallengeDayAdapterListener.requestUpdateOnDatabase(nextDay);
+                mChallengeDayAdapterListener.requestUpdateProgress(nextDay.getDay());
+            }
+            challengeDay.setStatus(ChallengeDay.STATUS_DONE);
+        }
         mChallengeDayList.set(position, challengeDay);
         notifyItemChanged(position);
+        mChallengeDayAdapterListener.requestUpdateOnDatabase(challengeDay);
     }
 
     public void updateItem(ChallengeDay challengeDay) {
@@ -79,5 +93,9 @@ public class ChallengeDayAdapter extends RecyclerView.Adapter<ChallengeViewHolde
 
     public void setItemClickListener(ItemClickListener<ChallengeDay> listener) {
         mListener = listener;
+    }
+
+    public void setChallengeDayAdapterListener(ChallengeDayAdapterListener listener) {
+        mChallengeDayAdapterListener = listener;
     }
 }
