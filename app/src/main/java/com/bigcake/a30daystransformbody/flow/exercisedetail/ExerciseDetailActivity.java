@@ -78,7 +78,7 @@ public class ExerciseDetailActivity extends BaseActivity implements ExerciseDeta
     public void displayExercise(Exercise exercise) {
         getSupportActionBar().setTitle(exercise.getTitle());
         tvTag.setText(exercise.getTag());
-        btnStart.setText(exercise.getDay() >= 0 ? String.format(getString(R.string.gen_start_day), String.valueOf(exercise.getDay())) : getString(R.string.btn_start));
+        btnStart.setText(exercise.getDay() > 0 ? String.format(getString(R.string.gen_start_day), String.valueOf(exercise.getDay())) : getString(R.string.btn_start));
         mExerciseImageAdaper.replaceAllData(exercise.getImageList());
         mExerciseDescriptionAdapter.replaceAllData(exercise.getDescriptionList());
     }

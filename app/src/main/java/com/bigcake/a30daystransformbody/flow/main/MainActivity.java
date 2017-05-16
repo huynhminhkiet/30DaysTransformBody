@@ -3,6 +3,7 @@ package com.bigcake.a30daystransformbody.flow.main;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        getSupportFragmentManager().putFragment(outState, KEY_CURRENT_FRAGMENT, mCurrentFragment);
+        if (mCurrentFragment.isAdded())
+            getSupportFragmentManager().putFragment(outState, KEY_CURRENT_FRAGMENT, mCurrentFragment);
     }
 
     @Override
@@ -90,12 +91,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.weight_manager) {
+            getSupportFragmentManager().popBackStackImmediate();
             mCurrentFragment = WeightManagerFragment.newInstance();
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         } else if (id == R.id.exercises) {
             mCurrentFragment = ExercisesCategoriesFragment.newInstance();
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         } else if (id == R.id.my_exercises) {
+            getSupportFragmentManager().popBackStackImmediate();
             mCurrentFragment = ExerciseFragment.newInstance(null);
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         }
@@ -129,6 +132,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onOpenExerciseList(ExerciseCategory exerciseCategory) {
         mCurrentFragment = ExerciseFragment.newInstance(exerciseCategory);
-        ActivityUtils.replaceFragmentToActivityWithBackstack(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        ActivityUtils.replaceFragmentToActivityWithBackstack(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container, "asd");
     }
 }

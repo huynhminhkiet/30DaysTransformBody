@@ -45,11 +45,11 @@ public class ExerciseDetailPresenter implements ExerciseDetailContract.Presenter
 
     @Override
     public void openChallenge() {
-        if (mExercise.getDay() == -1) {
+        if (mExercise.getDay() == 0) {
             mChallengeRepository.generateChallengesDay(mExercise.getId(), new ChallengeDataSource.ChallengeCallBack() {
                 @Override
                 public void onSuccess() {
-                    mExercise.setDay(0);
+                    mExercise.setDay(1);
                     mExerciseRository.updateExercise(mExercise, new ExerciseDataSource.DefaultCallback() {
                         @Override
                         public void onSuccess() {

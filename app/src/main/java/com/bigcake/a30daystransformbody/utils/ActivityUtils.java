@@ -30,10 +30,10 @@ public class ActivityUtils {
     }
 
     public static void replaceFragmentToActivityWithBackstack (@NonNull FragmentManager fragmentManager,
-                                                  @NonNull Fragment fragment, int frameId) {
+                                                  @NonNull Fragment fragment, int frameId, String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(frameId, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
     }
 }

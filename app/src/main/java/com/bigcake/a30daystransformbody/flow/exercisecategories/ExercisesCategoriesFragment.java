@@ -72,7 +72,7 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
         });
 
         mExerciseCatViewPager = (ViewPager) view.findViewById(R.id.pager);
-        mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getActivity().getSupportFragmentManager());
+        mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getChildFragmentManager());
         mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
         mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
         mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());

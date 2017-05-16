@@ -116,7 +116,7 @@ public class ExerciseLocalDataSource implements ExerciseDataSource {
         values.put(TableContent.Exercise.COLUMN_TAG, exercise.getTag());
         values.put(TableContent.Exercise.COLUMN_IMAGES, exercise.getImages());
         values.put(TableContent.Exercise.COLUMN_DESCRIPTIONS, exercise.getDescriptions());
-        values.put(TableContent.Exercise.COLUMN_DAY, -1);
+        values.put(TableContent.Exercise.COLUMN_DAY, 0);
 
         long id = db.insert(TableContent.Exercise.TABLE_NAME, null, values);
         if (id == -1) {
@@ -152,7 +152,7 @@ public class ExerciseLocalDataSource implements ExerciseDataSource {
                 TableContent.Exercise.COLUMN_DAY
         };
         String selection = TableContent.Exercise.COLUMN_DAY + " > ?";
-        String [] selectionArgs = {String.valueOf(-1)};
+        String [] selectionArgs = {String.valueOf(0)};
 
         Cursor c = db.query(TableContent.Exercise.TABLE_NAME,
                 projection, selection, selectionArgs, null, null, null);
