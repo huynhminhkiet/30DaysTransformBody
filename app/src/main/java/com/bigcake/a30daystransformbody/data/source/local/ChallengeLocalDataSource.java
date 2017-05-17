@@ -78,6 +78,44 @@ public class ChallengeLocalDataSource implements ChallengeDataSource {
     }
 
     @Override
+    public void resetChallengeDayByExercise(final int exerciseId, final ChallengeCallBack callBack) {
+        deleteAllChallengeDayByExercise(exerciseId, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                generateChallengesDay(exerciseId, new ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        callBack.onSuccess();
+                    }
+
+                    @Override
+                    public void onError() {
+                        callBack.onError();
+                    }
+                });
+            }
+
+            @Override
+            public void onError() {
+                onError();
+            }
+        });
+    }
+
+    @Override
+    public void deleteAllChallengeDayByExercise(int exerciseId, ChallengeCallBack callBack) {
+        SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
+        String where = TableContent.ChallengeDay.COLUMN_EXERCISE_ID + " = ?";
+        String [] whereArgs = {String.valueOf(exerciseId)};
+        long result = db.delete(TableContent.ChallengeDay.TABLE_NAME, where, whereArgs);
+        db.close();
+        if (result == -1)
+            callBack.onError();
+        else
+            callBack.onSuccess();
+    }
+
+    @Override
     public void generateChallengesDay(int exerciseId, ChallengeCallBack callBack) {
         SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
 

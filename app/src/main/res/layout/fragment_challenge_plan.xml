@@ -27,10 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_height="wrap_content">
 
             <TextView
@@ -51,11 +50,11 @@
                 android:layout_centerInParent="true"/>
 
             <TextView
+                android:id="@+id/tv_day_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_progress"
                 android:layout_centerHorizontal="true"
-                android:text="26 Days left"
                 android:textColor="@color/colorOrange"
                 android:layout_marginTop="@dimen/_15sdp"/>
         </RelativeLayout>
@@ -64,12 +63,28 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
             <ImageButton
+                android:id="@+id/btn_reset_challenge"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_centerHorizontal="true"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_navigate"
+                android:src="@drawable/ic_reset"
+                android:scaleType="fitCenter"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/btn_delete_challenge"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_delete"
                 android:scaleType="fitCenter"/>
         </RelativeLayout>
     </LinearLayout>

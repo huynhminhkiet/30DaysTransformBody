@@ -16,11 +16,14 @@ public interface ChallengeProgressContract {
         void displayProgressBar(int progress);
         void openCamera(ChallengeDay challengeDay);
         void updateItemView(ChallengeDay challengeDay, int position);
+        void closeChallenge();
     }
 
     interface Presenter extends BasePresenter {
         void challengeDayClick(ChallengeDay challengeDay);
         void updateDataOnDatabase(ChallengeDay challengeDay);
         void updateProgress(int day);
+        void deleteChallenge();
+        void resetChallenge();
     }
 }

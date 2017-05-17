@@ -33,6 +33,7 @@ public class ExerciseDetailPresenter implements ExerciseDetailContract.Presenter
         mExerciseRository.getExercise(mExercise.getId(), new ExerciseDataSource.LoadExerciseCallBack() {
             @Override
             public void onExerciseLoaded(Exercise exercise) {
+                mExercise = exercise;
                 mView.displayExercise(exercise);
             }
 

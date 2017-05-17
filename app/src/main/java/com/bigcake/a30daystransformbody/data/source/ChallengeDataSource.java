@@ -73,6 +73,8 @@ public interface ChallengeDataSource {
     void getLastChallengeDayHasImage(int exerciseId, int limitDay, @NonNull GetLastChallengeDay callback);
     void updateImage(int challengeDayId, Bitmap newImage, UpdateChallengeDayImageCallback callBack);
     void deleteChallengeDayImage(ChallengeDay challengeDay, ChallengeCallBack callBack);
+    void deleteAllChallengeDayByExercise(int exerciseId, ChallengeCallBack callBack);
+    void resetChallengeDayByExercise(int exerciseId, ChallengeCallBack callBack);
 
     void insertChallengeGif(int exerciseId, byte[] gif, byte[] thumbnail, InsertChangeImageCallBack callBack);
     void getAllChangeImages(int exerciseId, GetChangeImagesCallback callback);

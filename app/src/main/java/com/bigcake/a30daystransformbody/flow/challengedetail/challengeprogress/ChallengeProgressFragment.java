@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseFragment;
+import com.bigcake.a30daystransformbody.base.MessageDialog;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.Exercise;
 import com.bigcake.a30daystransformbody.flow.camera.CameraActivity;
@@ -32,16 +35,17 @@ import java.util.List;
  * Created by kiethuynh on 10/04/2017
  */
 
-public class ChallengeProgressFragment extends BaseFragment implements ChallengeProgressContract.View, ItemClickListener<ChallengeDay>, ChallengeDayAdapterListener {
+public class ChallengeProgressFragment extends BaseFragment implements ChallengeProgressContract.View,
+        ItemClickListener<ChallengeDay>, ChallengeDayAdapterListener, View.OnClickListener {
     public static final int CAMERA_REQUEST_CODE = 100;
     private ChallengeProgressContract.Presenter mPresenter;
-
     private RecyclerView rvChallengeDay;
     private ChallengeDayAdapter mChallengeDayAdapter;
     private ProgressBar progressBar;
-
     private int mPositionUpdating;
     private ChallengeProgressFragmentListener mListener;
+    private ImageButton btnDeleteChallenge, btnResetChallenge;
+    private TextView tvDayLeft, tvProgress;
 
     public static ChallengeProgressFragment newInstance(Exercise exercise) {
         ChallengeProgressFragment fragment = new ChallengeProgressFragment();
@@ -86,6 +90,12 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
         mChallengeDayAdapter.setChallengeDayAdapterListener(this);
         rvChallengeDay.setAdapter(mChallengeDayAdapter);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        btnDeleteChallenge = (ImageButton) view.findViewById(R.id.btn_delete_challenge);
+        btnDeleteChallenge.setOnClickListener(this);
+        btnResetChallenge = (ImageButton) view.findViewById(R.id.btn_reset_challenge);
+        btnResetChallenge.setOnClickListener(this);
+        tvProgress = (TextView) view.findViewById(R.id.tv_progress);
+        tvDayLeft = (TextView) view.findViewById(R.id.tv_day_left);
     }
 
     @Override
@@ -96,6 +106,9 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     @Override
     public void displayProgressBar(int progress) {
         progressBar.setProgress(progress);
+        int dayLeft = 30 - progress;
+        tvDayLeft.setText(String.format(getContext().getString(dayLeft == 29 ? R.string.gen_1_day_left : R.string.gen_day_left), dayLeft));
+        tvProgress.setText(String.valueOf(progress));
     }
 
     @Override
@@ -139,5 +152,56 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
     @Override
     public void requestUpdateOnDatabase(ChallengeDay challengeDay) {
         mPresenter.updateDataOnDatabase(challengeDay);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == btnDeleteChallenge) {
+            showDeleteChallengeDialog();
+        } else if (view == btnResetChallenge) {
+            showResetChallengeDialog();
+        }
+    }
+
+    private void showResetChallengeDialog() {
+        final MessageDialog dialog = MessageDialog.create(getContext());
+        dialog.setTitleText(R.string.gen_reset_challenge_dialog)
+                .setMessage(R.string.gen_reset_challenge_dialog_message)
+                .setLeftButton(R.string.cancel, new MessageDialog.ClickListener() {
+                    @Override
+                    public void onClick() {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightButton(R.string.ok, new MessageDialog.ClickListener() {
+                    @Override
+                    public void onClick() {
+                        mPresenter.resetChallenge();
+                    }
+                }).show();
+
+    }
+
+    @Override
+    public void closeChallenge() {
+        getActivity().finish();
+    }
+
+    private void showDeleteChallengeDialog() {
+        final MessageDialog dialog = MessageDialog.create(getContext());
+        dialog.setTitleText(R.string.gen_delete_challenge_dialog)
+                .setMessage(R.string.gen_delete_challenge_dialog_message)
+                .setLeftButton(R.string.cancel, new MessageDialog.ClickListener() {
+                    @Override
+                    public void onClick() {
+                        dialog.dismiss();
+                    }
+                })
+                .setRightButton(R.string.ok, new MessageDialog.ClickListener() {
+                    @Override
+                    public void onClick() {
+                        mPresenter.deleteChallenge();
+                    }
+                }).show();
     }
 }

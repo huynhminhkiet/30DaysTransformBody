@@ -9,7 +9,7 @@
         <item
             android:id="@+id/my_exercises"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Exercises" />
+            android:title="My Challenges" />
         <item
             android:id="@+id/weight_manager"
             android:icon="@drawable/ic_menu_camera"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreenYellow"
+    android:background="@color/colorBlack"
     tools:context="com.bigcake.a30daystransformbody.flow.photoviewer.PhotoViewerActivity">
 
     <ImageView
@@ -33,7 +33,7 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_fb" />
+            android:src="@drawable/ic_share" />
 
         <ImageButton
             android:id="@+id/btn_delete_image"

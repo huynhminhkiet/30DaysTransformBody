@@ -59,8 +59,38 @@ public class ChallengeRepository implements ChallengeDataSource {
     }
 
     @Override
+    public void deleteAllChallengeDayByExercise(int exerciseId, final ChallengeCallBack callBack) {
+        mChallengeDataSource.deleteAllChallengeDayByExercise(exerciseId, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
+            }
+        });
+    }
+
+    @Override
     public void updateChallengeDay(ChallengeDay challengeDay, final ChallengeCallBack callBack) {
         mChallengeDataSource.updateChallengeDay(challengeDay, new ChallengeCallBack() {
+            @Override
+            public void onSuccess() {
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callBack.onError();
+            }
+        });
+    }
+
+    @Override
+    public void resetChallengeDayByExercise(int exerciseId, final ChallengeCallBack callBack) {
+        mChallengeDataSource.resetChallengeDayByExercise(exerciseId, new ChallengeCallBack() {
             @Override
             public void onSuccess() {
                 callBack.onSuccess();
