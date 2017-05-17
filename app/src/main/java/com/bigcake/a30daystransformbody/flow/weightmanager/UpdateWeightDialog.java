@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.interfaces.UpdateWeightDialogCallback;
@@ -18,8 +19,8 @@ import com.bigcake.a30daystransformbody.interfaces.UpdateWeightDialogCallback;
 
 public class UpdateWeightDialog extends Dialog {
     private UpdateWeightDialogCallback mCallback;
-    private EditText edtWeight;
-    private String lastWeightData;
+    private float lastWeightData;
+    private NumberPicker leftNumberPicker, rightNumberPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +32,26 @@ public class UpdateWeightDialog extends Dialog {
         findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate(edtWeight.getText().toString())) {
-                    mCallback.onWeightSubmitted(Float.parseFloat(edtWeight.getText().toString()));
-                    dismiss();
-                }
+                float weight = Float.parseFloat(leftNumberPicker.getValue() + "." + rightNumberPicker.getValue());
+                mCallback.onWeightSubmitted(weight);
+                dismiss();
             }
         });
+
     }
 
-    private boolean validate(String s) {
-        return (s != null && !s.isEmpty() && !"0".equals(s));
-    }
 
     private void initViews() {
-        edtWeight = (EditText) findViewById(R.id.edt_weight);
-        edtWeight.setText(lastWeightData);
+        leftNumberPicker = (NumberPicker) findViewById(R.id.number_picker_left);
+        leftNumberPicker.setMinValue(1);
+        leftNumberPicker.setMaxValue(300);
+        leftNumberPicker.setWrapSelectorWheel(false);
+        leftNumberPicker.setValue((int) lastWeightData);
+        rightNumberPicker = (NumberPicker) findViewById(R.id.number_picker_right);
+        rightNumberPicker.setMinValue(0);
+        rightNumberPicker.setMaxValue(9);
+        rightNumberPicker.setWrapSelectorWheel(true);
+        rightNumberPicker.setValue(((int)(lastWeightData * 10)) % 10);
     }
 
     private UpdateWeightDialog(@NonNull Context context) {
@@ -60,6 +66,9 @@ public class UpdateWeightDialog extends Dialog {
     }
 
     public void setLastWeight(String lastWeight) {
-        lastWeightData = lastWeight;
+        if (lastWeight == null || lastWeight.isEmpty())
+            lastWeightData = 50;
+        else
+            lastWeightData = Float.parseFloat(lastWeight);
     }
 }

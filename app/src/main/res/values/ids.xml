@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="error_delay" type="id">Invalid value!</item>
+    <item name="gen_delete_message_dialog" type="id">Delete selected image?</item>
 </resources>

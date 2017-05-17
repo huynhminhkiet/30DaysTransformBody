@@ -7,15 +7,19 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
 import com.bigcake.a30daystransformbody.Injection;
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.base.BaseActivity;
+import com.bigcake.a30daystransformbody.base.MessageDialog;
 import com.bigcake.a30daystransformbody.data.ChallengeDay;
 import com.bigcake.a30daystransformbody.data.ChallengeImage;
 import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
 import java.io.File;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -60,11 +64,25 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
         btnDeleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tag == Constants.TAG_CHALLENGE_ALBUM) {
-                    mPresenter.deleteChallengeDayImage(challengeDay);
-                } else {
-                    mPresenter.deleteChangeImage(challengeImage);
-                }
+                final MessageDialog messageDialog = MessageDialog.create(PhotoViewerActivity.this);
+                messageDialog.setTitleText(R.string.gen_delete_dilog_title)
+                        .setMessage(R.string.gen_delete_message_dialog)
+                        .setLeftButton(R.string.cancel, new MessageDialog.ClickListener() {
+                            @Override
+                            public void onClick() {
+                                messageDialog.dismiss();
+                            }
+                        })
+                        .setRightButton(R.string.ok, new MessageDialog.ClickListener() {
+                            @Override
+                            public void onClick() {
+                                if (tag == Constants.TAG_CHALLENGE_ALBUM) {
+                                    mPresenter.deleteChallengeDayImage(challengeDay);
+                                } else {
+                                    mPresenter.deleteChangeImage(challengeImage);
+                                }
+                            }
+                        }).show();
             }
         });
     }

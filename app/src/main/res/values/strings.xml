@@ -27,4 +27,10 @@
     <string name="successfully_posted_post">Post ID: %1$s</string>
     <string name="gen_progress_day">day %s</string>
     <string name="gen_start_day">Start (%s)</string>
+    <string name="gen_delete_dilog_title">Delete</string>
+    <string name="gen_delete_message_dialog">Delete selected image?</string>
+    <string name="cancel">Cancel</string>
+    <string name="gen_100_ms">100 ms</string>
+    <string name="gen_1000_ms">1000 ms</string>
+    <string name="gen_delay_value">%d ms</string>
 </resources>

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.bigcake.a30daystransformbody.R;
 import com.bigcake.a30daystransformbody.interfaces.SetDelayDialogCallback;
@@ -20,9 +22,11 @@ import com.bigcake.a30daystransformbody.interfaces.SetDelayDialogCallback;
  */
 
 public class SetDelayDialog extends Dialog {
-    private EditText edtDelay;
     private Button btnOk;
+    private TextView tvDelay;
     private SetDelayDialogCallback callback;
+    private SeekBar seekBar;
+    private int delay;
 
     private SetDelayDialog(@NonNull Context context) {
         super(context);
@@ -44,42 +48,35 @@ public class SetDelayDialog extends Dialog {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validate(edtDelay.getText().toString())) {
-                    callback.onDelaySetted(Integer.parseInt(edtDelay.getText().toString()));
-                    dismiss();
-                }
+                callback.onDelaySetted(delay);
+                dismiss();
+            }
+        });
+
+        seekBar.setProgress(200);
+        seekBar.incrementProgressBy(50);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                delay = progress + 100;
+                tvDelay.setText(String.format(getContext().getString(R.string.gen_delay_value), delay));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
     }
 
-    private boolean validate(String delay) {
-        if (delay.isEmpty())
-            return false;
-        int delayValue = Integer.parseInt(delay);
-        if (delayValue < 100 || delayValue > 1000) {
-            edtDelay.setError(getContext().getString(R.string.error_delay));
-            edtDelay.setFocusable(true);
-            edtDelay.requestFocus();
-            return false;
-        }
-        return true;
-}
-
     private void initViews() {
-        edtDelay = (EditText) findViewById(R.id.edt_delay);
-        edtDelay.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                edtDelay.setError(null);
-            }
-        });
+        tvDelay = (TextView) findViewById(R.id.tv_delay);
         btnOk = (Button) findViewById(R.id.btn_ok);
+        seekBar = (SeekBar) findViewById(R.id.seekbar_delay);
     }
 }
