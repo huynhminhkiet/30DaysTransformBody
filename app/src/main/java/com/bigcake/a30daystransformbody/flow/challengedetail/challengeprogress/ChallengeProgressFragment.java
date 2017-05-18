@@ -30,6 +30,7 @@ import com.bigcake.a30daystransformbody.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by kiethuynh on 10/04/2017
@@ -108,7 +109,8 @@ public class ChallengeProgressFragment extends BaseFragment implements Challenge
         progressBar.setProgress(progress);
         int dayLeft = 30 - progress;
         tvDayLeft.setText(String.format(getContext().getString(dayLeft == 29 ? R.string.gen_1_day_left : R.string.gen_day_left), dayLeft));
-        tvProgress.setText(String.valueOf(progress));
+        tvProgress.setText(String.format(Locale.getDefault(),"%.1f", (float)
+                progress / 30 * 100));
     }
 
     @Override
