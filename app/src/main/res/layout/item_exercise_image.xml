@@ -5,10 +5,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:scaleType="fitCenter"
+        android:layout_margin="@dimen/_5sdp"
+        android:scaleType="centerInside"
         android:id="@+id/iv_exercise_image"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ei_pull_1"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

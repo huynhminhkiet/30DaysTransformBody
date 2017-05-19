@@ -1,6 +1,7 @@
 package com.bigcake.a30daystransformbody.flow.exercisedetail;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,10 +35,10 @@ public class ExerciseImageAdaper extends RecyclerView.Adapter<ExerciseImageViewH
 
     @Override
     public void onBindViewHolder(ExerciseImageViewHolder holder, int position) {
+
         try {
-            InputStream ims = mContext.getAssets().open("avatar.jpg");
-            Drawable d = Drawable.createFromStream(ims, null);
-            holder.ivExerciseImage.setImageDrawable(d);
+            InputStream ims = mContext.getAssets().open("images/" + mImageList.get(position));
+            holder.ivExerciseImage.setImageBitmap(BitmapFactory.decodeStream(ims));
             ims .close();
         }
         catch(IOException ex)
