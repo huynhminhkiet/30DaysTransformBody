@@ -18,6 +18,7 @@ import com.bigcake.a30daystransformbody.data.ExerciseCategory;
 import com.bigcake.a30daystransformbody.data.Weight;
 import com.bigcake.a30daystransformbody.flow.exercisecategories.ExercisesCategoriesFragment;
 import com.bigcake.a30daystransformbody.flow.exercises.ExerciseFragment;
+import com.bigcake.a30daystransformbody.flow.reminder.ReminderFragment;
 import com.bigcake.a30daystransformbody.flow.weightmanager.WeightManagerFragment;
 import com.bigcake.a30daystransformbody.interfaces.ExercisesCategoriesFragmentListener;
 import com.bigcake.a30daystransformbody.utils.ActivityUtils;
@@ -25,11 +26,10 @@ import com.bigcake.a30daystransformbody.utils.Constants;
 import com.bigcake.a30daystransformbody.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainContract.View, ExercisesCategoriesFragmentListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ExercisesCategoriesFragmentListener {
     private static final String KEY_CURRENT_FRAGMENT = "key_current_fragment";
     private Toolbar toolbar;
     private Fragment mCurrentFragment;
-    private MainContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initSlideMenu();
-
-        mPresenter = new MainPresenter(this, Injection.provideChallengeRepository(this));
-        mPresenter.start();
 
         if (savedInstanceState == null) {
             mCurrentFragment = ExercisesCategoriesFragment.newInstance();
@@ -101,6 +98,10 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().popBackStackImmediate();
             mCurrentFragment = ExerciseFragment.newInstance(null);
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        } else if (id == R.id.reminder) {
+            getSupportFragmentManager().popBackStackImmediate();
+            mCurrentFragment = ReminderFragment.newInstance();
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,16 +118,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    @Override
-    public void resetWeightTracker() {
-        Utils.putBooleanPrefs(this, Constants.PREFS_TODAY_WEIGHT_UPDATED, false);
-    }
-
-    @Override
-    public void trackWeight(Weight weight) {
-        Utils.putBooleanPrefs(this, Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
     }
 
     @Override

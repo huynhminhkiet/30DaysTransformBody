@@ -85,6 +85,18 @@ public class Utils {
         return prefs.getBoolean(key, defaultValue);
     }
 
+    public static void putStringPrefs(Activity activity, String key, String value) {
+        SharedPreferences.Editor editor = activity.getSharedPreferences("appPrefs", MODE_PRIVATE).edit();
+        editor.putString(key, value);
+        editor.apply();
+        editor.commit();
+    }
+
+    public static String getStringPrefs(Activity activity, String key, String defaultValue) {
+        SharedPreferences prefs = activity.getSharedPreferences("appPrefs", MODE_PRIVATE);
+        return prefs.getString(key, defaultValue);
+    }
+
     public static Date getZeroTimeDate(Date fecha) {
         Calendar calendar = Calendar.getInstance();
 
@@ -116,6 +128,14 @@ public class Utils {
             simpleDateFormat = new SimpleDateFormat("d", Locale.getDefault());
             return simpleDateFormat.format(date);
         }
+    }
+
+    public static Calendar toBeginningOfDay(Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
     }
 
 }

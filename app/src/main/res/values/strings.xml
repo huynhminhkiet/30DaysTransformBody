@@ -39,4 +39,5 @@
     <string name="gen_reset_challenge_dialog_message">Do you want to reset this challenge?</string>
     <string name="gen_1_day_left" formatted="false">%d day left</string>
     <string name="gen_day_left" formatted="false">%d days left</string>
+    <string name="save">Save</string>
 </resources>

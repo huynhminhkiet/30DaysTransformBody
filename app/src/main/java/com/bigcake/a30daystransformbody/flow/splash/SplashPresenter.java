@@ -1,5 +1,7 @@
 package com.bigcake.a30daystransformbody.flow.splash;
 
+import android.os.Handler;
+
 import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
 import com.bigcake.a30daystransformbody.data.source.harddata.HardData;
 import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepository;
@@ -26,7 +28,12 @@ public class SplashPresenter implements SplashContract.Presenter {
         mExerciseRepository.checkFullData(new ExerciseDataSource.CheckFullDataCallback() {
             @Override
             public void onFull() {
-                mView.gotoHomeScreen();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.gotoHomeScreen();
+                    }
+                }, 1000);
             }
 
             @Override

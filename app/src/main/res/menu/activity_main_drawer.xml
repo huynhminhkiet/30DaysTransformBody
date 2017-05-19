@@ -14,6 +14,10 @@
             android:id="@+id/weight_manager"
             android:icon="@drawable/ic_menu_camera"
             android:title="Weight Manager" />
+        <item
+            android:id="@+id/reminder"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Reminder" />
     </group>
 
     <item android:title="Communicate">

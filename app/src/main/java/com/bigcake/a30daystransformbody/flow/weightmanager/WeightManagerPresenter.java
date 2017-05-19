@@ -32,8 +32,8 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
         mLabels = new ArrayList<>();
     }
 
-    @Override
-    public void updateWeight(final float weight) {
+
+    private void updateWeight(final float weight) {
         mCurrentWeight.setWeight(weight);
         mChallengeRepository.updateWeight(mCurrentWeight, new ChallengeDataSource.ChallengeCallBack() {
             @Override
@@ -50,8 +50,8 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
         });
     }
 
-    @Override
-    public void insertWeight(final float weight) {
+
+    private void insertWeight(final float weight) {
         final Date date = new Date();
         mCurrentWeight = new Weight(date, weight);
         mChallengeRepository.insertWeight(mCurrentWeight, new ChallengeDataSource.ChallengeCallBack() {
@@ -82,6 +82,14 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
     }
 
     @Override
+    public void submitWeight(float weight) {
+        if (mCurrentWeight!= null && compareDate(mCurrentWeight.getDate(), new Date()))
+            updateWeight(weight);
+        else
+            insertWeight(weight);
+    }
+
+    @Override
     public Weight getCurrentWeight() {
         mChallengeRepository.getLastWeight(new ChallengeDataSource.GetLastWeightCallback() {
             @Override
@@ -98,6 +106,7 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
 
     @Override
     public void start() {
+        getCurrentWeight();
         mChallengeRepository.getAllWeight(new ChallengeDataSource.GetAllWeightCallback() {
             @Override
             public void onSuccess(List<Weight> weightList) {
@@ -140,6 +149,14 @@ public class WeightManagerPresenter implements WeightManagerContract.Presenter {
             mLabels.add(Utils.formatDateChart(calendar.getTime()));
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+    }
+
+    private boolean compareDate(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return Utils.toBeginningOfDay(cal1).equals(Utils.toBeginningOfDay(cal2));
     }
 
 }

@@ -1,10 +1,9 @@
 package com.bigcake.a30daystransformbody.data.source.preferences;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.bigcake.a30daystransformbody.data.source.PreferencesDataSource;
+import com.bigcake.a30daystransformbody.data.source.PreferencesData;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -12,7 +11,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by kiethuynh on 19/05/2017
  */
 
-public class AppPreferences implements PreferencesDataSource {
+public class AppPreferences implements PreferencesData {
     public SharedPreferences mSharedPreferences;
 
     private static AppPreferences mInstance;
@@ -43,12 +42,12 @@ public class AppPreferences implements PreferencesDataSource {
     }
 
     @Override
-    public void getBoolean(String key, boolean defaultValue) {
-        mSharedPreferences.getBoolean(key, defaultValue);
+    public boolean getBoolean(String key, boolean defaultValue) {
+        return mSharedPreferences.getBoolean(key, defaultValue);
     }
 
     @Override
-    public void getString(String key, String defaultValue) {
-        mSharedPreferences.getString(key, defaultValue);
+    public String getString(String key, String defaultValue) {
+        return mSharedPreferences.getString(key, defaultValue);
     }
 }

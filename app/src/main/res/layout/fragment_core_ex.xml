@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/iv1"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
+        android:src="@drawable/core_1"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_140sdp"
+        android:text="INTERCOSTALS"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_60sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_130sdp"
+        android:text="ABS"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_92sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_130sdp"
+        android:text="OBLIQUES"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_60sdp"
+        android:id="@+id/tv2"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv1"
+        android:text="ERECTOR\nSPINAE"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorBlack"/>
+    
+    <ImageView
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
+        android:src="@drawable/core_2"
+        android:layout_toLeftOf="@+id/tv2"
+        android:layout_marginTop="@dimen/_150sdp"/>
+
+</RelativeLayout>

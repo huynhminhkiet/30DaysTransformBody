@@ -74,9 +74,9 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
         mExerciseCatViewPager = (ViewPager) view.findViewById(R.id.pager);
         mExerciseCategoryDescriptionAdapter = new ExerciseCategoryDescriptionAdapter(getChildFragmentManager());
         mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
-        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
-        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
-        mExerciseCategoryDescriptionAdapter.addFragment(new PullExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new PushExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new LedGluteExerciseFragment());
+        mExerciseCategoryDescriptionAdapter.addFragment(new CoreExerciseFragment());
 
         mExerciseCatViewPager.setAdapter(mExerciseCategoryDescriptionAdapter);
         mExerciseCatViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

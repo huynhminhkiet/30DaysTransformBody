@@ -61,12 +61,7 @@ public class WeightManagerFragment extends BaseFragment implements WeightManager
         UpdateWeightDialog dialog = UpdateWeightDialog.create(getContext(), new UpdateWeightDialogCallback() {
             @Override
             public void onWeightSubmitted(float weight) {
-                if (!Utils.getBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, false)) {
-                    mPresenter.insertWeight(weight);
-                    Utils.putBooleanPrefs(getActivity(), Constants.PREFS_TODAY_WEIGHT_UPDATED, true);
-                } else {
-                    mPresenter.updateWeight(weight);
-                }
+                mPresenter.submitWeight(weight);
             }
         });
         dialog.setLastWeight(lastWeight);

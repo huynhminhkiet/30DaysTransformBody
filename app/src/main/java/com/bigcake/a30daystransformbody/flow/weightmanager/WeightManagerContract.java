@@ -18,8 +18,7 @@ public interface WeightManagerContract {
         void showUpdateWeightForm(String lastWeight);
     }
     interface Presenter extends BasePresenter {
-        void updateWeight(float weight);
-        void insertWeight(float weight);
+        void submitWeight(float weight);
         Weight getCurrentWeight();
     }
 }
