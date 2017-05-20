@@ -1,5 +1,6 @@
 package com.bigcake.a30daystransformbody.flow.main;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -88,25 +89,45 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.weight_manager) {
-            getSupportFragmentManager().popBackStackImmediate();
-            mCurrentFragment = WeightManagerFragment.newInstance();
-            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+            goToWeightManager();
         } else if (id == R.id.exercises) {
-            mCurrentFragment = ExercisesCategoriesFragment.newInstance();
-            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+            goToExerciseCategory();
         } else if (id == R.id.my_exercises) {
-            getSupportFragmentManager().popBackStackImmediate();
-            mCurrentFragment = ExerciseFragment.newInstance(null);
-            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+            gotToMyExercise();
         } else if (id == R.id.reminder) {
-            getSupportFragmentManager().popBackStackImmediate();
-            mCurrentFragment = ReminderFragment.newInstance();
-            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+            goToReminder();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void goToWeightManager() {
+        getSupportFragmentManager().popBackStackImmediate();
+        mCurrentFragment = WeightManagerFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        toolbar.setTitle(R.string.weight_manager);
+    }
+
+    private void goToExerciseCategory() {
+        mCurrentFragment = ExercisesCategoriesFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        toolbar.setTitle(R.string.app_name);
+    }
+
+    private void gotToMyExercise() {
+        getSupportFragmentManager().popBackStackImmediate();
+        mCurrentFragment = ExerciseFragment.newInstance(null);
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        toolbar.setTitle(R.string.my_challenge);
+    }
+
+    private void goToReminder() {
+        getSupportFragmentManager().popBackStackImmediate();
+        mCurrentFragment = ReminderFragment.newInstance();
+        ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container);
+        toolbar.setTitle(R.string.gen_reminder);
     }
 
     private void initSlideMenu() {

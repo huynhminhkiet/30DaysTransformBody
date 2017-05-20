@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class ExerciseLocalDataSource implements ExerciseDataSource {
-    private static final long DATA_SIZE = 3;
+    private static final long DATA_SIZE = 9;
     private static ExerciseLocalDataSource mInstance;
 
     private DatabaseHelper mDatabaseHelper;
@@ -39,8 +39,8 @@ public class ExerciseLocalDataSource implements ExerciseDataSource {
     @Override
     public void getExerciseCategorise(@NonNull LoadExerciseCategoryCallBack callBack) {
         List<ExerciseCategory> exerciseCategoryList = new ArrayList<>();
-        exerciseCategoryList.add(new ExerciseCategory(1, "Push", "Description 1"));
-        exerciseCategoryList.add(new ExerciseCategory(2, "Pull", "Description 2"));
+        exerciseCategoryList.add(new ExerciseCategory(1, "Pull", "Description 2"));
+        exerciseCategoryList.add(new ExerciseCategory(2, "Push", "Description 1"));
         exerciseCategoryList.add(new ExerciseCategory(3, "Led & Glute", "Description 2"));
         exerciseCategoryList.add(new ExerciseCategory(4, "Core", "Description 2"));
         callBack.onExerciseCategoryLoaded(exerciseCategoryList);

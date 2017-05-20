@@ -1,26 +1,74 @@
 [
   {
-    "images": "step1.png;;step2.png;;step3.png",
+    "images": "step-1-1.PNG;;step-1-2.PNG",
     "id": 1,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "push1",
-    "descriptions": "description1;;description2;;description3",
+    "tag": "lats, biceps, forearms, rear deltoids",
+    "title": "Let Me In\u2019s",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
     "categoryId": 1
   },
   {
-    "images": "step1.png;;step2.png;;step3.png",
-    "id": 2,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "push2",
-    "descriptions": "description1;;description2;;description3",
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms",
+    "title": "Pull Ups",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
     "categoryId": 1
   },
   {
-    "images": "step1.png;;step2.png;;step3.png",
-    "id": 3,
-    "tag": "pectorals, triceps, deltoids",
-    "title": "push3",
-    "descriptions": "description1;;description2;;description3",
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "biceps, forearms",
+    "title": "Towel Curls",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms, rear deltoids",
+    "title": "Ledge Curls",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms, rear deltoids",
+    "title": "Curls",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "forearms",
+    "title": "Forearm Curls",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms, rear deltoids (1-4)",
+    "title": "Let Me In\u2019s",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms, rear deltoids (1-4)",
+    "title": "Let Me In\u2019s",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
+    "categoryId": 1
+  },
+  {
+    "images": "step-1-1.PNG;;step-1-2.PNG",
+    "id": 1,
+    "tag": "lats, biceps, forearms, rear deltoids (1-4)",
+    "title": "Let Me In\u2019s",
+    "descriptions": "Place your feet on either side of the door, pressing the door between them.;;Straighten your arms. Bend your knees. Stick your butt out. Create a right angle between your straight spine and your thighs.",
     "categoryId": 1
   }
 ]

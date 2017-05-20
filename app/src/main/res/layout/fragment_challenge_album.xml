@@ -26,28 +26,31 @@
             android:text="@string/gen_item_selected"
             android:gravity="center"/>
 
-        <TextView
+        <ImageView
+            android:padding="@dimen/_5sdp"
             android:id="@+id/btn_all"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="All"
+            android:src="@drawable/ic_select_all"
             android:gravity="center"/>
 
-        <TextView
+        <ImageView
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_create_gif"
             android:id="@+id/btn_create_gif"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Gif"
             android:gravity="center"/>
 
-        <TextView
+        <ImageView
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_cancel"
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Cancel"
             android:gravity="center"/>
 
     </LinearLayout>

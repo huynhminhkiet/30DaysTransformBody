@@ -40,4 +40,7 @@
     <string name="gen_1_day_left" formatted="false">%d day left</string>
     <string name="gen_day_left" formatted="false">%d days left</string>
     <string name="save">Save</string>
+    <string name="gen_reminder">Reminder</string>
+    <string name="weight_manager">Weight Manager</string>
+    <string name="my_challenge">My Challenges</string>
 </resources>

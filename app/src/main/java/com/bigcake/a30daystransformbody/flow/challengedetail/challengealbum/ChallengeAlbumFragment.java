@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
     private AlbumContract.Presenter mPresenter;
     private int mPositionSelected;
     private TextView tvNumberItemSelected;
-    private TextView btnSelectAll, btnCreateGif, btnCancel;
+    private ImageView btnSelectAll, btnCreateGif, btnCancel;
     private ProgressDialog mProgressDialog;
     public static final int REQUEST_CODE_CHALLENGE_DAY_ALBUM = 100;
     private ChallengeAlbumFragmentListener mListener;
@@ -123,11 +124,11 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
         rvAlbum.setAdapter(mAlbumAdapter);
         mGifPanel = (LinearLayout) view.findViewById(R.id.ln_gif_panel);
         tvNumberItemSelected = (TextView) view.findViewById(R.id.tv_number_item_selected);
-        btnSelectAll = (TextView) view.findViewById(R.id.btn_all);
+        btnSelectAll = (ImageView) view.findViewById(R.id.btn_all);
         btnSelectAll.setOnClickListener(this);
-        btnCreateGif = (TextView) view.findViewById(R.id.btn_create_gif);
+        btnCreateGif = (ImageView) view.findViewById(R.id.btn_create_gif);
         btnCreateGif.setOnClickListener(this);
-        btnCancel = (TextView) view.findViewById(R.id.btn_cancel);
+        btnCancel = (ImageView) view.findViewById(R.id.btn_cancel);
         btnCancel.setOnClickListener(this);
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setMessage("Creating..");
@@ -188,7 +189,7 @@ public class ChallengeAlbumFragment extends BaseFragment implements AlbumContrac
 
     @Override
     public void updateAllSelectedButton(Boolean isOnSelectAll) {
-        btnSelectAll.setText(isOnSelectAll ? "All" : "D All");
+        btnSelectAll.setImageResource(isOnSelectAll ? R.drawable.ic_select_all : R.drawable.ic_non_all);
     }
 
     @Override

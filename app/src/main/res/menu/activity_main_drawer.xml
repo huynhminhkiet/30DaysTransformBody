@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/exercises"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_exercise"
             android:title="Exercises" />
         <item
             android:id="@+id/my_exercises"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_my_challenge"
             android:title="My Challenges" />
         <item
             android:id="@+id/weight_manager"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_weight"
             android:title="Weight Manager" />
         <item
             android:id="@+id/reminder"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_reminder"
             android:title="Reminder" />
     </group>
 
@@ -25,15 +25,15 @@
             <item
                 android:id="@+id/about"
                 android:icon="@drawable/ic_menu_share"
-                android:title="About" />
+                android:title="Share" />
             <item
                 android:id="@+id/feedback"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_feedback"
                 android:title="Feedback" />
 
             <item
                 android:id="@+id/rate"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_ratting"
                 android:title="Rate" />
         </menu>
     </item>
