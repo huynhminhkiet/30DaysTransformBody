@@ -3,7 +3,10 @@ package com.bigcake.a30daystransformbody.data.source.harddata;
 import android.os.AsyncTask;
 
 import com.bigcake.a30daystransformbody.data.Exercise;
+import com.bigcake.a30daystransformbody.data.Weight;
+import com.bigcake.a30daystransformbody.data.source.ChallengeDataSource;
 import com.bigcake.a30daystransformbody.data.source.ExerciseDataSource;
+import com.bigcake.a30daystransformbody.data.source.repository.ChallengeRepository;
 import com.bigcake.a30daystransformbody.data.source.repository.ExerciseRepository;
 import com.bigcake.a30daystransformbody.manager.AssetsManager;
 
@@ -13,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,10 +26,12 @@ import java.util.List;
 public class JsonData implements HardData {
     private AssetsManager mAssetsManager;
     private ExerciseRepository mExerciseRepository;
+    private ChallengeRepository mChallengeRepository;
 
-    public JsonData(AssetsManager assetsManager, ExerciseRepository exerciseRepository) {
+    public JsonData(AssetsManager assetsManager, ExerciseRepository exerciseRepository, ChallengeRepository challengeRepository) {
         mAssetsManager = assetsManager;
         mExerciseRepository = exerciseRepository;
+        mChallengeRepository = challengeRepository;
     }
 
     @Override
@@ -57,6 +63,55 @@ public class JsonData implements HardData {
                 } catch (JSONException e) {
                     exerciseList = null;
                 }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.parseLong("1494694800000"));
+                mChallengeRepository.insertWeight(new Weight(calendar.getTime(), 50.0f), new ChallengeDataSource.ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                calendar.setTimeInMillis(Long.parseLong("1494781200000"));
+                mChallengeRepository.insertWeight(new Weight(calendar.getTime(), 50.1f), new ChallengeDataSource.ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                calendar.setTimeInMillis(Long.parseLong("1494954000000"));
+                mChallengeRepository.insertWeight(new Weight(calendar.getTime(), 50.2f), new ChallengeDataSource.ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                calendar.setTimeInMillis(Long.parseLong("1495040400000"));
+                mChallengeRepository.insertWeight(new Weight(calendar.getTime(), 50.1f), new ChallengeDataSource.ChallengeCallBack() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
                 return null;
             }
 

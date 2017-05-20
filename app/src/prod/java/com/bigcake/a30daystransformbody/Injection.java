@@ -26,7 +26,9 @@ public class Injection {
     }
 
     public static HardData provideHardData(Context context) {
-        return new JsonData(new AssetsManager(context), ExerciseRepository.getInstance(ExerciseLocalDataSource.getInstance(context)));
+        return new JsonData(new AssetsManager(context),
+                ExerciseRepository.getInstance(ExerciseLocalDataSource.getInstance(context)),
+                ChallengeRepository.getInstance(ChallengeLocalDataSource.getInstance(context)));
     }
 
     public static PreferencesData providePreferencesData(Context context) {
