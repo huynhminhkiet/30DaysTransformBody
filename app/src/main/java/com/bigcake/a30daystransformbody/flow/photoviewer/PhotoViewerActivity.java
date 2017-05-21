@@ -104,7 +104,7 @@ public class PhotoViewerActivity extends BaseActivity implements PhotoViewerCont
         shareIntent.setType("image/gif");
         Uri uri = Uri.fromFile(file);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(shareIntent, "Share Emoji"));
+        startActivity(Intent.createChooser(shareIntent, "Share"));
     }
 
     private void bindViews() {

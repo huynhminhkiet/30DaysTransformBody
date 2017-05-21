@@ -63,6 +63,7 @@ public class ExercisesCategoriesFragment extends BaseFragment implements Exercis
     }
 
     private void bindViews(View view) {
+        getActivity().setTitle(R.string.app_name);
         ivBtnOpenExercises = (ImageButton) view.findViewById(R.id.btn_go);
         ivBtnOpenExercises.setOnClickListener(new View.OnClickListener() {
             @Override

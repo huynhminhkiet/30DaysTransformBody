@@ -145,5 +145,6 @@ public class MainActivity extends AppCompatActivity
     public void onOpenExerciseList(ExerciseCategory exerciseCategory) {
         mCurrentFragment = ExerciseFragment.newInstance(exerciseCategory);
         ActivityUtils.replaceFragmentToActivityWithBackstack(getSupportFragmentManager(), mCurrentFragment, R.id.fragment_container, "asd");
+        toolbar.setTitle(exerciseCategory.getName());
     }
 }

@@ -42,6 +42,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
         bindViews();
 
         Exercise exercise = (Exercise) getIntent().getSerializableExtra(Constants.EXTRA_EXERCISE);
+        getSupportActionBar().setTitle(exercise.getTitle());
         wrapper = new ContextWrapper(getApplicationContext());
         mPresenter = new ChallengeDetailPresenter(this, exercise);
         mPresenter.start();
@@ -69,7 +70,7 @@ public class ChallengeDetailActivity extends BaseActivity implements ChallengeDe
         mChallengeDetailAdapter = new ChallengeDetailAdapter(getSupportFragmentManager());
         mChallengeDetailAdapter.addFragment(challengeProgressFragment, "Progress");
         mChallengeDetailAdapter.addFragment(challengeAlbumFragment, "Album");
-        mChallengeDetailAdapter.addFragment(changeFragment, "Change");
+        mChallengeDetailAdapter.addFragment(changeFragment, "Gif");
         viewPager.setAdapter(mChallengeDetailAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
