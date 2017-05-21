@@ -53,7 +53,7 @@ public class SetDelayDialog extends Dialog {
             }
         });
 
-        seekBar.setProgress(200);
+        seekBar.setProgress(400);
         seekBar.incrementProgressBy(50);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
